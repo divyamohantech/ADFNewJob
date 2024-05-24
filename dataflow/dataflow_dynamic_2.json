@@ -17,6 +17,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "SourceUserProfile"
+				},
+				{
+					"dataset": {
+						"referenceName": "SQLDynamicDS",
+						"type": "DatasetReference"
+					},
+					"name": "SourcePanel"
 				}
 			],
 			"sinks": [
@@ -42,6 +49,9 @@
 				{
 					"name": "derivedColumn1",
 					"description": "Creating/updating the columns 'COLOR_Tool_Name, ENTITY_ID'"
+				},
+				{
+					"name": "ExistsTestCondition"
 				}
 			],
 			"scriptLines": [
@@ -107,6 +117,23 @@
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     query: 'Select ENTITY_ID as ENTITY_ID from [dbo].[USER_PROFILE] Where User_Name =\\'pfadmin\\'',",
 				"     format: 'query') ~> SourceUserProfile",
+				"source(output(",
+				"          PANEL_ID as integer,",
+				"          NAME as string,",
+				"          IS_METALLIC as integer,",
+				"          CREATE_USER_ID as integer,",
+				"          CREATE_DATE as timestamp,",
+				"          NOTES as string,",
+				"          IS_PUBLIC as integer,",
+				"          ENTITY_ID as integer,",
+				"          IS_INACTIVE as integer,",
+				"          AUDIT_SEARCH_INDEX_DATE as timestamp,",
+				"          IS_FLAGGED as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> SourcePanel",
 				"SourceUserProfile derive(ENTITY_ID = toInteger(ENTITY_ID)) ~> AddColumnsValueEntityID",
 				"SourceInCsv select(mapColumn(",
 				"          COLOR_Tool_Name",
@@ -114,6 +141,9 @@
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select1",
 				"select1 derive(ENTITY_ID = SinkEntityIDValue#output()) ~> derivedColumn1",
+				"derivedColumn1, SourcePanel exists(COLOR_Tool_Name == NAME,",
+				"     negate:true,",
+				"     broadcast: 'auto')~> ExistsTestCondition",
 				"AddColumnsValueEntityID sink(validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
@@ -124,7 +154,7 @@
 				"     mapColumn(",
 				"          ENTITY_ID",
 				"     )) ~> SinkEntityIDValue",
-				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"ExistsTestCondition sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          PANEL_ID as integer,",
