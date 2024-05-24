@@ -17,7 +17,18 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "dataflow_dynamic_2",
-						"type": "DataFlowReference"
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"SourceInCsv": {
+								"TableName": "InCSV_NEW"
+							},
+							"SourceUserProfile": {
+								"TableName": "USER_PROFILE"
+							},
+							"SinkPanelTable": {
+								"TableName": "PANEL"
+							}
+						}
 					},
 					"compute": {
 						"coreCount": 8,
