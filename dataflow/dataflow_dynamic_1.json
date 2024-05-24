@@ -10,10 +10,32 @@
 						"type": "DatasetReference"
 					},
 					"name": "SourceIncsv"
+				},
+				{
+					"dataset": {
+						"referenceName": "SQLDynamicDS",
+						"type": "DatasetReference"
+					},
+					"name": "SourceColorTool"
 				}
 			],
-			"sinks": [],
-			"transformations": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "SQLDynamicDS",
+						"type": "DatasetReference"
+					},
+					"name": "SinkDataColorTool"
+				}
+			],
+			"transformations": [
+				{
+					"name": "ExistsTestUnique"
+				},
+				{
+					"name": "SelectData"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
 				"          COLOR_Tool_Name as string,",
@@ -58,7 +80,42 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> SourceIncsv"
+				"     format: 'table') ~> SourceIncsv",
+				"source(output(",
+				"          COLOR_TOOL_ID as integer,",
+				"          COLOR_TOOL_NAME as string,",
+				"          COLOR_TOOL_TYPE_ID as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> SourceColorTool",
+				"SourceIncsv, SourceColorTool exists(SourceIncsv@COLOR_Tool_Name == SourceColorTool@COLOR_TOOL_NAME,",
+				"     negate:true,",
+				"     broadcast: 'auto')~> ExistsTestUnique",
+				"ExistsTestUnique select(mapColumn(",
+				"          COLOR_Tool_Name",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SelectData",
+				"SelectData sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          COLOR_TOOL_ID as integer,",
+				"          COLOR_TOOL_NAME as string,",
+				"          COLOR_TOOL_TYPE_ID as integer",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          COLOR_TOOL_NAME = COLOR_Tool_Name",
+				"     )) ~> SinkDataColorTool"
 			]
 		}
 	}
