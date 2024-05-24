@@ -35,6 +35,7 @@
 						"computeType": "General"
 					},
 					"traceLevel": "None",
+					"runConcurrently": true,
 					"cacheSinks": {
 						"firstRowOnly": true
 					}
@@ -180,6 +181,7 @@
 						"computeType": "General"
 					},
 					"traceLevel": "None",
+					"runConcurrently": true,
 					"cacheSinks": {
 						"firstRowOnly": true
 					}
