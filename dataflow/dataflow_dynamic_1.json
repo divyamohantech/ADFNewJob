@@ -31,6 +31,9 @@
 			"transformations": [
 				{
 					"name": "SelectData"
+				},
+				{
+					"name": "ExistsTestConditionNewRecords"
 				}
 			],
 			"scriptLines": [
@@ -88,11 +91,14 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> SourceColorTool",
-				"SourceIncsv select(mapColumn(",
+				"ExistsTestConditionNewRecords select(mapColumn(",
 				"          COLOR_Tool_Name",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> SelectData",
+				"SourceIncsv, SourceColorTool exists(SourceIncsv@COLOR_Tool_Name == SourceColorTool@COLOR_TOOL_NAME,",
+				"     negate:true,",
+				"     broadcast: 'auto')~> ExistsTestConditionNewRecords",
 				"SelectData sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
