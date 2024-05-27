@@ -55,7 +55,7 @@
 						"type": "DataFlowReference",
 						"datasetParameters": {
 							"SourceIncsv": {
-								"TableName": "COLOR_TOOL"
+								"TableName": "InCSV_NEW"
 							},
 							"SourceColorTool": {
 								"TableName": "COLOR_TOOL_REJECTION"
