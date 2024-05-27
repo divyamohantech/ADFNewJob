@@ -22,7 +22,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "SQLDynamicDS",
+						"referenceName": "DelimitedTextRejectionCSV",
 						"type": "DatasetReference"
 					},
 					"name": "SinkDataColorTool"
@@ -103,21 +103,16 @@
 				"SelectData sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
-				"          COLOR_TOOL_ID as integer,",
+				"          COLOR_TOOL_ID as string,",
 				"          COLOR_TOOL_NAME as string,",
-				"          COLOR_TOOL_TYPE_ID as integer",
+				"          COLOR_TOOL_TYPE_ID as string",
 				"     ),",
-				"     deletable:false,",
-				"     insertable:true,",
-				"     updateable:false,",
-				"     upsertable:false,",
-				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
 				"          COLOR_TOOL_NAME",
-				"     )) ~> SinkDataColorTool"
+				"     ),",
+				"     format: 'table') ~> SinkDataColorTool"
 			]
 		}
 	}
