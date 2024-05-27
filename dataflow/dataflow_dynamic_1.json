@@ -57,11 +57,11 @@
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> SourceColorTool",
 				"ExistsTestConditionNewRecords select(mapColumn(",
-				"          COLOR_Tool_Name",
+				"          COLOR_TOOL_NAME",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> SelectData",
-				"SourceIncsv, SourceColorTool exists(SourceIncsv@COLOR_Tool_Name == SourceColorTool@COLOR_TOOL_NAME,",
+				"SourceIncsv, SourceColorTool exists(SourceIncsv@COLOR_TOOL_NAME == SourceColorTool@COLOR_TOOL_NAME,",
 				"     negate:true,",
 				"     broadcast: 'auto')~> ExistsTestConditionNewRecords",
 				"SelectData sink(allowSchemaDrift: true,",
@@ -80,7 +80,7 @@
 				"     skipDuplicateMapOutputs: true,",
 				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
-				"          COLOR_TOOL_NAME = COLOR_Tool_Name",
+				"          COLOR_TOOL_NAME",
 				"     )) ~> SinkDataColorTool"
 			]
 		}
