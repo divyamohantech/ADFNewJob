@@ -171,6 +171,9 @@
 							"SourceUserProfile": {
 								"TableName": "USER_PROFILE"
 							},
+							"SourcePanel": {
+								"TableName": "PANEL"
+							},
 							"SinkPanelTable": {
 								"TableName": "PANEL"
 							}
