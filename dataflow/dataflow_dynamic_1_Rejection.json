@@ -82,7 +82,7 @@
 				"     skipDuplicateMapOutputs: true,",
 				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
-				"          COLOR_TOOL_NAME = COLOR_Tool_Name",
+				"          COLOR_TOOL_NAME",
 				"     )) ~> SinkDataColorTool"
 			]
 		}
