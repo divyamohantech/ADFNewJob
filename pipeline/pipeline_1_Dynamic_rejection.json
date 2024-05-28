@@ -5,7 +5,14 @@
 			{
 				"name": "dataflow_dynamic_1",
 				"type": "ExecuteDataFlow",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "dataflow_dynamic_1_Rejection",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -40,14 +47,7 @@
 			{
 				"name": "dataflow_dynamic_1_Rejection",
 				"type": "ExecuteDataFlow",
-				"dependsOn": [
-					{
-						"activity": "Copy data into color tool CSV",
-						"dependencyConditions": [
-							"Completed"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -82,14 +82,9 @@
 			{
 				"name": "Copy data into color tool CSV",
 				"type": "Copy",
-				"dependsOn": [
-					{
-						"activity": "dataflow_dynamic_1",
-						"dependencyConditions": [
-							"Completed"
-						]
-					}
-				],
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -182,14 +177,9 @@
 			{
 				"name": "Copy data into Rejection CSV",
 				"type": "Copy",
-				"dependsOn": [
-					{
-						"activity": "dataflow_dynamic_1_Rejection",
-						"dependencyConditions": [
-							"Completed"
-						]
-					}
-				],
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
