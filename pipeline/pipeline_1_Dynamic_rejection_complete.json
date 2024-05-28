@@ -30,6 +30,9 @@
 							},
 							"SourceColorToolTbale": {
 								"TableName": "COLOR_TOOL"
+							},
+							"SinkNewrecorddataintocolotoolTable": {
+								"TableName": "COLOR_TOOL"
 							}
 						}
 					},
