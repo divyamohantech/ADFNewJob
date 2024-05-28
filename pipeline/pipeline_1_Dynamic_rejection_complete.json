@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "dataflow_dynamic_1_Complete",
+				"name": "dataflow_dynamic_1_CompleteNew",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -43,9 +43,11 @@
 			{
 				"name": "Copy data into color tool CSV",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
-						"activity": "dataflow_dynamic_1_Complete",
+						"activity": "dataflow_dynamic_1_CompleteNew",
 						"dependencyConditions": [
 							"Succeeded"
 						]
