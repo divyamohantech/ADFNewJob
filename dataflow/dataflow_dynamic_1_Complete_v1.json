@@ -70,7 +70,7 @@
 				},
 				{
 					"name": "ExistsTestConditionNewRecords",
-					"description": "Filtering rows from undefined which are not matching in undefined based on columns 1'SourceIncsv@COLOR_Tool_Name, SourceColorTool@COLOR_TOOL_NAME'"
+					"description": "Filtering rows from undefined which are not matching in undefined based on columns j1'SourceIncsv@COLOR_Tool_Name, SourceColorTool@COLOR_TOOL_NAME'"
 				},
 				{
 					"name": "joinRejectionCondition",
