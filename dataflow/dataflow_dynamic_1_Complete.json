@@ -36,14 +36,6 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "DelimitedTextColorCSV",
-						"type": "DatasetReference"
-					},
-					"name": "SinkDataColorToolCSV",
-					"description": "Export data to DelimitedTextColorCSV1"
-				},
-				{
-					"dataset": {
 						"referenceName": "DelimitedTextRejectionCSV",
 						"type": "DatasetReference"
 					},
@@ -55,6 +47,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "SinkNewrecorddataintocolotoolTable"
+				},
+				{
+					"dataset": {
+						"referenceName": "DelimitedTextColorCSV",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
 				}
 			],
 			"transformations": [
@@ -206,20 +205,6 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'right')~> NewApprovedrecords",
-				"NewApprovedrecords sink(allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     input(",
-				"          COLOR_TOOL_ID as string,",
-				"          COLOR_TOOL_NAME as string,",
-				"          COLOR_TOOL_TYPE_ID as string",
-				"     ),",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true,",
-				"     saveOrder: 2,",
-				"     mapColumn(",
-				"          COLOR_TOOL_NAME = COLOR_Tool_Name",
-				"     ),",
-				"     format: 'table') ~> SinkDataColorToolCSV",
 				"SelectDataColorTool sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -247,7 +232,16 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> SinkNewrecorddataintocolotoolTable"
+				"     errorHandlingOption: 'stopOnFirstError') ~> SinkNewrecorddataintocolotoolTable",
+				"NewApprovedrecords sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          COLOR_TOOL_ID as string,",
+				"          COLOR_TOOL_NAME as string,",
+				"          COLOR_TOOL_TYPE_ID as string",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
 			]
 		}
 	}

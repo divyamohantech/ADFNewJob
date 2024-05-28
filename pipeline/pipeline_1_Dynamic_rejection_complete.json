@@ -30,9 +30,6 @@
 							},
 							"SourceColorToolTbale": {
 								"TableName": "COLOR_TOOL"
-							},
-							"SinkDataColorToolTable": {
-								"TableName": "COLOR_TOOL"
 							}
 						}
 					},
