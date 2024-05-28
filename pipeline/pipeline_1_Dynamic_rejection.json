@@ -66,9 +66,6 @@
 							},
 							"SourceColorTool": {
 								"TableName": "COLOR_TOOL"
-							},
-							"SinkDataColorTool": {
-								"TableName": "COLOR_TOOL_REJECTION"
 							}
 						}
 					},
