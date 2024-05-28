@@ -71,7 +71,8 @@
 					"name": "SelectDataColorTool"
 				},
 				{
-					"name": "NewApprovedrecords"
+					"name": "NewApprovedrecords",
+					"description": "Inner join on 'SelectData' and 'SourceColorTool'a"
 				}
 			],
 			"scriptLines": [
