@@ -47,6 +47,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "sinkDataColorRejectCSV"
+				},
+				{
+					"dataset": {
+						"referenceName": "DelimitedTextColorCSV",
+						"type": "DatasetReference"
+					},
+					"name": "SinkNewrecorddataintocolotoolCSV"
 				}
 			],
 			"transformations": [
@@ -61,6 +68,9 @@
 				},
 				{
 					"name": "SelectDataColorTool"
+				},
+				{
+					"name": "NewApprovedrecords"
 				}
 			],
 			"scriptLines": [
@@ -188,7 +198,12 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> SelectDataColorTool",
-				"SelectData sink(allowSchemaDrift: true,",
+				"SelectData, SourceColorTool join(SelectData@COLOR_Tool_Name == SourceColorTool@COLOR_TOOL_NAME,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'right')~> NewApprovedrecords",
+				"NewApprovedrecords sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          COLOR_TOOL_ID as integer,",
@@ -219,7 +234,20 @@
 				"     saveOrder: 1,",
 				"     mapColumn(",
 				"          COLOR_TOOL_NAME = COLOR_Tool_Name",
-				"     )) ~> sinkDataColorRejectCSV"
+				"     )) ~> sinkDataColorRejectCSV",
+				"SelectData sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          COLOR_TOOL_ID as string,",
+				"          COLOR_TOOL_NAME as string,",
+				"          COLOR_TOOL_TYPE_ID as string",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     saveOrder: 3,",
+				"     mapColumn(",
+				"          COLOR_TOOL_NAME = COLOR_Tool_Name",
+				"     )) ~> SinkNewrecorddataintocolotoolCSV"
 			]
 		}
 	}
