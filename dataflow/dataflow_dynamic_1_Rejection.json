@@ -111,8 +111,7 @@
 				"     skipDuplicateMapOutputs: true,",
 				"     mapColumn(",
 				"          COLOR_TOOL_NAME",
-				"     ),",
-				"     format: 'table') ~> SinkDataColorTool"
+				"     )) ~> SinkDataColorTool"
 			]
 		}
 	}
