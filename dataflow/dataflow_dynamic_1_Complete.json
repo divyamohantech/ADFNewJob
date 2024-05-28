@@ -66,7 +66,8 @@
 					"description": "Filtering rows from undefined which are not matching in undefined based on columns 1'SourceIncsv@COLOR_Tool_Name, SourceColorTool@COLOR_TOOL_NAME'"
 				},
 				{
-					"name": "joinRejectionCondition"
+					"name": "joinRejectionCondition",
+					"description": "Inner join on 'SourceInCSVtable' and 'SourceColorToolTbale'q"
 				},
 				{
 					"name": "SelectDataColorTool"
@@ -195,7 +196,7 @@
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> joinRejectionCondition",
+				"     broadcast: 'left')~> joinRejectionCondition",
 				"joinRejectionCondition select(mapColumn(",
 				"          COLOR_Tool_Name = SourceInCSVtable@COLOR_Tool_Name",
 				"     ),",
