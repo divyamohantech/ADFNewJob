@@ -36,10 +36,11 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "SQLDynamicDS",
+						"referenceName": "DelimitedTextColorCSV",
 						"type": "DatasetReference"
 					},
-					"name": "SinkDataColorToolTable"
+					"name": "SinkDataColorToolCSV",
+					"description": "Export data to DelimitedTextColorCSV1"
 				},
 				{
 					"dataset": {
@@ -50,10 +51,10 @@
 				},
 				{
 					"dataset": {
-						"referenceName": "DelimitedTextColorCSV",
+						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference"
 					},
-					"name": "SinkNewrecorddataintocolotoolCSV"
+					"name": "SinkNewrecorddataintocolotoolTable"
 				}
 			],
 			"transformations": [
@@ -208,22 +209,17 @@
 				"NewApprovedrecords sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
-				"          COLOR_TOOL_ID as integer,",
+				"          COLOR_TOOL_ID as string,",
 				"          COLOR_TOOL_NAME as string,",
-				"          COLOR_TOOL_TYPE_ID as integer",
+				"          COLOR_TOOL_TYPE_ID as string",
 				"     ),",
-				"     deletable:false,",
-				"     insertable:true,",
-				"     updateable:false,",
-				"     upsertable:false,",
-				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     saveOrder: 2,",
-				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
 				"          COLOR_TOOL_NAME = COLOR_Tool_Name",
-				"     )) ~> SinkDataColorToolTable",
+				"     ),",
+				"     format: 'table') ~> SinkDataColorToolCSV",
 				"SelectDataColorTool sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -240,16 +236,18 @@
 				"SelectData sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
-				"          COLOR_TOOL_ID as string,",
+				"          COLOR_TOOL_ID as integer,",
 				"          COLOR_TOOL_NAME as string,",
-				"          COLOR_TOOL_TYPE_ID as string",
+				"          COLOR_TOOL_TYPE_ID as integer",
 				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     saveOrder: 3,",
-				"     mapColumn(",
-				"          COLOR_TOOL_NAME = COLOR_Tool_Name",
-				"     )) ~> SinkNewrecorddataintocolotoolCSV"
+				"     errorHandlingOption: 'stopOnFirstError') ~> SinkNewrecorddataintocolotoolTable"
 			]
 		}
 	}
