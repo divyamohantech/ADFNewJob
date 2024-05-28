@@ -46,7 +46,8 @@
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference"
 					},
-					"name": "SinkNewrecorddataintocolotoolTable"
+					"name": "SinkNewrecorddataintocolotoolTable",
+					"description": "Export data to SQLDynamicDS "
 				},
 				{
 					"dataset": {
