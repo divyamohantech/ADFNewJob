@@ -32,10 +32,7 @@
 								"TableName": "COLOR_TOOL_REJECTION"
 							},
 							"SinkDataColorTool": {
-								"TableName": {
-									"value": "@variables('csv')",
-									"type": "Expression"
-								}
+								"TableName": "COLOR_TOOL_REJECTION"
 							}
 						}
 					},
