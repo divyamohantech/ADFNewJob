@@ -4,6 +4,7 @@
 		"activities": [
 			{
 				"name": "dataflow_dynamic_1_CompleteNew",
+				"description": "new",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
