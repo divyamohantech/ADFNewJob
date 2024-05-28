@@ -31,6 +31,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "SourceColorToolTbale"
+				},
+				{
+					"dataset": {
+						"referenceName": "SQLDynamicDS",
+						"type": "DatasetReference"
+					},
+					"name": "SourceApprovedRecords"
 				}
 			],
 			"sinks": [
@@ -75,6 +82,9 @@
 				{
 					"name": "NewApprovedrecords",
 					"description": "Inner join on 'SelectData' and 'SourceColorTool'a"
+				},
+				{
+					"name": "Innerjoin"
 				}
 			],
 			"scriptLines": [
@@ -184,6 +194,15 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> SourceColorToolTbale",
+				"source(output(",
+				"          COLOR_TOOL_ID as integer,",
+				"          COLOR_TOOL_NAME as string,",
+				"          COLOR_TOOL_TYPE_ID as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> SourceApprovedRecords",
 				"ExistsTestConditionNewRecords select(mapColumn(",
 				"          COLOR_Tool_Name",
 				"     ),",
@@ -207,6 +226,11 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'right')~> NewApprovedrecords",
+				"SourceApprovedRecords, SourceColorTool join(SourceApprovedRecords@COLOR_TOOL_NAME == SourceColorTool@COLOR_TOOL_NAME,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> Innerjoin",
 				"SelectDataColorTool sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
