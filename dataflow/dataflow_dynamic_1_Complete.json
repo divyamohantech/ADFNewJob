@@ -241,7 +241,12 @@
 				"          COLOR_TOOL_TYPE_ID as string",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sink1"
+				"     skipDuplicateMapOutputs: true,",
+				"     mapColumn(",
+				"          COLOR_TOOL_ID,",
+				"          COLOR_TOOL_NAME = SourceColorTool@COLOR_TOOL_NAME,",
+				"          COLOR_TOOL_TYPE_ID",
+				"     )) ~> sink1"
 			]
 		}
 	}
