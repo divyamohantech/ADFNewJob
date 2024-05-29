@@ -61,7 +61,7 @@
 						"referenceName": "DelimitedTextColorCSV",
 						"type": "DatasetReference"
 					},
-					"name": "sink1"
+					"name": "sinkNewApprovedrecords"
 				},
 				{
 					"name": "CacheSinkNewRecords"
@@ -275,19 +275,19 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     saveOrder: 3,",
+				"     saveOrder: 2,",
 				"     mapColumn(",
 				"          COLOR_TOOL_ID,",
 				"          COLOR_TOOL_NAME = SourceColorTool@COLOR_TOOL_NAME,",
 				"          COLOR_TOOL_TYPE_ID",
-				"     )) ~> sink1",
+				"     )) ~> sinkNewApprovedrecords",
 				"SelectData sink(validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     store: 'cache',",
 				"     format: 'inline',",
 				"     output: true,",
-				"     saveOrder: 1) ~> CacheSinkNewRecords"
+				"     saveOrder: 2) ~> CacheSinkNewRecords"
 			]
 		}
 	}
