@@ -42,6 +42,10 @@
 			],
 			"sinks": [
 				{
+					"dataset": {
+						"referenceName": "DelimitedTextDymanicCSVFiles",
+						"type": "DatasetReference"
+					},
 					"name": "sinkDataColorRejectCSV"
 				},
 				{
@@ -230,6 +234,11 @@
 				"     broadcast: 'auto')~> Innerjoin",
 				"SelectDataColorTool sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
+				"     input(",
+				"          COLOR_TOOL_ID as string,",
+				"          COLOR_TOOL_NAME as string,",
+				"          COLOR_TOOL_TYPE_ID as string",
+				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     saveOrder: 1,",
