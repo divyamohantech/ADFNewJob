@@ -17,13 +17,6 @@
 						"type": "DatasetReference"
 					},
 					"name": "SourceColorTool"
-				},
-				{
-					"dataset": {
-						"referenceName": "SQLDynamicDS",
-						"type": "DatasetReference"
-					},
-					"name": "SourceApprovedRecords"
 				}
 			],
 			"sinks": [
@@ -38,9 +31,6 @@
 				{
 					"name": "ExistsTestConditionNewRecords",
 					"description": "Filtering rows from undefined which are not matching in undefined based on columns j1'SourceIncsv@COLOR_Tool_Name, SourceColorTool@COLOR_TOOL_NAME'"
-				},
-				{
-					"name": "Innerjoin"
 				}
 			],
 			"scriptLines": [
@@ -97,15 +87,6 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> SourceColorTool",
-				"source(output(",
-				"          COLOR_TOOL_ID as integer,",
-				"          COLOR_TOOL_NAME as string,",
-				"          COLOR_TOOL_TYPE_ID as integer",
-				"     ),",
-				"     allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> SourceApprovedRecords",
 				"ExistsTestConditionNewRecords select(mapColumn(",
 				"          COLOR_Tool_Name",
 				"     ),",
@@ -114,11 +95,6 @@
 				"SourceIncsv, SourceColorTool exists(SourceIncsv@COLOR_Tool_Name == SourceColorTool@COLOR_TOOL_NAME,",
 				"     negate:true,",
 				"     broadcast: 'auto')~> ExistsTestConditionNewRecords",
-				"SourceApprovedRecords, SourceColorTool join(SourceApprovedRecords@COLOR_TOOL_NAME == SourceColorTool@COLOR_TOOL_NAME,",
-				"     joinType:'inner',",
-				"     matchType:'exact',",
-				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> Innerjoin",
 				"SelectData sink(validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
