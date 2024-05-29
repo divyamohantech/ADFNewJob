@@ -63,6 +63,9 @@
 					},
 					"name": "SinkApprovedFile4",
 					"description": "Export data to DelimitedTextColorCSv"
+				},
+				{
+					"name": "SinkCacheNewRecordsFile2"
 				}
 			],
 			"transformations": [
@@ -278,7 +281,14 @@
 				"          COLOR_TOOL_ID,",
 				"          COLOR_TOOL_NAME = SourceColorTool@COLOR_TOOL_NAME,",
 				"          COLOR_TOOL_TYPE_ID",
-				"     )) ~> SinkApprovedFile4"
+				"     )) ~> SinkApprovedFile4",
+				"SelectData sink(validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     store: 'cache',",
+				"     format: 'inline',",
+				"     output: true,",
+				"     saveOrder: 1) ~> SinkCacheNewRecordsFile2"
 			]
 		}
 	}
