@@ -46,14 +46,14 @@
 						"referenceName": "DelimitedTextDymanicCSVFiles",
 						"type": "DatasetReference"
 					},
-					"name": "sinkDataColorRejectCSV"
+					"name": "SinkRejectedFile1"
 				},
 				{
 					"dataset": {
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference"
 					},
-					"name": "SinkNewrecorddataintocolotoolTable",
+					"name": "SinkTableColorTool3",
 					"description": "Export data to SQLDynamicDS "
 				},
 				{
@@ -61,7 +61,7 @@
 						"referenceName": "DelimitedTextDymanicCSVFiles",
 						"type": "DatasetReference"
 					},
-					"name": "sink1",
+					"name": "SinkApprovedFile4",
 					"description": "Export data to DelimitedTextColorCSv"
 				}
 			],
@@ -244,7 +244,7 @@
 				"     saveOrder: 1,",
 				"     mapColumn(",
 				"          COLOR_TOOL_NAME = COLOR_Tool_Name",
-				"     )) ~> sinkDataColorRejectCSV",
+				"     )) ~> SinkRejectedFile1",
 				"SelectData sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -263,7 +263,7 @@
 				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
 				"          COLOR_TOOL_NAME = COLOR_Tool_Name",
-				"     )) ~> SinkNewrecorddataintocolotoolTable",
+				"     )) ~> SinkTableColorTool3",
 				"NewApprovedrecords sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -278,7 +278,7 @@
 				"          COLOR_TOOL_ID,",
 				"          COLOR_TOOL_NAME = SourceColorTool@COLOR_TOOL_NAME,",
 				"          COLOR_TOOL_TYPE_ID",
-				"     )) ~> sink1"
+				"     )) ~> SinkApprovedFile4"
 			]
 		}
 	}
