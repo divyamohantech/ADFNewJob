@@ -34,7 +34,7 @@
 				},
 				{
 					"dataset": {
-						"referenceName": "SQLDynamicDS",
+						"referenceName": "DelimitedTextRejectionCSV",
 						"type": "DatasetReference"
 					},
 					"name": "SourceApprovedRecords"
@@ -199,14 +199,13 @@
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> SourceColorToolTbale",
 				"source(output(",
-				"          COLOR_TOOL_ID as integer,",
+				"          COLOR_TOOL_ID as string,",
 				"          COLOR_TOOL_NAME as string,",
-				"          COLOR_TOOL_TYPE_ID as integer",
+				"          COLOR_TOOL_TYPE_ID as string",
 				"     ),",
-				"     allowSchemaDrift: true,",
+				"     allowSchemaDrift: false,",
 				"     validateSchema: false,",
-				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> SourceApprovedRecords",
+				"     ignoreNoFilesFound: false) ~> SourceApprovedRecords",
 				"ExistsTestConditionNewRecords select(mapColumn(",
 				"          COLOR_Tool_Name",
 				"     ),",
