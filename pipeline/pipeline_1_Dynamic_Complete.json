@@ -44,8 +44,11 @@
 						"coreCount": 32,
 						"computeType": "MemoryOptimized"
 					},
-					"traceLevel": "Fine",
-					"runConcurrently": true
+					"traceLevel": "None",
+					"runConcurrently": true,
+					"cacheSinks": {
+						"firstRowOnly": true
+					}
 				}
 			},
 			{
