@@ -46,14 +46,14 @@
 						"referenceName": "DelimitedTextRejectionCSV",
 						"type": "DatasetReference"
 					},
-					"name": "sinkDataColorRejectCSV"
+					"name": "FileSinkRejectCSVRecords1"
 				},
 				{
 					"dataset": {
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference"
 					},
-					"name": "SinkNewrecorddataintocolotoolTable",
+					"name": "TableSinkApprovedRecords3",
 					"description": "Export data to SQLDynamicDS "
 				},
 				{
@@ -61,10 +61,11 @@
 						"referenceName": "DelimitedTextColorCSV",
 						"type": "DatasetReference"
 					},
-					"name": "sinkNewApprovedrecordsFile"
+					"name": "FileSinkApprovedRecords4"
 				},
 				{
-					"name": "CacheSinkNewRecords"
+					"name": "CacheSinkApprovedRecords2",
+					"description": "2"
 				}
 			],
 			"transformations": [
@@ -246,7 +247,7 @@
 				"     saveOrder: 1,",
 				"     mapColumn(",
 				"          COLOR_TOOL_NAME = COLOR_Tool_Name",
-				"     )) ~> sinkDataColorRejectCSV",
+				"     )) ~> FileSinkRejectCSVRecords1",
 				"SelectData sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -265,7 +266,7 @@
 				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
 				"          COLOR_TOOL_NAME = COLOR_Tool_Name",
-				"     )) ~> SinkNewrecorddataintocolotoolTable",
+				"     )) ~> TableSinkApprovedRecords3",
 				"NewApprovedrecords sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -280,14 +281,14 @@
 				"          COLOR_TOOL_ID,",
 				"          COLOR_TOOL_NAME = SourceColorTool@COLOR_TOOL_NAME,",
 				"          COLOR_TOOL_TYPE_ID",
-				"     )) ~> sinkNewApprovedrecordsFile",
+				"     )) ~> FileSinkApprovedRecords4",
 				"SelectData sink(validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     store: 'cache',",
 				"     format: 'inline',",
 				"     output: true,",
-				"     saveOrder: 2) ~> CacheSinkNewRecords"
+				"     saveOrder: 2) ~> CacheSinkApprovedRecords2"
 			]
 		}
 	}
