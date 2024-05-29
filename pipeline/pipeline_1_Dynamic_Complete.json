@@ -4,7 +4,7 @@
 		"activities": [
 			{
 				"name": "dataflow_dynamic_1_CompleteNew",
-				"description": "new",
+				"description": "newa",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
