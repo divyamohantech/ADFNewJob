@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "dataflow_dynamic_1_CompleteNew",
+				"name": "dataflowV3",
 				"description": "new",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
@@ -35,10 +35,15 @@
 							"SourceApprovedRecords": {
 								"TableName": "COLOR_TOOL"
 							},
+							"SinkRejectedFile1": {
+								"Container_Name": "test",
+								"File_Name": "Rejection_color_tool.csv"
+							},
 							"SinkTableColorTool3": {
 								"TableName": "COLOR_TOOL"
 							},
 							"SinkApprovedFile4": {
+								"Container_Name": "test",
 								"File_Name": "Color_Tool_New.csv"
 							}
 						}
@@ -47,7 +52,10 @@
 						"coreCount": 32,
 						"computeType": "MemoryOptimized"
 					},
-					"traceLevel": "Fine"
+					"traceLevel": "None",
+					"cacheSinks": {
+						"firstRowOnly": true
+					}
 				}
 			},
 			{
@@ -57,7 +65,7 @@
 				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
-						"activity": "dataflow_dynamic_1_CompleteNew",
+						"activity": "dataflowV3",
 						"dependencyConditions": [
 							"Succeeded"
 						]
