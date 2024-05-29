@@ -34,8 +34,16 @@
 							"SourceApprovedRecords": {
 								"TableName": "COLOR_TOOL"
 							},
+							"sinkDataColorRejectCSV": {
+								"Container_Name": "test",
+								"File_Name": "Rejection_color_tool.csv"
+							},
 							"SinkNewrecorddataintocolotoolTable": {
 								"TableName": "COLOR_TOOL"
+							},
+							"sink1": {
+								"Container_Name": "test",
+								"File_Name": "Color_Tool_New.csv"
 							}
 						}
 					},
@@ -43,7 +51,10 @@
 						"coreCount": 8,
 						"computeType": "General"
 					},
-					"traceLevel": "Fine"
+					"traceLevel": "None",
+					"cacheSinks": {
+						"firstRowOnly": true
+					}
 				}
 			}
 		],
