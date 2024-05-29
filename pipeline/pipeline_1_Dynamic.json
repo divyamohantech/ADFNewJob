@@ -121,7 +121,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "DelimitedTextColorCSV",
+						"referenceName": "DelimitedTextDymanicCSVFiles",
 						"type": "DatasetReference"
 					}
 				]
@@ -218,33 +218,24 @@
 							{
 								"source": {
 									"name": "NAME",
-									"type": "String",
-									"physicalType": "varchar"
+									"type": "String"
 								},
 								"sink": {
 									"name": "NAME",
-									"type": "String",
-									"physicalType": "String"
+									"type": "String"
 								}
 							},
 							{
 								"source": {
 									"name": "ENTITY_ID",
-									"type": "Int32",
-									"physicalType": "int"
+									"type": "Int32"
 								},
 								"sink": {
 									"name": "ENTITY_ID",
-									"type": "String",
-									"physicalType": "String"
+									"type": "String"
 								}
 							}
-						],
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
+						]
 					}
 				},
 				"inputs": [
@@ -254,12 +245,6 @@
 						"parameters": {
 							"TableName": "PANEL"
 						}
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "DelimitedTextPanelCSV",
-						"type": "DatasetReference"
 					}
 				]
 			}

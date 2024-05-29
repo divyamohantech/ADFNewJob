@@ -21,10 +21,6 @@
 			],
 			"sinks": [
 				{
-					"dataset": {
-						"referenceName": "DelimitedTextRejectionCSV",
-						"type": "DatasetReference"
-					},
 					"name": "SinkDataColorTool"
 				}
 			],
@@ -102,11 +98,6 @@
 				"     broadcast: 'auto')~> join1",
 				"SelectData sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     input(",
-				"          COLOR_TOOL_ID as string,",
-				"          COLOR_TOOL_NAME as string,",
-				"          COLOR_TOOL_TYPE_ID as string",
-				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     mapColumn(",

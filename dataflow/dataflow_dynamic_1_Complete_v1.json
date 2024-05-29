@@ -34,7 +34,7 @@
 				},
 				{
 					"dataset": {
-						"referenceName": "DelimitedTextRejectionCSV",
+						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference"
 					},
 					"name": "SourceApprovedRecords"
@@ -42,30 +42,22 @@
 			],
 			"sinks": [
 				{
-					"dataset": {
-						"referenceName": "DelimitedTextRejectionCSV",
-						"type": "DatasetReference"
-					},
-					"name": "FileSinkRejectCSVRecords1"
+					"name": "sinkDataColorRejectCSV"
 				},
 				{
 					"dataset": {
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference"
 					},
-					"name": "TableSinkApprovedRecords3",
+					"name": "SinkNewrecorddataintocolotoolTable",
 					"description": "Export data to SQLDynamicDS "
 				},
 				{
 					"dataset": {
-						"referenceName": "DelimitedTextColorCSV",
+						"referenceName": "DelimitedTextDymanicCSVFiles",
 						"type": "DatasetReference"
 					},
-					"name": "FileSinkApprovedRecords4"
-				},
-				{
-					"name": "CacheSinkApprovedRecords2",
-					"description": "2"
+					"name": "sink1"
 				}
 			],
 			"transformations": [
@@ -199,13 +191,14 @@
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> SourceColorToolTbale",
 				"source(output(",
-				"          COLOR_TOOL_ID as string,",
+				"          COLOR_TOOL_ID as integer,",
 				"          COLOR_TOOL_NAME as string,",
-				"          COLOR_TOOL_TYPE_ID as string",
+				"          COLOR_TOOL_TYPE_ID as integer",
 				"     ),",
-				"     allowSchemaDrift: false,",
+				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> SourceApprovedRecords",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> SourceApprovedRecords",
 				"ExistsTestConditionNewRecords select(mapColumn(",
 				"          COLOR_Tool_Name",
 				"     ),",
@@ -236,17 +229,12 @@
 				"     broadcast: 'auto')~> Innerjoin",
 				"SelectDataColorTool sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     input(",
-				"          COLOR_TOOL_ID as string,",
-				"          COLOR_TOOL_NAME as string,",
-				"          COLOR_TOOL_TYPE_ID as string",
-				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     saveOrder: 1,",
 				"     mapColumn(",
 				"          COLOR_TOOL_NAME = COLOR_Tool_Name",
-				"     )) ~> FileSinkRejectCSVRecords1",
+				"     )) ~> sinkDataColorRejectCSV",
 				"SelectData sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -261,11 +249,11 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     saveOrder: 3,",
+				"     saveOrder: 2,",
 				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
 				"          COLOR_TOOL_NAME = COLOR_Tool_Name",
-				"     )) ~> TableSinkApprovedRecords3",
+				"     )) ~> SinkNewrecorddataintocolotoolTable",
 				"NewApprovedrecords sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -280,14 +268,7 @@
 				"          COLOR_TOOL_ID,",
 				"          COLOR_TOOL_NAME = SourceColorTool@COLOR_TOOL_NAME,",
 				"          COLOR_TOOL_TYPE_ID",
-				"     )) ~> FileSinkApprovedRecords4",
-				"SelectData sink(validateSchema: false,",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true,",
-				"     store: 'cache',",
-				"     format: 'inline',",
-				"     output: true,",
-				"     saveOrder: 2) ~> CacheSinkApprovedRecords2"
+				"     )) ~> sink1"
 			]
 		}
 	}
