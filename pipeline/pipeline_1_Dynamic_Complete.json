@@ -32,10 +32,7 @@
 							"SourceColorToolTbale": {
 								"TableName": "COLOR_TOOL"
 							},
-							"SourceApprovedRecords": {
-								"TableName": "COLOR_TOOL"
-							},
-							"SinkNewrecorddataintocolotoolTable": {
+							"TableSinkApprovedRecords3": {
 								"TableName": "COLOR_TOOL"
 							}
 						}
