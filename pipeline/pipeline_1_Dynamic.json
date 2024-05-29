@@ -15,21 +15,6 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"dataflow": {
-						"referenceName": "dataflow_dynamic_1",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"SourceIncsv": {
-								"TableName": "InCSV_NEW"
-							},
-							"SourceColorTool": {
-								"TableName": "COLOR_TOOL"
-							},
-							"SinkDataColorTool": {
-								"TableName": "COLOR_TOOL"
-							}
-						}
-					},
 					"compute": {
 						"coreCount": 8,
 						"computeType": "General"
