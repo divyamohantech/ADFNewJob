@@ -17,7 +17,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "dataflow_dynamic_1_Complete",
+						"referenceName": "dataflow_dynamic_1_Complete_v1",
 						"type": "DataFlowReference",
 						"datasetParameters": {
 							"SourceIncsv": {
@@ -30,6 +30,9 @@
 								"TableName": "InCSV_NEW"
 							},
 							"SourceColorToolTbale": {
+								"TableName": "COLOR_TOOL"
+							},
+							"SourceApprovedRecords": {
 								"TableName": "COLOR_TOOL"
 							},
 							"SinkNewrecorddataintocolotoolTable": {
