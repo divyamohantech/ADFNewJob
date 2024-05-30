@@ -45,6 +45,9 @@
 							"SinkApprovedFile4": {
 								"Container_Name": "test",
 								"File_Name": "Color_Tool_New.csv"
+							},
+							"sink1": {
+								"TableName": "COLOR_TOOL_Log"
 							}
 						}
 					},
