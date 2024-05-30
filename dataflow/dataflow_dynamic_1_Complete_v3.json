@@ -362,6 +362,7 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
+				"     saveOrder: 6,",
 				"     errorHandlingOption: 'stopOnFirstError') ~> SinkTableColorToolLog3"
 			]
 		}
