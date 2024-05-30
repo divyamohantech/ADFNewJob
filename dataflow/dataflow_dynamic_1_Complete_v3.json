@@ -196,7 +196,7 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     isolationLevel: 'REPEATABLE_READ',",
 				"     format: 'table') ~> SourceColorToolTable",
 				"source(output(",
 				"          COLOR_TOOL_ID as integer,",
