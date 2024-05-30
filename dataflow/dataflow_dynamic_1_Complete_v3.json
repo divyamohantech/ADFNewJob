@@ -315,7 +315,7 @@
 				"     saveOrder: 3,",
 				"     mapColumn(",
 				"          COLOR_TOOL_ID,",
-				"          COLOR_TOOL_NAME = SourceColorTool@COLOR_TOOL_NAME,",
+				"          COLOR_TOOL_NAME = SourceColorToolAfterInsert@COLOR_TOOL_NAME,",
 				"          COLOR_TOOL_TYPE_ID",
 				"     )) ~> SinkApprovedFile4",
 				"SelectData sink(validateSchema: false,",
