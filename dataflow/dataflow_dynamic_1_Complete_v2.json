@@ -70,7 +70,7 @@
 					"name": "SelectData"
 				},
 				{
-					"name": "ExistsTestConditionNewRecords",
+					"name": "NotExistsTestConditionNewRecords",
 					"description": "Filtering rows from undefined which are not matching in undefined based on columns j1'SourceIncsv@COLOR_Tool_Name, SourceColorTool@COLOR_TOOL_NAME'"
 				},
 				{
@@ -204,14 +204,14 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> SourceApprovedRecords",
-				"ExistsTestConditionNewRecords select(mapColumn(",
+				"NotExistsTestConditionNewRecords select(mapColumn(",
 				"          COLOR_Tool_Name",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> SelectData",
 				"SourceIncsv, SourceColorTool exists(SourceIncsv@COLOR_Tool_Name == SourceColorTool@COLOR_TOOL_NAME,",
 				"     negate:true,",
-				"     broadcast: 'auto')~> ExistsTestConditionNewRecords",
+				"     broadcast: 'auto')~> NotExistsTestConditionNewRecords",
 				"SourceInCSVtable, SourceColorToolTbale join(SourceInCSVtable@COLOR_Tool_Name == SourceColorToolTbale@COLOR_TOOL_NAME,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
