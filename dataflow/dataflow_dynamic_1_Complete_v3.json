@@ -87,7 +87,7 @@
 						"type": "DatasetReference"
 					},
 					"name": "SinkTableColorToolLog3",
-					"description": "Export data to SQLDynamicDSss"
+					"description": "Export data to SQLDynamicDSss111"
 				}
 			],
 			"transformations": [
