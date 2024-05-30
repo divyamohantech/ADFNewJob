@@ -35,6 +35,9 @@
 							"SourceApprovedRecords": {
 								"TableName": "COLOR_TOOL"
 							},
+							"SourceColorToolAfterInsert": {
+								"TableName": "COLOR_TOOL"
+							},
 							"SinkRejectedFile1": {
 								"Container_Name": "test",
 								"File_Name": "Rejection_color_tool.csv"
