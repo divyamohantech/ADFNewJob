@@ -46,7 +46,7 @@
 								"Container_Name": "test",
 								"File_Name": "Color_Tool_New.csv"
 							},
-							"sink1": {
+							"SinkTableColorToolLog1": {
 								"TableName": "COLOR_TOOL_Log"
 							}
 						}
