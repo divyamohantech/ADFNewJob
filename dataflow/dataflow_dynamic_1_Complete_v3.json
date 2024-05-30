@@ -87,7 +87,8 @@
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference"
 					},
-					"name": "SinkTableColorToolLog4"
+					"name": "SinkTableColorToolLog4",
+					"description": "Export data to SQLDynamicDS1"
 				}
 			],
 			"transformations": [
