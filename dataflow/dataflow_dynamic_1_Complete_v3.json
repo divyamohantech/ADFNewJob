@@ -16,13 +16,6 @@
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference"
 					},
-					"name": "SourceColorTool"
-				},
-				{
-					"dataset": {
-						"referenceName": "SQLDynamicDS",
-						"type": "DatasetReference"
-					},
 					"name": "SourceInCSVtable"
 				},
 				{
@@ -30,14 +23,7 @@
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference"
 					},
-					"name": "SourceColorToolTbale"
-				},
-				{
-					"dataset": {
-						"referenceName": "SQLDynamicDS",
-						"type": "DatasetReference"
-					},
-					"name": "SourceApprovedRecords"
+					"name": "SourceColorToolTable"
 				},
 				{
 					"dataset": {
@@ -95,6 +81,13 @@
 					},
 					"name": "SinkTableColorToolLog3",
 					"description": "Export data to SQLDynamicDSEDIT"
+				},
+				{
+					"dataset": {
+						"referenceName": "SQLDynamicDS",
+						"type": "DatasetReference"
+					},
+					"name": "SinkTableColorToolLog4"
 				}
 			],
 			"transformations": [
@@ -117,7 +110,7 @@
 					"description": "Inner join on 'SelectData' and 'SourceColorTool'a"
 				},
 				{
-					"name": "Innerjoin"
+					"name": "join1"
 				}
 			],
 			"scriptLines": [
@@ -165,15 +158,6 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> SourceIncsv",
-				"source(output(",
-				"          COLOR_TOOL_ID as integer,",
-				"          COLOR_TOOL_NAME as string,",
-				"          COLOR_TOOL_TYPE_ID as integer",
-				"     ),",
-				"     allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> SourceColorTool",
 				"source(output(",
 				"          COLOR_Tool_Name as string,",
 				"          Color_Chip_Name as string,",
@@ -226,16 +210,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> SourceColorToolTbale",
-				"source(output(",
-				"          COLOR_TOOL_ID as integer,",
-				"          COLOR_TOOL_NAME as string,",
-				"          COLOR_TOOL_TYPE_ID as integer",
-				"     ),",
-				"     allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> SourceApprovedRecords",
+				"     format: 'table') ~> SourceColorToolTable",
 				"source(output(",
 				"          COLOR_TOOL_ID as integer,",
 				"          COLOR_TOOL_NAME as string,",
@@ -251,10 +226,10 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> SelectData",
-				"SourceIncsv, SourceColorTool exists(SourceIncsv@COLOR_Tool_Name == SourceColorTool@COLOR_TOOL_NAME,",
+				"SourceIncsv, SourceColorToolTable exists(SourceIncsv@COLOR_Tool_Name == SourceColorToolTable@COLOR_TOOL_NAME,",
 				"     negate:true,",
 				"     broadcast: 'auto')~> DontExistsTestConditionNewRecords",
-				"SourceInCSVtable, SourceColorToolTbale join(SourceInCSVtable@COLOR_Tool_Name == SourceColorToolTbale@COLOR_TOOL_NAME,",
+				"SourceInCSVtable, SourceColorToolTable join(SourceInCSVtable@COLOR_Tool_Name == SourceColorToolTable@COLOR_TOOL_NAME,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
@@ -269,11 +244,11 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'right')~> NewApprovedrecords",
-				"SourceApprovedRecords, SourceColorTool join(SourceApprovedRecords@COLOR_TOOL_NAME == SourceColorTool@COLOR_TOOL_NAME,",
+				"SourceInCSVtable, SourceColorToolTable join(SourceInCSVtable@COLOR_Tool_Name == SourceColorToolTable@COLOR_TOOL_NAME,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> Innerjoin",
+				"     broadcast: 'auto')~> join1",
 				"SelectDataColorTool sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -382,7 +357,22 @@
 				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
 				"          COLOR_TOOL_NAME = SelectData@COLOR_Tool_Name",
-				"     )) ~> SinkTableColorToolLog3"
+				"     )) ~> SinkTableColorToolLog3",
+				"join1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          COLOR_TOOL_ID as integer,",
+				"          COLOR_TOOL_NAME as string,",
+				"          COLOR_TOOL_TYPE_ID as integer",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> SinkTableColorToolLog4"
 			]
 		}
 	}
