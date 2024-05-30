@@ -228,7 +228,7 @@
 				"     skipDuplicateMapOutputs: true) ~> SelectData",
 				"SourceIncsv, SourceColorToolTable exists(SourceIncsv@COLOR_Tool_Name == SourceColorToolTable@COLOR_TOOL_NAME,",
 				"     negate:true,",
-				"     broadcast: 'auto')~> DontExistsTestConditionNewRecords",
+				"     broadcast: 'off')~> DontExistsTestConditionNewRecords",
 				"SourceInCSVtable, SourceColorToolTable join(SourceInCSVtable@COLOR_Tool_Name == SourceColorToolTable@COLOR_TOOL_NAME,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
