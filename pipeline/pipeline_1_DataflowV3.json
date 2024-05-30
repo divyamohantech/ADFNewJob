@@ -48,6 +48,9 @@
 							},
 							"SinkTableColorToolLog1": {
 								"TableName": "COLOR_TOOL_Log"
+							},
+							"SinkTableColorToolLog2": {
+								"TableName": "COLOR_TOOL_Log"
 							}
 						}
 					},
