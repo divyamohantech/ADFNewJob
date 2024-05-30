@@ -264,7 +264,7 @@
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> SelectDataColorTool",
 				"SelectData, SourceColorToolAfterInsert join(SelectData@COLOR_Tool_Name == SourceColorToolAfterInsert@COLOR_TOOL_NAME,",
-				"     joinType:'inner',",
+				"     joinType:'right',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'right')~> NewApprovedrecords",
