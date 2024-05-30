@@ -23,17 +23,8 @@
 							"SourceIncsv": {
 								"TableName": "InCSV_NEW"
 							},
-							"SourceColorTool": {
-								"TableName": "COLOR_TOOL"
-							},
 							"SourceInCSVtable": {
 								"TableName": "InCSV_NEW"
-							},
-							"SourceColorToolTbale": {
-								"TableName": "COLOR_TOOL"
-							},
-							"SourceApprovedRecords": {
-								"TableName": "COLOR_TOOL"
 							},
 							"SinkRejectedFile1": {
 								"Container_Name": "test",
