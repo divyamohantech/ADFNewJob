@@ -66,6 +66,13 @@
 				},
 				{
 					"name": "SinkCacheNewRecordsFile2"
+				},
+				{
+					"dataset": {
+						"referenceName": "SQLDynamicDS",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
 				}
 			],
 			"transformations": [
@@ -73,7 +80,7 @@
 					"name": "SelectData"
 				},
 				{
-					"name": "ExistsTestConditionNewRecords",
+					"name": "DontExistsTestConditionNewRecords",
 					"description": "Filtering rows from undefined which are not matching in undefined based on columns j1'SourceIncsv@COLOR_Tool_Name, SourceColorTool@COLOR_TOOL_NAME'"
 				},
 				{
@@ -207,14 +214,14 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> SourceApprovedRecords",
-				"ExistsTestConditionNewRecords select(mapColumn(",
+				"DontExistsTestConditionNewRecords select(mapColumn(",
 				"          COLOR_Tool_Name",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> SelectData",
 				"SourceIncsv, SourceColorTool exists(SourceIncsv@COLOR_Tool_Name == SourceColorTool@COLOR_TOOL_NAME,",
 				"     negate:true,",
-				"     broadcast: 'auto')~> ExistsTestConditionNewRecords",
+				"     broadcast: 'auto')~> DontExistsTestConditionNewRecords",
 				"SourceInCSVtable, SourceColorToolTbale join(SourceInCSVtable@COLOR_Tool_Name == SourceColorToolTbale@COLOR_TOOL_NAME,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
@@ -276,7 +283,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     saveOrder: 3,",
+				"     saveOrder: 2,",
 				"     mapColumn(",
 				"          COLOR_TOOL_ID,",
 				"          COLOR_TOOL_NAME = SourceColorTool@COLOR_TOOL_NAME,",
@@ -288,7 +295,25 @@
 				"     store: 'cache',",
 				"     format: 'inline',",
 				"     output: true,",
-				"     saveOrder: 1) ~> SinkCacheNewRecordsFile2"
+				"     saveOrder: 1) ~> SinkCacheNewRecordsFile2",
+				"DontExistsTestConditionNewRecords sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          COLOR_TOOL_ID as integer,",
+				"          COLOR_TOOL_NAME as string,",
+				"          COLOR_TOOL_TYPE_ID as integer",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          COLOR_TOOL_NAME = COLOR_Tool_Name",
+				"     )) ~> sink1"
 			]
 		}
 	}
