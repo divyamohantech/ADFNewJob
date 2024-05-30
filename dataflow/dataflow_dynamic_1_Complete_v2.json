@@ -273,7 +273,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     saveOrder: 2,",
+				"     saveOrder: 3,",
 				"     mapColumn(",
 				"          COLOR_TOOL_ID,",
 				"          COLOR_TOOL_NAME = SourceColorTool@COLOR_TOOL_NAME,",
