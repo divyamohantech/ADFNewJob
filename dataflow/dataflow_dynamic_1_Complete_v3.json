@@ -263,7 +263,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> SelectDataColorTool",
-				"SelectData, SourceColorTool join(SelectData@COLOR_Tool_Name == SourceColorTool@COLOR_TOOL_NAME,",
+				"SelectData, SourceColorToolAfterInsert join(SelectData@COLOR_Tool_Name == SourceColorToolAfterInsert@COLOR_TOOL_NAME,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
