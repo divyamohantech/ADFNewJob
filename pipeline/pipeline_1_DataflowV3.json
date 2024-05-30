@@ -23,16 +23,10 @@
 							"SourceIncsv": {
 								"TableName": "InCSV_NEW"
 							},
-							"SourceColorTool": {
-								"TableName": "COLOR_TOOL"
-							},
 							"SourceInCSVtable": {
 								"TableName": "InCSV_NEW"
 							},
-							"SourceColorToolTbale": {
-								"TableName": "COLOR_TOOL"
-							},
-							"SourceApprovedRecords": {
+							"SourceColorToolTable": {
 								"TableName": "COLOR_TOOL"
 							},
 							"SourceColorToolAfterInsert": {
@@ -56,6 +50,9 @@
 								"TableName": "COLOR_TOOL_Log"
 							},
 							"SinkTableColorToolLog3": {
+								"TableName": "COLOR_TOOL_Log"
+							},
+							"SinkTableColorToolLog4": {
 								"TableName": "COLOR_TOOL_Log"
 							}
 						}
