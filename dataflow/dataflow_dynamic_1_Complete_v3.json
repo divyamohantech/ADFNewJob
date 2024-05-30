@@ -219,7 +219,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     query: 'Select  COLOR_TOOL_ID, COLOR_TOOL_NAME, COLOR_TOOL_TYPE_ID from [dbo].[COLOR_TOOL]\\nWhere COLOR_TOOL_ID in (62,63,64)',",
+				"     query: 'Select  COLOR_TOOL_ID, COLOR_TOOL_NAME, COLOR_TOOL_TYPE_ID from [dbo].[COLOR_TOOL]\\n',",
 				"     format: 'query') ~> SourceColorToolAfterInsert",
 				"DontExistsTestConditionNewRecords select(mapColumn(",
 				"          COLOR_Tool_Name",
