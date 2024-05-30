@@ -373,7 +373,12 @@
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     saveOrder: 7,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> SinkTableColorToolLog4"
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          COLOR_TOOL_ID,",
+				"          COLOR_TOOL_NAME = SourceInCSVtable@COLOR_Tool_Name,",
+				"          COLOR_TOOL_TYPE_ID",
+				"     )) ~> SinkTableColorToolLog4"
 			]
 		}
 	}
