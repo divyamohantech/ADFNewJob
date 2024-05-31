@@ -97,7 +97,7 @@
 					"description": "Inner join on 'SelectData' and 'SourceColorTool'a"
 				},
 				{
-					"name": "join1"
+					"name": "NewRecordsForInsert"
 				}
 			],
 			"scriptLines": [
@@ -232,10 +232,10 @@
 				"     ignoreSpaces: false,",
 				"     broadcast: 'right')~> NewApprovedrecords",
 				"SourceInCSVtable, SourceColorToolTable join(SourceInCSVtable@COLOR_Tool_Name == SourceColorToolTable@COLOR_TOOL_NAME,",
-				"     joinType:'inner',",
+				"     joinType:'left',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> join1",
+				"     broadcast: 'auto')~> NewRecordsForInsert",
 				"SelectDataColorTool sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -307,7 +307,7 @@
 				"     mapColumn(",
 				"          COLOR_TOOL_NAME = SelectData@COLOR_Tool_Name",
 				"     )) ~> SinkTableColorToolLog3",
-				"join1 sink(allowSchemaDrift: true,",
+				"NewRecordsForInsert sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          COLOR_TOOL_ID as integer,",
