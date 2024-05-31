@@ -98,7 +98,6 @@
 				"SelectData sink(validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     keys:['COLOR_Tool_Name'],",
 				"     store: 'cache',",
 				"     format: 'inline',",
 				"     output: true,",
