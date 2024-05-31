@@ -63,9 +63,42 @@
 				}
 			},
 			{
+				"name": "Script1",
+				"type": "Script",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabaseLS",
+					"type": "LinkedServiceReference"
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "Query",
+							"text": "DECLARE @@CategoryID INT;\nSELECT @@CategoryID = MAX(color_tool_id) FROM COLOR_TOOL;\nSELECT  @@CategoryID;"
+						}
+					],
+					"scriptBlockExecutionTimeout": "02:00:00"
+				}
+			},
+			{
 				"name": "dataflow_dynamic_1_Approved_Table",
 				"type": "ExecuteDataFlow",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Set variable Max ID ",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -101,52 +134,36 @@
 				}
 			},
 			{
-				"name": "Script1",
-				"type": "Script",
-				"dependsOn": [],
+				"name": "Set variable Max ID",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Script1",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
 				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabaseLS",
-					"type": "LinkedServiceReference"
-				},
-				"typeProperties": {
-					"scripts": [
-						{
-							"type": "Query",
-							"text": "select * from COLOR_TOOL \nDECLARE @@CategoryID INT;\nSELECT @@CategoryID = MAX(color_tool_id) FROM COLOR_TOOL;\nSELECT  @@CategoryID;\ninsert into COLOR_TOOL values('white','')\nSELECT * FROM COLOR_TOOL WHERE COLOR_TOOL_ID>@@CategoryID;"
-						}
-					],
-					"scriptBlockExecutionTimeout": "02:00:00"
-				}
-			},
-			{
-				"name": "Scriptto find",
-				"type": "Script",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
 					"secureOutput": false,
 					"secureInput": false
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"scripts": [],
-					"scriptBlockExecutionTimeout": "02:00:00"
+					"variableName": "Max_Color_Tool_ID",
+					"value": {
+						"value": "@activity('Script1').output.pipelineReturnValue",
+						"type": "Expression"
+					}
 				}
 			}
 		],
 		"variables": {
 			"csv": {
 				"type": "String"
+			},
+			"Max_Color_Tool_ID": {
+				"type": "Integer"
 			}
 		},
 		"annotations": []
