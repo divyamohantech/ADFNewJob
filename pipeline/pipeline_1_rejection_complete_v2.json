@@ -3,66 +3,6 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "dataflow_dynamic_1_Complete_v2",
-				"type": "ExecuteDataFlow",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"dataflow": {
-						"referenceName": "dataflow_dynamic_1_Complete_v2",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"SourceIncsv": {
-								"TableName": "InCSV_NEW"
-							},
-							"SourceColorTool": {
-								"TableName": "COLOR_TOOL"
-							},
-							"SourceInCSVtable": {
-								"TableName": "InCSV_NEW"
-							},
-							"SourceColorToolTbale": {
-								"TableName": "COLOR_TOOL"
-							},
-							"InCSVSource": {
-								"TableName": "InCSV_NEW"
-							},
-							"ColorToolsource": {
-								"TableName": "COLOR_TOOL"
-							},
-							"sinkDataColorRejectCSV": {
-								"Container_Name": "test",
-								"File_Name": "Rejection_color_tool.csv"
-							},
-							"SinkNewrecorddataintocolotoolTable": {
-								"TableName": "COLOR_TOOL"
-							},
-							"SinkUniqueRecords": {
-								"Container_Name": "test",
-								"File_Name": "Color_Tool_New.csv"
-							}
-						}
-					},
-					"compute": {
-						"coreCount": 8,
-						"computeType": "General"
-					},
-					"traceLevel": "None",
-					"cacheSinks": {
-						"firstRowOnly": true
-					}
-				}
-			},
-			{
 				"name": "Script1",
 				"type": "Script",
 				"dependsOn": [],
@@ -89,51 +29,6 @@
 				}
 			},
 			{
-				"name": "dataflow_dynamic_1_Approved_Table",
-				"type": "ExecuteDataFlow",
-				"dependsOn": [
-					{
-						"activity": "Set variable Max ID",
-						"dependencyConditions": [
-							"Completed"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"dataflow": {
-						"referenceName": "dataflow_dynamic_1_Approved_Table",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"SourceIncsv": {
-								"TableName": "InCSV_NEW"
-							},
-							"SourceColorTool": {
-								"TableName": "COLOR_TOOL"
-							},
-							"SinkApprovedTable": {
-								"TableName": "COLOR_TOOL"
-							}
-						}
-					},
-					"compute": {
-						"coreCount": 8,
-						"computeType": "General"
-					},
-					"traceLevel": "None",
-					"cacheSinks": {
-						"firstRowOnly": true
-					}
-				}
-			},
-			{
 				"name": "Set variable Max ID",
 				"type": "SetVariable",
 				"dependsOn": [
@@ -155,6 +50,45 @@
 						"value": "@activity('Script1').output.pipelineReturnValue",
 						"type": "Expression"
 					}
+				}
+			},
+			{
+				"name": "dataflow_Test_Cache",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [
+					{
+						"activity": "Set variable Max ID",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "dataflow_Test_Cache",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"SourceIncsv": {
+								"TableName": "InCSV_NEW"
+							},
+							"SourceColorTool": {
+								"TableName": "COLOR_TOOL"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
 				}
 			}
 		],
