@@ -31,8 +31,6 @@
 			{
 				"name": "Set variable Max ID",
 				"type": "SetVariable",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Script1",
