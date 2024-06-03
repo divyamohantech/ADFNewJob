@@ -47,7 +47,7 @@
 				"typeProperties": {
 					"variableName": "Max_Color_Tool_ID",
 					"value": {
-						"value": "@activity('Script1').output.pipelineReturnValue",
+						"value": "@activity('Script1').output.value",
 						"type": "Expression"
 					}
 				}
