@@ -22,7 +22,7 @@
 					"scripts": [
 						{
 							"type": "Query",
-							"text": "select * from [dbo].[InCSV_NEW]"
+							"text": "DECLARE @@CategoryID INT;\nSELECT @@CategoryID = MAX(color_tool_id) FROM COLOR_TOOL;\n"
 						}
 					],
 					"scriptBlockExecutionTimeout": "02:00:00"
