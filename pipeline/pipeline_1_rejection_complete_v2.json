@@ -22,7 +22,7 @@
 					"scripts": [
 						{
 							"type": "Query",
-							"text": "DECLARE @@CategoryID INT;\nSELECT @@CategoryID = MAX(color_tool_id) FROM COLOR_TOOL;\nSELECT  @@CategoryID;"
+							"text": "select * from [dbo].[InCSV_NEW]"
 						}
 					],
 					"scriptBlockExecutionTimeout": "02:00:00"
@@ -31,6 +31,8 @@
 			{
 				"name": "Set variable Max ID",
 				"type": "SetVariable",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Script1",
@@ -55,6 +57,8 @@
 			{
 				"name": "dataflow_Test_Cache",
 				"type": "ExecuteDataFlow",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Set variable Max ID",
