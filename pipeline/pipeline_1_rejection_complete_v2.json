@@ -3,68 +3,9 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Script1",
-				"type": "Script",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabaseLS",
-					"type": "LinkedServiceReference"
-				},
-				"typeProperties": {
-					"scripts": [
-						{
-							"type": "Query",
-							"text": "DECLARE @@CategoryID INT;\nSELECT @@CategoryID = MAX(color_tool_id) FROM COLOR_TOOL;\n"
-						}
-					],
-					"scriptBlockExecutionTimeout": "02:00:00"
-				}
-			},
-			{
-				"name": "Set variable Max ID",
-				"type": "SetVariable",
-				"dependsOn": [
-					{
-						"activity": "Script1",
-						"dependencyConditions": [
-							"Completed"
-						]
-					}
-				],
-				"policy": {
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"variableName": "Max_Color_Tool_ID",
-					"value": {
-						"value": "@activity('Script1').output.value",
-						"type": "Expression"
-					}
-				}
-			},
-			{
-				"name": "dataflow_Test_Cache",
+				"name": "dataflow_dynamic_1_Complete_v1",
 				"type": "ExecuteDataFlow",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
-				"dependsOn": [
-					{
-						"activity": "Set variable Max ID",
-						"dependencyConditions": [
-							"Completed"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -75,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "dataflow_Test_Cache",
+						"referenceName": "dataflow_dynamic_1_Complete_v1",
 						"type": "DataFlowReference",
 						"datasetParameters": {
 							"SourceIncsv": {
@@ -83,6 +24,22 @@
 							},
 							"SourceColorTool": {
 								"TableName": "COLOR_TOOL"
+							},
+							"SourceInCSVtable": {
+								"TableName": "InCSV_NEW"
+							},
+							"SourceColorToolTbale": {
+								"TableName": "COLOR_TOOL"
+							},
+							"SourceApprovedRecords": {
+								"TableName": "COLOR_TOOL"
+							},
+							"SinkNewrecorddataintocolotoolTable": {
+								"TableName": "COLOR_TOOL"
+							},
+							"sink1": {
+								"Container_Name": "test",
+								"File_Name": "Color_Tool_New.csv"
 							}
 						}
 					},
