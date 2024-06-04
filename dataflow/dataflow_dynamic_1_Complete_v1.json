@@ -264,7 +264,7 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'right')~> NewApprovedrecords",
-				"SourceApprovedInCSVRecords, SourceColorTool join(SourceApprovedInCSVRecords@COLOR_TOOL_NAME == SourceColorTool@COLOR_TOOL_NAME,",
+				"SourceApprovedInCSVRecords, SourceColorTool join(SourceApprovedInCSVRecords@COLOR_Tool_Name == SourceColorTool@COLOR_TOOL_NAME,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
