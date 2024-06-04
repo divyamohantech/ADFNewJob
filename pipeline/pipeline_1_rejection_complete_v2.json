@@ -34,9 +34,6 @@
 							"SourceApprovedRecords": {
 								"TableName": "COLOR_TOOL"
 							},
-							"sinkDataColorRejectCSV": {
-								"TableName": "COLOR_TOOL"
-							},
 							"SinkNewrecorddataintocolotoolTable": {
 								"TableName": "COLOR_TOOL"
 							},
@@ -66,6 +63,8 @@
 			{
 				"name": "Copy data1",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
