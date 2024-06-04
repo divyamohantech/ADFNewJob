@@ -62,9 +62,6 @@
 						"type": "DatasetReference"
 					},
 					"name": "sink1"
-				},
-				{
-					"name": "SinkCashReject"
 				}
 			],
 			"transformations": [
@@ -311,23 +308,12 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     saveOrder: 2,",
+				"     saveOrder: 1,",
 				"     mapColumn(",
 				"          COLOR_TOOL_ID,",
 				"          COLOR_TOOL_NAME = SourceColorTool@COLOR_TOOL_NAME,",
 				"          COLOR_TOOL_TYPE_ID",
-				"     )) ~> sink1",
-				"SelectDataColorTool sink(validateSchema: false,",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true,",
-				"     keys:['COLOR_Tool_Name'],",
-				"     store: 'cache',",
-				"     format: 'inline',",
-				"     output: false,",
-				"     saveOrder: 1,",
-				"     mapColumn(",
-				"          COLOR_Tool_Name",
-				"     )) ~> SinkCashReject"
+				"     )) ~> sink1"
 			]
 		}
 	}
