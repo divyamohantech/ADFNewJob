@@ -31,14 +31,14 @@
 							"SourceColorToolTbale": {
 								"TableName": "COLOR_TOOL"
 							},
-							"SourceApprovedRecords": {
-								"TableName": "COLOR_TOOL"
+							"SourceApprovedInCSVRecords": {
+								"TableName": "InCSV_NEW"
 							},
-							"sinkDataColorRejectCSV": {
+							"SnkDataColorRejectCSV": {
 								"Container_Name": "test",
 								"File_Name": "Rejection_color_tool.csv"
 							},
-							"SinkNewrecorddataintocolotoolTable": {
+							"SinkColoToolTable": {
 								"TableName": "COLOR_TOOL"
 							},
 							"sink1": {
