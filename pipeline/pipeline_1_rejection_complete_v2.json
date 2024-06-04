@@ -34,12 +34,22 @@
 							"SourceApprovedRecords": {
 								"TableName": "COLOR_TOOL"
 							},
+							"sinkDataColorRejectCSV": {
+								"TableName": "COLOR_TOOL"
+							},
 							"SinkNewrecorddataintocolotoolTable": {
 								"TableName": "COLOR_TOOL"
 							},
 							"sink1": {
 								"Container_Name": "test",
 								"File_Name": "Color_Tool_New.csv"
+							}
+						},
+						"linkedServiceParameters": {
+							"sinkDataColorRejectCSV": {
+								"schemaLinkedService": {
+									"TableName": "test"
+								}
 							}
 						}
 					},
