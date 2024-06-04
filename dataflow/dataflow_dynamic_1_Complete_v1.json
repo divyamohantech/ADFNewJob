@@ -37,7 +37,7 @@
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference"
 					},
-					"name": "SourceApprovedRecords"
+					"name": "SourceApprovedInCSVRecords"
 				}
 			],
 			"sinks": [
@@ -46,14 +46,14 @@
 						"referenceName": "DelimitedTextDymanicCSVFiles",
 						"type": "DatasetReference"
 					},
-					"name": "sinkDataColorRejectCSV"
+					"name": "SnkDataColorRejectCSV"
 				},
 				{
 					"dataset": {
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference"
 					},
-					"name": "SinkNewrecorddataintocolotoolTable",
+					"name": "SinkColoToolTable",
 					"description": "Export data to SQLDynamicDS "
 				},
 				{
@@ -69,7 +69,7 @@
 					"name": "SelectData"
 				},
 				{
-					"name": "ExistsTestConditionNewRecords",
+					"name": "NotExistsTestConditionNewRecords",
 					"description": "Filtering rows from undefined which are not matching in undefined based on columns j1'SourceIncsv@COLOR_Tool_Name, SourceColorTool@COLOR_TOOL_NAME'"
 				},
 				{
@@ -202,15 +202,15 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> SourceApprovedRecords",
-				"ExistsTestConditionNewRecords select(mapColumn(",
+				"     format: 'table') ~> SourceApprovedInCSVRecords",
+				"NotExistsTestConditionNewRecords select(mapColumn(",
 				"          COLOR_Tool_Name",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> SelectData",
 				"SourceIncsv, SourceColorTool exists(SourceIncsv@COLOR_Tool_Name == SourceColorTool@COLOR_TOOL_NAME,",
 				"     negate:true,",
-				"     broadcast: 'auto')~> ExistsTestConditionNewRecords",
+				"     broadcast: 'auto')~> NotExistsTestConditionNewRecords",
 				"SourceInCSVtable, SourceColorToolTbale join(SourceInCSVtable@COLOR_Tool_Name == SourceColorToolTbale@COLOR_TOOL_NAME,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
@@ -226,7 +226,7 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'right')~> NewApprovedrecords",
-				"SourceApprovedRecords, SourceColorTool join(SourceApprovedRecords@COLOR_TOOL_NAME == SourceColorTool@COLOR_TOOL_NAME,",
+				"SourceApprovedInCSVRecords, SourceColorTool join(SourceApprovedInCSVRecords@COLOR_TOOL_NAME == SourceColorTool@COLOR_TOOL_NAME,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
@@ -244,7 +244,7 @@
 				"     mapColumn(",
 				"          COLOR_TOOL_NAME = COLOR_Tool_Name",
 				"     ),",
-				"     format: 'table') ~> sinkDataColorRejectCSV",
+				"     format: 'table') ~> SnkDataColorRejectCSV",
 				"SelectData sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -263,7 +263,7 @@
 				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
 				"          COLOR_TOOL_NAME = COLOR_Tool_Name",
-				"     )) ~> SinkNewrecorddataintocolotoolTable",
+				"     )) ~> SinkColoToolTable",
 				"NewApprovedrecords sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
