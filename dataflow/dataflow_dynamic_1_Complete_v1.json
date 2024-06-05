@@ -46,7 +46,8 @@
 						"referenceName": "DelimitedTextDymanicCSVFiles",
 						"type": "DatasetReference"
 					},
-					"name": "SnkDataColorRejectCSV"
+					"name": "SnkDataColorRejectCSV",
+					"description": "Export data to DelimitedTextDymanicCSVFiles"
 				},
 				{
 					"dataset": {
@@ -55,13 +56,6 @@
 					},
 					"name": "SinkColoToolTable",
 					"description": "Export data to SQLDynamicDS "
-				},
-				{
-					"dataset": {
-						"referenceName": "DelimitedTextDymanicCSVFiles",
-						"type": "DatasetReference"
-					},
-					"name": "sink1"
 				}
 			],
 			"transformations": [
@@ -78,10 +72,6 @@
 				},
 				{
 					"name": "SelectDataColorTool"
-				},
-				{
-					"name": "NewApprovedrecords",
-					"description": "Inner join on 'SelectData' and 'SourceColorTool'a"
 				},
 				{
 					"name": "Innerjoin"
@@ -256,11 +246,6 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> SelectDataColorTool",
-				"SelectData, SourceColorTool join(SelectData@COLOR_Tool_Name == SourceColorTool@COLOR_TOOL_NAME,",
-				"     joinType:'inner',",
-				"     matchType:'exact',",
-				"     ignoreSpaces: false,",
-				"     broadcast: 'right')~> NewApprovedrecords",
 				"SourceApprovedInCSVRecords, SourceColorTool join(SourceApprovedInCSVRecords@COLOR_Tool_Name == SourceColorTool@COLOR_TOOL_NAME,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
@@ -298,22 +283,7 @@
 				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
 				"          COLOR_TOOL_NAME = COLOR_Tool_Name",
-				"     )) ~> SinkColoToolTable",
-				"NewApprovedrecords sink(allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     input(",
-				"          COLOR_TOOL_ID as string,",
-				"          COLOR_TOOL_NAME as string,",
-				"          COLOR_TOOL_TYPE_ID as string",
-				"     ),",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true,",
-				"     saveOrder: 1,",
-				"     mapColumn(",
-				"          COLOR_TOOL_ID,",
-				"          COLOR_TOOL_NAME = SourceColorTool@COLOR_TOOL_NAME,",
-				"          COLOR_TOOL_TYPE_ID",
-				"     )) ~> sink1"
+				"     )) ~> SinkColoToolTable"
 			]
 		}
 	}
