@@ -31,13 +31,6 @@
 						"type": "DatasetReference"
 					},
 					"name": "SourceColorToolTbale"
-				},
-				{
-					"dataset": {
-						"referenceName": "SQLDynamicDS",
-						"type": "DatasetReference"
-					},
-					"name": "SourceApprovedInCSVRecords"
 				}
 			],
 			"sinks": [
@@ -47,7 +40,7 @@
 						"type": "DatasetReference"
 					},
 					"name": "SnkDataColorRejectCSV",
-					"description": "Export data to DelimitedTextDymanicCSVFiles"
+					"description": "Export data to DelimitedTextDymanicCSVFile"
 				},
 				{
 					"dataset": {
@@ -72,9 +65,6 @@
 				},
 				{
 					"name": "SelectDataColorTool"
-				},
-				{
-					"name": "Innerjoin"
 				}
 			],
 			"scriptLines": [
@@ -184,50 +174,6 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> SourceColorToolTbale",
-				"source(output(",
-				"          COLOR_Tool_Name as string,",
-				"          Color_Chip_Name as string,",
-				"          DateTime as string,",
-				"          Color_Chip_Source as string,",
-				"          Scheme as string,",
-				"          Instrument as string,",
-				"          Geometry as string,",
-				"          {400} as string,",
-				"          {410} as string,",
-				"          {420} as string,",
-				"          {430} as string,",
-				"          {440} as string,",
-				"          {450} as string,",
-				"          {460} as string,",
-				"          {470} as string,",
-				"          {480} as string,",
-				"          {490} as string,",
-				"          {500} as string,",
-				"          {510} as string,",
-				"          {520} as string,",
-				"          {530} as string,",
-				"          {540} as string,",
-				"          {550} as string,",
-				"          {560} as string,",
-				"          {570} as string,",
-				"          {580} as string,",
-				"          {590} as string,",
-				"          {600} as string,",
-				"          {610} as string,",
-				"          {620} as string,",
-				"          {630} as string,",
-				"          {640} as string,",
-				"          {650} as string,",
-				"          {660} as string,",
-				"          {670} as string,",
-				"          {680} as string,",
-				"          {690} as string,",
-				"          {700} as string",
-				"     ),",
-				"     allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> SourceApprovedInCSVRecords",
 				"NotExistsTestConditionNewRecords select(mapColumn(",
 				"          COLOR_Tool_Name",
 				"     ),",
@@ -246,11 +192,6 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> SelectDataColorTool",
-				"SourceApprovedInCSVRecords, SourceColorTool join(SourceApprovedInCSVRecords@COLOR_Tool_Name == SourceColorTool@COLOR_TOOL_NAME,",
-				"     joinType:'inner',",
-				"     matchType:'exact',",
-				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> Innerjoin",
 				"SelectDataColorTool sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
