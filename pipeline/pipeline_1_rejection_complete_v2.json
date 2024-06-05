@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "dataflow_dynamic_1_Complete_v1",
+				"name": "dataflow_dynamic_1_Complete_v3",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -16,26 +16,36 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "dataflow_dynamic_1_Complete_v1",
+						"referenceName": "dataflow_dynamic_1_Complete_v3",
 						"type": "DataFlowReference",
 						"datasetParameters": {
 							"SourceIncsv": {
 								"TableName": "InCSV_NEW"
 							},
-							"SourceColorTool": {
+							"SourceInCSVtable": {
 								"TableName": "COLOR_TOOL"
 							},
-							"SourceInCSVtable": {
+							"SourceColorToolTable": {
 								"TableName": "InCSV_NEW"
 							},
-							"SourceColorToolTbale": {
+							"SourceColorToolAfterInsert": {
 								"TableName": "COLOR_TOOL"
 							},
-							"SnkDataColorRejectCSV": {
+							"SinkRejectedFile1": {
 								"Container_Name": "test",
 								"File_Name": "Rejection_color_tool.csv"
 							},
-							"SinkColoToolTable": {
+							"SinkTableColorTool3": {
+								"TableName": "COLOR_TOOL"
+							},
+							"SinkApprovedFile4": {
+								"Container_Name": "test",
+								"File_Name": "Color_Tool_New.csv"
+							},
+							"SinkTableColorToolLog3": {
+								"TableName": "COLOR_TOOL"
+							},
+							"SinkTableColorToolLog4": {
 								"TableName": "COLOR_TOOL"
 							}
 						}
