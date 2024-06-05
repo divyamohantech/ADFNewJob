@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "dataflow_dynamic_1_Complete_v2",
+						"referenceName": "dataflow_dynamic_1_Complete_v2_with_rejection",
 						"type": "DataFlowReference",
 						"datasetParameters": {
 							"SourceIncsv": {
@@ -31,22 +31,12 @@
 							"SourceColorToolTbale": {
 								"TableName": "COLOR_TOOL"
 							},
-							"InCSVSource": {
-								"TableName": "InCSV_NEW"
-							},
-							"ColorToolsource": {
-								"TableName": "COLOR_TOOL"
-							},
 							"sinkDataColorRejectCSV": {
 								"Container_Name": "test",
 								"File_Name": "Rejection_color_tool.csv"
 							},
 							"SinkNewrecorddataintocolotoolTable": {
 								"TableName": "COLOR_TOOL"
-							},
-							"SinkUniqueRecords": {
-								"Container_Name": "test",
-								"File_Name": "Color_Tool_New.csv"
 							}
 						}
 					},
