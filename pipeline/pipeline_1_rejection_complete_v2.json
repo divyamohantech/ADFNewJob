@@ -17,13 +17,37 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "dataflow_dynamic_1_Complete_v1",
-						"type": "DataFlowReference"
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"SourceIncsv": {
+								"TableName": "InCSV_NEW"
+							},
+							"SourceColorTool": {
+								"TableName": "COLOR_TOOL"
+							},
+							"SourceInCSVtable": {
+								"TableName": "InCSV_NEW"
+							},
+							"SourceColorToolTbale": {
+								"TableName": "COLOR_TOOL"
+							},
+							"SnkDataColorRejectCSV": {
+								"Container_Name": "test",
+								"File_Name": "Rejection_color_tool.csv"
+							},
+							"SinkColoToolTable": {
+								"TableName": "COLOR_TOOL"
+							}
+						}
 					},
 					"compute": {
 						"coreCount": 8,
 						"computeType": "General"
 					},
-					"traceLevel": "Fine"
+					"traceLevel": "None",
+					"cacheSinks": {
+						"firstRowOnly": true
+					}
 				}
 			}
 		],
