@@ -10,6 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
+				"fileName": "Color_Tool_New.csv",
 				"container": "test"
 			},
 			"columnDelimiter": ",",
