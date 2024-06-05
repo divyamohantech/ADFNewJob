@@ -94,7 +94,7 @@
 				},
 				{
 					"name": "NewApprovedrecords",
-					"description": "Inner join on 'SelectData' and 'SourceColorTool'a"
+					"description": "Inner join on 'SelectData' and 'SourceColorTool'"
 				},
 				{
 					"name": "NewRecordsForInsert"
