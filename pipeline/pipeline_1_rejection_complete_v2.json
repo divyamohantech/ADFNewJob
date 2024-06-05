@@ -32,7 +32,7 @@
 								"TableName": "COLOR_TOOL"
 							},
 							"SourceApprovedInCSVRecords": {
-								"TableName": "InCSV_NEW"
+								"TableName": "COLOR_TOOL"
 							},
 							"SnkDataColorRejectCSV": {
 								"Container_Name": "test",
@@ -40,10 +40,6 @@
 							},
 							"SinkColoToolTable": {
 								"TableName": "COLOR_TOOL"
-							},
-							"sink1": {
-								"Container_Name": "test",
-								"File_Name": "Color_Tool_New.csv"
 							}
 						}
 					},
@@ -51,28 +47,7 @@
 						"coreCount": 8,
 						"computeType": "General"
 					},
-					"traceLevel": "None",
-					"cacheSinks": {
-						"firstRowOnly": true
-					}
-				}
-			},
-			{
-				"name": "Copy data1",
-				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"enableStaging": false
+					"traceLevel": "Fine"
 				}
 			}
 		],
