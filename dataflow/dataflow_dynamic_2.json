@@ -143,7 +143,7 @@
 				"select1 derive(ENTITY_ID = SinkEntityIDValue#output()) ~> derivedColumn1",
 				"derivedColumn1, SourcePanel exists(COLOR_Tool_Name == NAME,",
 				"     negate:true,",
-				"     broadcast: 'left')~> NotExistsTestCondition",
+				"     broadcast: 'right')~> NotExistsTestCondition",
 				"AddColumnsValueEntityID sink(validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
