@@ -59,14 +59,6 @@
 					},
 					"name": "SinkTableColorToolLog3",
 					"description": "Export data to SQLDynamicDSEDIT"
-				},
-				{
-					"dataset": {
-						"referenceName": "SQLDynamicDS",
-						"type": "DatasetReference"
-					},
-					"name": "SinkTableColorToolLog4",
-					"description": "Export data to SQLDynamicDS11"
 				}
 			],
 			"transformations": [
@@ -83,9 +75,6 @@
 				},
 				{
 					"name": "SelectDataColorTool"
-				},
-				{
-					"name": "NewRecordsForInsert"
 				}
 			],
 			"scriptLines": [
@@ -214,11 +203,6 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> SelectDataColorTool",
-				"SourceInCSVtable, SourceColorToolTable join(SourceInCSVtable@COLOR_Tool_Name == SourceColorToolTable@COLOR_TOOL_NAME,",
-				"     joinType:'left',",
-				"     matchType:'exact',",
-				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> NewRecordsForInsert",
 				"SelectDataColorTool sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -276,26 +260,7 @@
 				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
 				"          COLOR_TOOL_NAME = COLOR_Tool_Name",
-				"     )) ~> SinkTableColorToolLog3",
-				"NewRecordsForInsert sink(allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     input(",
-				"          COLOR_TOOL_ID as integer,",
-				"          COLOR_TOOL_NAME as string,",
-				"          COLOR_TOOL_TYPE_ID as integer",
-				"     ),",
-				"     deletable:false,",
-				"     insertable:true,",
-				"     updateable:false,",
-				"     upsertable:false,",
-				"     format: 'table',",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true,",
-				"     saveOrder: 4,",
-				"     errorHandlingOption: 'stopOnFirstError',",
-				"     mapColumn(",
-				"          COLOR_TOOL_NAME = SourceInCSVtable@COLOR_Tool_Name",
-				"     )) ~> SinkTableColorToolLog4"
+				"     )) ~> SinkTableColorToolLog3"
 			]
 		}
 	}
