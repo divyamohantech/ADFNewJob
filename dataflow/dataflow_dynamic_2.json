@@ -43,6 +43,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "sinkPanelTable"
+				},
+				{
+					"dataset": {
+						"referenceName": "DelimitedTextDymanicCSVFiles",
+						"type": "DatasetReference"
+					},
+					"name": "SinkRejectionCSV"
 				}
 			],
 			"transformations": [
@@ -58,6 +65,9 @@
 				},
 				{
 					"name": "CommanJoin"
+				},
+				{
+					"name": "selectColumns"
 				}
 			],
 			"scriptLines": [
@@ -186,6 +196,12 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> CommanJoin",
+				"CommanJoin select(mapColumn(",
+				"          NAME,",
+				"          ENTITY_ID",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> selectColumns",
 				"AddColumnsValueEntityID sink(validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
@@ -222,7 +238,16 @@
 				"     mapColumn(",
 				"          NAME = COLOR_Tool_Name,",
 				"          ENTITY_ID = ENTITY_ID.ENTITY_ID",
-				"     )) ~> sinkPanelTable"
+				"     )) ~> sinkPanelTable",
+				"selectColumns sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          COLOR_TOOL_ID as string,",
+				"          COLOR_TOOL_NAME as string,",
+				"          COLOR_TOOL_TYPE_ID as string",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SinkRejectionCSV"
 			]
 		}
 	}
