@@ -28,8 +28,15 @@
 							"SourcePanel": {
 								"TableName": "PANEL"
 							},
-							"sink1": {
+							"INCSV": {
+								"TableName": "InCSV_NEW"
+							},
+							"sinkPanelTable": {
 								"TableName": "PANEL"
+							},
+							"SinkRejectionCSV": {
+								"Container_Name": "test",
+								"File_Name": "Rejection_Panel.csv"
 							}
 						}
 					},
