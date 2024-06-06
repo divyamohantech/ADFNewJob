@@ -208,7 +208,7 @@
 				"     store: 'cache',",
 				"     format: 'inline',",
 				"     output: true,",
-				"     saveOrder: 0,",
+				"     saveOrder: 2,",
 				"     mapColumn(",
 				"          ENTITY_ID",
 				"     )) ~> SinkEntityIDValue",
@@ -234,6 +234,7 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
+				"     saveOrder: 3,",
 				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
 				"          NAME = COLOR_Tool_Name,",
@@ -247,7 +248,8 @@
 				"          COLOR_TOOL_TYPE_ID as string",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> SinkRejectionCSV"
+				"     skipDuplicateMapOutputs: true,",
+				"     saveOrder: 1) ~> SinkRejectionCSV"
 			]
 		}
 	}
