@@ -68,6 +68,9 @@
 				},
 				{
 					"name": "selectColumns"
+				},
+				{
+					"name": "NotExistsUnique"
 				}
 			],
 			"scriptLines": [
@@ -202,6 +205,9 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> selectColumns",
+				"derivedColumn1, SourcePanel exists(COLOR_Tool_Name == NAME,",
+				"     negate:true,",
+				"     broadcast: 'auto')~> NotExistsUnique",
 				"AddColumnsValueEntityID sink(validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
@@ -212,7 +218,7 @@
 				"     mapColumn(",
 				"          ENTITY_ID",
 				"     )) ~> SinkEntityIDValue",
-				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"NotExistsUnique sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          PANEL_ID as integer,",
