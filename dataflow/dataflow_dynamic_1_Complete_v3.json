@@ -50,14 +50,6 @@
 					"description": "Export data to SQLDynamicDS "
 				},
 				{
-					"dataset": {
-						"referenceName": "DelimitedTextDymanicCSVFiles",
-						"type": "DatasetReference"
-					},
-					"name": "SinkApprovedFile4",
-					"description": "Export data to DelimitedTextColorCSv"
-				},
-				{
 					"name": "SinkCacheNewRecordsFile2"
 				},
 				{
@@ -91,10 +83,6 @@
 				},
 				{
 					"name": "SelectDataColorTool"
-				},
-				{
-					"name": "NewApprovedrecords",
-					"description": "Inner join on 'SelectData' and 'SourceColorTool'"
 				},
 				{
 					"name": "NewRecordsForInsert"
@@ -226,11 +214,6 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> SelectDataColorTool",
-				"SelectData, SourceColorToolAfterInsert join(SelectData@COLOR_Tool_Name == SourceColorToolAfterInsert@COLOR_TOOL_NAME,",
-				"     joinType:'inner',",
-				"     matchType:'exact',",
-				"     ignoreSpaces: false,",
-				"     broadcast: 'right')~> NewApprovedrecords",
 				"SourceInCSVtable, SourceColorToolTable join(SourceInCSVtable@COLOR_Tool_Name == SourceColorToolTable@COLOR_TOOL_NAME,",
 				"     joinType:'left',",
 				"     matchType:'exact',",
@@ -268,19 +251,6 @@
 				"     mapColumn(",
 				"          COLOR_TOOL_NAME = COLOR_Tool_Name",
 				"     )) ~> SinkTableColorTool3",
-				"NewApprovedrecords sink(allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     input(",
-				"          COLOR_TOOL_ID as string,",
-				"          COLOR_TOOL_NAME as string,",
-				"          COLOR_TOOL_TYPE_ID as string",
-				"     ),",
-				"     saveOrder: 3,",
-				"     mapColumn(",
-				"          COLOR_TOOL_ID,",
-				"          COLOR_TOOL_NAME = SourceColorToolAfterInsert@COLOR_TOOL_NAME,",
-				"          COLOR_TOOL_TYPE_ID",
-				"     )) ~> SinkApprovedFile4",
 				"SelectData sink(validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
@@ -288,7 +258,7 @@
 				"     format: 'inline',",
 				"     output: true,",
 				"     saveOrder: 2) ~> SinkCacheNewRecordsFile2",
-				"NewApprovedrecords sink(allowSchemaDrift: true,",
+				"SelectData sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          COLOR_TOOL_ID as integer,",
@@ -302,10 +272,10 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     saveOrder: 4,",
+				"     saveOrder: 3,",
 				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
-				"          COLOR_TOOL_NAME = SelectData@COLOR_Tool_Name",
+				"          COLOR_TOOL_NAME = COLOR_Tool_Name",
 				"     )) ~> SinkTableColorToolLog3",
 				"NewRecordsForInsert sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
@@ -321,7 +291,7 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     saveOrder: 5,",
+				"     saveOrder: 4,",
 				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
 				"          COLOR_TOOL_NAME = SourceInCSVtable@COLOR_Tool_Name",
