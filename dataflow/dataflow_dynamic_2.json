@@ -141,9 +141,9 @@
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select1",
 				"select1 derive(ENTITY_ID = SinkEntityIDValue#output()) ~> derivedColumn1",
-				"derivedColumn1, SourcePanel exists(COLOR_Tool_Name == NAME,",
+				"derivedColumn1, SourcePanel exists(Color_Chip_Name == NAME,",
 				"     negate:true,",
-				"     broadcast: 'right')~> NotExistsTestCondition",
+				"     broadcast: 'both')~> NotExistsTestCondition",
 				"AddColumnsValueEntityID sink(validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
@@ -170,8 +170,7 @@
 				"     skipDuplicateMapOutputs: true,",
 				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
-				"          NAME = COLOR_Tool_Name,",
-				"          ENTITY_ID = ENTITY_ID.ENTITY_ID",
+				"          COLOR_TOOL_NAME = Color_Chip_Name",
 				"     )) ~> SinkPanelTable"
 			]
 		}
