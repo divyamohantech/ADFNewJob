@@ -25,7 +25,7 @@
 							"SourceUserProfile": {
 								"TableName": "USER_PROFILE"
 							},
-							"SinkPanelTable": {
+							"SourcePanel": {
 								"TableName": "PANEL"
 							}
 						}
@@ -43,8 +43,6 @@
 			{
 				"name": "Copy data to panel table",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "dataflow_dynamic_2",
