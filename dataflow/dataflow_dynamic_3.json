@@ -23,26 +23,12 @@
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference"
 					},
-					"name": "INCSV"
-				},
-				{
-					"dataset": {
-						"referenceName": "SQLDynamicDS",
-						"type": "DatasetReference"
-					},
 					"name": "SOURCECOLORTOOL"
 				}
 			],
 			"sinks": [
 				{
 					"name": "SinkEntityIDValue"
-				},
-				{
-					"dataset": {
-						"referenceName": "DelimitedTextDymanicCSVFiles",
-						"type": "DatasetReference"
-					},
-					"name": "SinkRejectionCSV"
 				},
 				{
 					"dataset": {
@@ -53,12 +39,6 @@
 				}
 			],
 			"transformations": [
-				{
-					"name": "CommanJoin"
-				},
-				{
-					"name": "selectColumns"
-				},
 				{
 					"name": "InnerJOINPANELcsv"
 				},
@@ -141,32 +121,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> INCSV",
-				"source(output(",
-				"          COLOR_CHIP_ID as integer,",
-				"          PANEL_ID as integer,",
-				"          CHIP_SOURCE as string,",
-				"          IS_ACTIVE as integer,",
-				"          LAST_UPDATED_DATE as timestamp,",
-				"          COLOR_TOOL_ID as integer,",
-				"          SOURCE_SYSTEM_NAME as string,",
-				"          SOURCE_SYSTEM_ID as integer",
-				"     ),",
-				"     allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> SOURCECOLORTOOL",
-				"INCSV, SourcePanel join(Color_Chip_Name == NAME,",
-				"     joinType:'inner',",
-				"     matchType:'exact',",
-				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> CommanJoin",
-				"CommanJoin select(mapColumn(",
-				"          NAME,",
-				"          ENTITY_ID",
-				"     ),",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> selectColumns",
 				"SourceInCsv, SourcePanel join(Color_Chip_Name == NAME,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
@@ -181,20 +136,7 @@
 				"     store: 'cache',",
 				"     format: 'inline',",
 				"     output: true,",
-				"     saveOrder: 1,",
-				"     mapColumn(",
-				"          ENTITY_ID",
-				"     )) ~> SinkEntityIDValue",
-				"selectColumns sink(allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     input(",
-				"          COLOR_TOOL_ID as string,",
-				"          COLOR_TOOL_NAME as string,",
-				"          COLOR_TOOL_TYPE_ID as string",
-				"     ),",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true,",
-				"     saveOrder: 0) ~> SinkRejectionCSV",
+				"     saveOrder: 2) ~> SinkEntityIDValue",
 				"Notexists sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -214,6 +156,7 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
+				"     saveOrder: 1,",
 				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
 				"          PANEL_ID,",
