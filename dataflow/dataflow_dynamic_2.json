@@ -168,10 +168,7 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError',",
-				"     mapColumn(",
-				"          COLOR_TOOL_NAME = Color_Chip_Name",
-				"     )) ~> SinkPanelTable"
+				"     errorHandlingOption: 'stopOnFirstError') ~> SinkPanelTable"
 			]
 		}
 	}
