@@ -27,6 +27,9 @@
 							},
 							"SourcePanel": {
 								"TableName": "PANEL"
+							},
+							"sink1": {
+								"TableName": "PANEL"
 							}
 						}
 					},
