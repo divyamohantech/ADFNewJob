@@ -35,8 +35,7 @@
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference"
 					},
-					"name": "SinkPanelTable",
-					"description": "Add sink dataset panel table"
+					"name": "sink1"
 				}
 			],
 			"transformations": [
@@ -49,9 +48,6 @@
 				{
 					"name": "derivedColumn1",
 					"description": "Creating/updating the columns 'COLOR_Tool_Name, ENTITY_ID'"
-				},
-				{
-					"name": "NotExistsTestCondition"
 				}
 			],
 			"scriptLines": [
@@ -100,17 +96,7 @@
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> SourceInCsv",
 				"source(output(",
-				"          PANEL_ID as integer,",
-				"          NAME as string,",
-				"          IS_METALLIC as integer,",
-				"          CREATE_USER_ID as integer,",
-				"          CREATE_DATE as timestamp,",
-				"          NOTES as string,",
-				"          IS_PUBLIC as integer,",
-				"          ENTITY_ID as integer,",
-				"          IS_INACTIVE as integer,",
-				"          AUDIT_SEARCH_INDEX_DATE as timestamp,",
-				"          IS_FLAGGED as string",
+				"          ENTITY_ID as integer",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
@@ -136,14 +122,11 @@
 				"     format: 'table') ~> SourcePanel",
 				"SourceUserProfile derive(ENTITY_ID = toInteger(ENTITY_ID)) ~> AddColumnsValueEntityID",
 				"SourceInCsv select(mapColumn(",
-				"          Color_Chip_Name",
+				"          COLOR_Tool_Name",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select1",
 				"select1 derive(ENTITY_ID = SinkEntityIDValue#output()) ~> derivedColumn1",
-				"derivedColumn1, SourcePanel exists(Color_Chip_Name == NAME,",
-				"     negate:true,",
-				"     broadcast: 'both')~> NotExistsTestCondition",
 				"AddColumnsValueEntityID sink(validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
@@ -154,12 +137,20 @@
 				"     mapColumn(",
 				"          ENTITY_ID",
 				"     )) ~> SinkEntityIDValue",
-				"NotExistsTestCondition sink(allowSchemaDrift: true,",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
-				"          COLOR_TOOL_ID as integer,",
-				"          COLOR_TOOL_NAME as string,",
-				"          COLOR_TOOL_TYPE_ID as integer",
+				"          PANEL_ID as integer,",
+				"          NAME as string,",
+				"          IS_METALLIC as integer,",
+				"          CREATE_USER_ID as integer,",
+				"          CREATE_DATE as timestamp,",
+				"          NOTES as string,",
+				"          IS_PUBLIC as integer,",
+				"          ENTITY_ID as integer,",
+				"          IS_INACTIVE as integer,",
+				"          AUDIT_SEARCH_INDEX_DATE as timestamp,",
+				"          IS_FLAGGED as string",
 				"     ),",
 				"     deletable:false,",
 				"     insertable:true,",
@@ -168,7 +159,11 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> SinkPanelTable"
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          NAME = COLOR_Tool_Name,",
+				"          ENTITY_ID = ENTITY_ID.ENTITY_ID",
+				"     )) ~> sink1"
 			]
 		}
 	}
