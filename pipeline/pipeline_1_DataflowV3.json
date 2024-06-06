@@ -4,7 +4,7 @@
 		"activities": [
 			{
 				"name": "dataflowV3",
-				"description": "new",
+				"description": "newedit",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -39,14 +39,7 @@
 							"SinkTableColorTool3": {
 								"TableName": "COLOR_TOOL"
 							},
-							"SinkApprovedFile4": {
-								"Container_Name": "test",
-								"File_Name": "Color_Tool_New.csv"
-							},
 							"SinkTableColorToolLog3": {
-								"TableName": "COLOR_TOOL_Log"
-							},
-							"SinkTableColorToolLog4": {
 								"TableName": "COLOR_TOOL_Log"
 							}
 						}
