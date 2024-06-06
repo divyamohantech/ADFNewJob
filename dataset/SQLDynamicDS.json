@@ -14,58 +14,43 @@
 		"type": "AzureSqlTable",
 		"schema": [
 			{
+				"name": "COLOR_CHIP_ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
 				"name": "PANEL_ID",
 				"type": "int",
 				"precision": 10
 			},
 			{
-				"name": "NAME",
-				"type": "varchar"
+				"name": "CHIP_SOURCE",
+				"type": "nvarchar"
 			},
 			{
-				"name": "IS_METALLIC",
+				"name": "IS_ACTIVE",
 				"type": "int",
 				"precision": 10
 			},
 			{
-				"name": "CREATE_USER_ID",
-				"type": "int",
-				"precision": 10
-			},
-			{
-				"name": "CREATE_DATE",
+				"name": "LAST_UPDATED_DATE",
 				"type": "datetime",
 				"precision": 23,
 				"scale": 3
 			},
 			{
-				"name": "NOTES",
+				"name": "COLOR_TOOL_ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "SOURCE_SYSTEM_NAME",
 				"type": "varchar"
 			},
 			{
-				"name": "IS_PUBLIC",
+				"name": "SOURCE_SYSTEM_ID",
 				"type": "int",
 				"precision": 10
-			},
-			{
-				"name": "ENTITY_ID",
-				"type": "int",
-				"precision": 10
-			},
-			{
-				"name": "IS_INACTIVE",
-				"type": "int",
-				"precision": 10
-			},
-			{
-				"name": "AUDIT_SEARCH_INDEX_DATE",
-				"type": "datetime",
-				"precision": 23,
-				"scale": 3
-			},
-			{
-				"name": "IS_FLAGGED",
-				"type": "varchar"
 			}
 		],
 		"typeProperties": {
