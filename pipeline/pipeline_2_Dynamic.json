@@ -5,8 +5,6 @@
 			{
 				"name": "dataflow_dynamic_2",
 				"type": "ExecuteDataFlow",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -87,114 +85,57 @@
 							{
 								"source": {
 									"name": "PANEL_ID",
-									"type": "Int32"
+									"type": "Int32",
+									"physicalType": "int"
 								},
 								"sink": {
 									"name": "PANEL_ID",
-									"type": "String"
+									"type": "String",
+									"physicalType": "String"
 								}
 							},
 							{
 								"source": {
 									"name": "NAME",
-									"type": "String"
+									"type": "String",
+									"physicalType": "varchar"
 								},
 								"sink": {
 									"name": "NAME",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "IS_METALLIC",
-									"type": "Int32"
-								},
-								"sink": {
-									"name": "IS_METALLIC",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "CREATE_USER_ID",
-									"type": "Int32"
-								},
-								"sink": {
-									"name": "CREATE_USER_ID",
-									"type": "String"
+									"type": "String",
+									"physicalType": "String"
 								}
 							},
 							{
 								"source": {
 									"name": "CREATE_DATE",
-									"type": "DateTime"
+									"type": "DateTime",
+									"physicalType": "datetime"
 								},
 								"sink": {
 									"name": "CREATE_DATE",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "NOTES",
-									"type": "String"
-								},
-								"sink": {
-									"name": "NOTES",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "IS_PUBLIC",
-									"type": "Int32"
-								},
-								"sink": {
-									"name": "IS_PUBLIC",
-									"type": "String"
+									"type": "String",
+									"physicalType": "String"
 								}
 							},
 							{
 								"source": {
 									"name": "ENTITY_ID",
-									"type": "Int32"
+									"type": "Int32",
+									"physicalType": "int"
 								},
 								"sink": {
 									"name": "ENTITY_ID",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "IS_INACTIVE",
-									"type": "Int32"
-								},
-								"sink": {
-									"name": "IS_INACTIVE",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "AUDIT_SEARCH_INDEX_DATE",
-									"type": "DateTime"
-								},
-								"sink": {
-									"name": "AUDIT_SEARCH_INDEX_DATE",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "IS_FLAGGED",
-									"type": "String"
-								},
-								"sink": {
-									"name": "IS_FLAGGED",
-									"type": "String"
+									"type": "String",
+									"physicalType": "String"
 								}
 							}
-						]
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
 					}
 				},
 				"inputs": [
@@ -205,39 +146,17 @@
 							"TableName": "PANEL"
 						}
 					}
-				]
-			},
-			{
-				"name": "dataflow_dynamic_1_Rejection",
-				"type": "ExecuteDataFlow",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"dataflow": {
-						"referenceName": "dataflow_dynamic_1_Rejection",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"SourceIncsv": {
-								"TableName": "InCSV_NEW"
-							},
-							"SourceColorTool": {
-								"TableName": "COLOR_TOOL_REJECTION"
-							}
+				],
+				"outputs": [
+					{
+						"referenceName": "DelimitedTextDymanicCSVFiles",
+						"type": "DatasetReference",
+						"parameters": {
+							"Container_Name": "test",
+							"File_Name": "samplePanel.csv"
 						}
-					},
-					"compute": {
-						"coreCount": 8,
-						"computeType": "General"
-					},
-					"traceLevel": "Fine"
-				}
+					}
+				]
 			}
 		],
 		"annotations": []
