@@ -5,6 +5,8 @@
 			{
 				"name": "Copy data to panel table",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -143,6 +145,9 @@
 							"SinkRejectionCSV": {
 								"Container_Name": "test",
 								"File_Name": "abcd.csv"
+							},
+							"SinkCOLORCHIP": {
+								"TableName": "COLOR_CHIP"
 							}
 						}
 					},
@@ -150,7 +155,10 @@
 						"coreCount": 8,
 						"computeType": "General"
 					},
-					"traceLevel": "Fine"
+					"traceLevel": "None",
+					"cacheSinks": {
+						"firstRowOnly": true
+					}
 				}
 			}
 		],
