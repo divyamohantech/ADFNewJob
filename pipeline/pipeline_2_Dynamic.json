@@ -72,6 +72,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
+						"sqlReaderQuery": "select * from [dbo].[PANEL] where PANEL_ID > 1",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
