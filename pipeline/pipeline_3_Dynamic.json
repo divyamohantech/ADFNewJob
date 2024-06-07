@@ -28,6 +28,9 @@
 							"SourcePanel": {
 								"TableName": "PANEL"
 							},
+							"SourceCSVIn": {
+								"TableName": "InCSV_NEW"
+							},
 							"sinkColorCHIPTable": {
 								"TableName": "COLOR_CHIP"
 							}
