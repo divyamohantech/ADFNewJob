@@ -30,6 +30,15 @@
 			"transformations": [
 				{
 					"name": "NotExistsRecords"
+				},
+				{
+					"name": "select1"
+				},
+				{
+					"name": "ExistsUniqueRecords"
+				},
+				{
+					"name": "select2"
 				}
 			],
 			"scriptLines": [
@@ -87,22 +96,44 @@
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> SourceColorTool",
 				"source(output(",
-				"          COLOR_CHIP_ID as integer,",
 				"          PANEL_ID as integer,",
-				"          CHIP_SOURCE as string,",
-				"          IS_ACTIVE as integer,",
-				"          LAST_UPDATED_DATE as timestamp,",
-				"          COLOR_TOOL_ID as integer,",
-				"          SOURCE_SYSTEM_NAME as string,",
-				"          SOURCE_SYSTEM_ID as integer",
+				"          NAME as string,",
+				"          IS_METALLIC as integer,",
+				"          CREATE_USER_ID as integer,",
+				"          CREATE_DATE as timestamp,",
+				"          NOTES as string,",
+				"          IS_PUBLIC as integer,",
+				"          ENTITY_ID as integer,",
+				"          IS_INACTIVE as integer,",
+				"          AUDIT_SEARCH_INDEX_DATE as timestamp,",
+				"          IS_FLAGGED as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> SourcePanel",
-				"SourceInCSV, SourceColorTool exists(SourceInCSV@COLOR_Tool_Name == ERROR_FUNCTION(''),",
+				"SourceInCSV, SourceColorTool exists(SourceInCSV@COLOR_Tool_Name == SourceColorTool@COLOR_TOOL_NAME,",
 				"     negate:true,",
-				"     broadcast: 'auto')~> NotExistsRecords"
+				"     broadcast: 'auto')~> NotExistsRecords",
+				"NotExistsRecords select(mapColumn(",
+				"          COLOR_Tool_Name,",
+				"          Color_Chip_Name,",
+				"          DateTime,",
+				"          Color_Chip_Source",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1, SourcePanel exists(Color_Chip_Name == NAME,",
+				"     negate:true,",
+				"     broadcast: 'right')~> ExistsUniqueRecords",
+				"ExistsUniqueRecords select(mapColumn(",
+				"          COLOR_Tool_Name,",
+				"          Color_Chip_Name,",
+				"          DateTime,",
+				"          Color_Chip_Source",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select2"
 			]
 		}
 	}
