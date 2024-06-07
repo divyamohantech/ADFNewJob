@@ -1,0 +1,84 @@
+{
+	"name": "dataflow_dynamic_3",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "SQLDynamicDS",
+						"type": "DatasetReference"
+					},
+					"name": "SourceInCSV"
+				},
+				{
+					"dataset": {
+						"referenceName": "SQLDynamicDS",
+						"type": "DatasetReference"
+					},
+					"name": "SourceColorTool"
+				},
+				{
+					"dataset": {
+						"referenceName": "SQLDynamicDS",
+						"type": "DatasetReference"
+					},
+					"name": "SourcePanel"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "NotExistsRecords"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          COLOR_CHIP_ID as integer,",
+				"          PANEL_ID as integer,",
+				"          CHIP_SOURCE as string,",
+				"          IS_ACTIVE as integer,",
+				"          LAST_UPDATED_DATE as timestamp,",
+				"          COLOR_TOOL_ID as integer,",
+				"          SOURCE_SYSTEM_NAME as string,",
+				"          SOURCE_SYSTEM_ID as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> SourceInCSV",
+				"source(output(",
+				"          COLOR_CHIP_ID as integer,",
+				"          PANEL_ID as integer,",
+				"          CHIP_SOURCE as string,",
+				"          IS_ACTIVE as integer,",
+				"          LAST_UPDATED_DATE as timestamp,",
+				"          COLOR_TOOL_ID as integer,",
+				"          SOURCE_SYSTEM_NAME as string,",
+				"          SOURCE_SYSTEM_ID as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> SourceColorTool",
+				"source(output(",
+				"          COLOR_CHIP_ID as integer,",
+				"          PANEL_ID as integer,",
+				"          CHIP_SOURCE as string,",
+				"          IS_ACTIVE as integer,",
+				"          LAST_UPDATED_DATE as timestamp,",
+				"          COLOR_TOOL_ID as integer,",
+				"          SOURCE_SYSTEM_NAME as string,",
+				"          SOURCE_SYSTEM_ID as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> SourcePanel",
+				"SourceInCSV, SourceColorTool exists(ERROR_FUNCTION('') == ERROR_FUNCTION(''),",
+				"     negate:true,",
+				"     broadcast: 'auto')~> NotExistsRecords"
+			]
+		}
+	}
+}
