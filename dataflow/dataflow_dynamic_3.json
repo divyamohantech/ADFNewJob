@@ -26,7 +26,15 @@
 					"name": "SourcePanel"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "SQLDynamicDS",
+						"type": "DatasetReference"
+					},
+					"name": "sinkColorCHIPTable"
+				}
+			],
 			"transformations": [
 				{
 					"name": "NotExistsRecords"
@@ -114,7 +122,7 @@
 				"     format: 'table') ~> SourcePanel",
 				"SourceInCSV, SourceColorTool exists(SourceInCSV@COLOR_Tool_Name == SourceColorTool@COLOR_TOOL_NAME,",
 				"     negate:true,",
-				"     broadcast: 'auto')~> NotExistsRecords",
+				"     broadcast: 'both')~> NotExistsRecords",
 				"NotExistsRecords select(mapColumn(",
 				"          COLOR_Tool_Name,",
 				"          Color_Chip_Name,",
@@ -133,7 +141,31 @@
 				"          Color_Chip_Source",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select2"
+				"     skipDuplicateMapOutputs: true) ~> select2",
+				"select2 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          COLOR_CHIP_ID as integer,",
+				"          PANEL_ID as integer,",
+				"          CHIP_SOURCE as string,",
+				"          IS_ACTIVE as integer,",
+				"          LAST_UPDATED_DATE as timestamp,",
+				"          COLOR_TOOL_ID as integer,",
+				"          SOURCE_SYSTEM_NAME as string,",
+				"          SOURCE_SYSTEM_ID as integer",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          CHIP_SOURCE = Color_Chip_Source,",
+				"          LAST_UPDATED_DATE = DateTime",
+				"     )) ~> sinkColorCHIPTable"
 			]
 		}
 	}
