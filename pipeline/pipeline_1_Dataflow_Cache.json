@@ -34,10 +34,6 @@
 							},
 							"SinkTableColorTool3": {
 								"TableName": "COLOR_TOOL"
-							},
-							"SinkApprovedFile4": {
-								"Container_Name": "test",
-								"File_Name": "Color_Tool_New.csv"
 							}
 						}
 					},
