@@ -5,7 +5,14 @@
 			{
 				"name": "dataflow_dynamic_3",
 				"type": "ExecuteDataFlow",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Copy data to Panel CSV",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -378,9 +385,16 @@
 				]
 			},
 			{
-				"name": "Copy data1",
+				"name": "Copy data to Panel CSV",
 				"type": "Copy",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "dataflow_dynamic_2",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -390,8 +404,185 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"enableStaging": false
-				}
+					"source": {
+						"type": "AzureSqlSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "PANEL_ID",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "PANEL_ID",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "NAME",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "NAME",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "IS_METALLIC",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "IS_METALLIC",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CREATE_USER_ID",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "CREATE_USER_ID",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CREATE_DATE",
+									"type": "DateTime",
+									"physicalType": "datetime"
+								},
+								"sink": {
+									"name": "CREATE_DATE",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "NOTES",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "NOTES",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "IS_PUBLIC",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "IS_PUBLIC",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ENTITY_ID",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "ENTITY_ID",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "IS_INACTIVE",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "IS_INACTIVE",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AUDIT_SEARCH_INDEX_DATE",
+									"type": "DateTime",
+									"physicalType": "datetime"
+								},
+								"sink": {
+									"name": "AUDIT_SEARCH_INDEX_DATE",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "IS_FLAGGED",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "IS_FLAGGED",
+									"type": "String",
+									"physicalType": "String"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SQLDynamicDS",
+						"type": "DatasetReference",
+						"parameters": {
+							"TableName": "PANEL"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DelimitedTextDymanicCSVFiles",
+						"type": "DatasetReference",
+						"parameters": {
+							"Container_Name": "test",
+							"File_Name": "Panel_App.csv"
+						}
+					}
+				]
 			}
 		],
 		"annotations": []
