@@ -45,6 +45,43 @@
 					},
 					"traceLevel": "Fine"
 				}
+			},
+			{
+				"name": "Copy Data to ColorChip Csv",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "dataflow_dynamic_3",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "SQLDynamicDS",
+						"type": "DatasetReference",
+						"parameters": {
+							"TableName": "COLOR_CHIP"
+						}
+					}
+				]
 			}
 		],
 		"annotations": []
