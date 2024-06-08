@@ -33,6 +33,9 @@
 							},
 							"sinkColorCHIPTable": {
 								"TableName": "COLOR_CHIP"
+							},
+							"SinkColorChipTablewsql": {
+								"TableName": "COLOR_CHIP"
 							}
 						}
 					},
@@ -40,10 +43,7 @@
 						"coreCount": 8,
 						"computeType": "General"
 					},
-					"traceLevel": "None",
-					"cacheSinks": {
-						"firstRowOnly": true
-					}
+					"traceLevel": "Fine"
 				}
 			}
 		],
