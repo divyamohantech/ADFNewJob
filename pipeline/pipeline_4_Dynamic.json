@@ -17,7 +17,25 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "dataflow_dynamic_4",
-						"type": "DataFlowReference"
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"SourceInCSV": {
+								"TableName": "InCSV_NEW"
+							},
+							"SourcePanel": {
+								"TableName": "PANEL"
+							},
+							"SinkSRTable": {
+								"TableName": "SPECTRAL_READING"
+							}
+						},
+						"linkedServiceParameters": {
+							"SinkSRTable": {
+								"schemaLinkedService": {
+									"TableName": "SPECTRAL_READING"
+								}
+							}
+						}
 					},
 					"compute": {
 						"coreCount": 8,
