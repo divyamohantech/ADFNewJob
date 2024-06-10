@@ -110,7 +110,7 @@
 				"     Scheme1 = first(Scheme),",
 				"          DateTime1 = first(DateTime),",
 				"          Instrument1 = first(Instrument),",
-				"          PANEL_ID = first(PANEL_ID)) ~> aggregate1",
+				"          PANEL_ID = max(PANEL_ID)) ~> aggregate1",
 				"aggregate1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
