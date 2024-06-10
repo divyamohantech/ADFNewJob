@@ -14,27 +14,21 @@
 		"type": "AzureSqlTable",
 		"schema": [
 			{
+				"name": "MEASUREMENT_ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
 				"name": "READING_ID",
 				"type": "int",
 				"precision": 10
 			},
 			{
-				"name": "PANEL_ID",
-				"type": "int",
-				"precision": 10
-			},
-			{
-				"name": "READING_DATE",
-				"type": "datetime",
-				"precision": 23,
-				"scale": 3
-			},
-			{
-				"name": "MEASUREMENT_SCHEME",
+				"name": "GEOMETRY",
 				"type": "varchar"
 			},
 			{
-				"name": "DEVICE_NAME",
+				"name": "RAW_DATA",
 				"type": "varchar"
 			}
 		],
