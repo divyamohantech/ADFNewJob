@@ -14,7 +14,7 @@
 		"type": "AzureSqlTable",
 		"schema": [
 			{
-				"name": "COLOR_CHIP_ID",
+				"name": "READING_ID",
 				"type": "int",
 				"precision": 10
 			},
@@ -24,33 +24,18 @@
 				"precision": 10
 			},
 			{
-				"name": "CHIP_SOURCE",
-				"type": "nvarchar"
-			},
-			{
-				"name": "IS_ACTIVE",
-				"type": "int",
-				"precision": 10
-			},
-			{
-				"name": "LAST_UPDATED_DATE",
+				"name": "READING_DATE",
 				"type": "datetime",
 				"precision": 23,
 				"scale": 3
 			},
 			{
-				"name": "COLOR_TOOL_ID",
-				"type": "int",
-				"precision": 10
-			},
-			{
-				"name": "SOURCE_SYSTEM_NAME",
+				"name": "MEASUREMENT_SCHEME",
 				"type": "varchar"
 			},
 			{
-				"name": "SOURCE_SYSTEM_ID",
-				"type": "int",
-				"precision": 10
+				"name": "DEVICE_NAME",
+				"type": "varchar"
 			}
 		],
 		"typeProperties": {
