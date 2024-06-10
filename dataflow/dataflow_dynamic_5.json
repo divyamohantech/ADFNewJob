@@ -26,13 +26,24 @@
 					"name": "SourceSR"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "SQLDynamicDS",
+						"type": "DatasetReference"
+					},
+					"name": "SinkSM"
+				}
+			],
 			"transformations": [
 				{
 					"name": "join1"
 				},
 				{
 					"name": "join2"
+				},
+				{
+					"name": "aggregate1"
 				}
 			],
 			"scriptLines": [
@@ -98,10 +109,11 @@
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> SourcePanel",
 				"source(output(",
-				"          MEASUREMENT_ID as integer,",
 				"          READING_ID as integer,",
-				"          GEOMETRY as string,",
-				"          RAW_DATA as string",
+				"          PANEL_ID as integer,",
+				"          READING_DATE as timestamp,",
+				"          MEASUREMENT_SCHEME as string,",
+				"          DEVICE_NAME as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
@@ -112,11 +124,35 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> join1",
-				"join1, SourceSR join(PANEL_ID == ERROR_FUNCTION(''),",
+				"join1, SourceSR join(SourcePanel@PANEL_ID == SourceSR@PANEL_ID,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> join2"
+				"     broadcast: 'auto')~> join2",
+				"join2 aggregate(groupBy(READING_ID,",
+				"          Geometry,",
+				"          {400},",
+				"          {410}),",
+				"     READING_ID_1 = first(READING_ID),",
+				"          Geometry_1 = first(Geometry),",
+				"          {400_1} = first(400)) ~> aggregate1",
+				"aggregate1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          READING_ID as integer,",
+				"          PANEL_ID as integer,",
+				"          READING_DATE as timestamp,",
+				"          MEASUREMENT_SCHEME as string,",
+				"          DEVICE_NAME as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> SinkSM"
 			]
 		}
 	}
