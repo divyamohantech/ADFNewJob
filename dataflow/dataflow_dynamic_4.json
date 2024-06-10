@@ -105,8 +105,7 @@
 				"     broadcast: 'auto')~> join1",
 				"join1 aggregate(groupBy(Scheme,",
 				"          Instrument,",
-				"          DateTime,",
-				"          PANEL_ID),",
+				"          DateTime),",
 				"     Scheme1 = first(Scheme),",
 				"          DateTime1 = first(DateTime),",
 				"          Instrument1 = first(Instrument),",
@@ -130,11 +129,7 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError',",
-				"     mapColumn(",
-				"          COLOR_CHIP_ID = Scheme,",
-				"          PANEL_ID = aggregate1@PANEL_ID",
-				"     )) ~> SinkSRTable"
+				"     errorHandlingOption: 'stopOnFirstError') ~> SinkSRTable"
 			]
 		}
 	}
