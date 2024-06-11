@@ -50,7 +50,10 @@
 						"coreCount": 8,
 						"computeType": "General"
 					},
-					"traceLevel": "Fine"
+					"traceLevel": "None",
+					"cacheSinks": {
+						"firstRowOnly": true
+					}
 				}
 			},
 			{
@@ -177,7 +180,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"Container_Name": "test",
-							"File_Name": "Color_Chip.csv"
+							"File_Name": "Color_Chip_App.csv"
 						}
 					}
 				]
