@@ -66,13 +66,7 @@
 					"name": "JoinCondition"
 				},
 				{
-					"name": "select3"
-				},
-				{
 					"name": "Join"
-				},
-				{
-					"name": "select4"
 				}
 			],
 			"scriptLines": [
@@ -217,34 +211,11 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> JoinCondition",
-				"JoinCondition select(mapColumn(",
-				"          COLOR_Tool_Name = SourceCSVIn@COLOR_Tool_Name,",
-				"          Color_Chip_Name,",
-				"          DateTime,",
-				"          Color_Chip_Source,",
-				"          COLOR_TOOL_ID,",
-				"          COLOR_TOOL_NAME = SourceColorTool@COLOR_TOOL_NAME,",
-				"          COLOR_TOOL_TYPE_ID",
-				"     ),",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select3",
-				"select3, SourcePanel join(Color_Chip_Name == NAME,",
+				"JoinCondition, SourcePanel join(Color_Chip_Name == NAME,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> Join",
-				"Join select(mapColumn(",
-				"          COLOR_Tool_Name = select3@COLOR_Tool_Name,",
-				"          Color_Chip_Name,",
-				"          DateTime,",
-				"          Color_Chip_Source,",
-				"          COLOR_TOOL_ID,",
-				"          COLOR_TOOL_NAME = select3@COLOR_TOOL_NAME,",
-				"          PANEL_ID,",
-				"          NAME",
-				"     ),",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select4",
 				"select2 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -262,7 +233,7 @@
 				"     skipDuplicateMapOutputs: true,",
 				"     saveOrder: 1,",
 				"     errorHandlingOption: 'stopOnFirstError') ~> sinkColorCHIPTable",
-				"select4 sink(allowSchemaDrift: true,",
+				"Join sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          MEASUREMENT_ID as integer,",
