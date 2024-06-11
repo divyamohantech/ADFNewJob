@@ -31,13 +31,6 @@
 						"type": "DatasetReference"
 					},
 					"name": "SourceColorToolAfterInsert"
-				},
-				{
-					"dataset": {
-						"referenceName": "SQLDynamicDS",
-						"type": "DatasetReference"
-					},
-					"name": "source1"
 				}
 			],
 			"sinks": [
@@ -66,6 +59,9 @@
 					},
 					"name": "SinkTableColorToolLog3",
 					"description": "Export data to SQLDynamicDSEDIT"
+				},
+				{
+					"name": "sink1"
 				}
 			],
 			"transformations": [
@@ -190,16 +186,6 @@
 				"     isolationLevel: 'READ_COMMITTED',",
 				"     query: 'Select  max(COLOR_TOOL_ID) as Max_COLOR_TOOL_ID from [dbo].[COLOR_TOOL]\\n',",
 				"     format: 'query') ~> SourceColorToolAfterInsert",
-				"source(output(",
-				"          MEASUREMENT_ID as integer,",
-				"          READING_ID as integer,",
-				"          GEOMETRY as string,",
-				"          RAW_DATA as string",
-				"     ),",
-				"     allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> source1",
 				"DontExistsTestConditionNewRecords select(mapColumn(",
 				"          COLOR_Tool_Name",
 				"     ),",
@@ -277,7 +263,14 @@
 				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
 				"          COLOR_TOOL_NAME = COLOR_Tool_Name",
-				"     )) ~> SinkTableColorToolLog3"
+				"     )) ~> SinkTableColorToolLog3",
+				"SourceColorToolAfterInsert sink(validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     store: 'cache',",
+				"     format: 'inline',",
+				"     output: true,",
+				"     saveOrder: 1) ~> sink1"
 			]
 		}
 	}
