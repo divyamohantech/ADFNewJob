@@ -150,6 +150,61 @@
 						"type": "DatasetReference"
 					}
 				]
+			},
+			{
+				"name": "dataflow_dynamic_2",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [
+					{
+						"activity": "Copy data1",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "dataflow_dynamic_2",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"SourceInCsv": {
+								"TableName": "InCSV_NEW"
+							},
+							"SourceUserProfile": {
+								"TableName": "USER_PROFILE"
+							},
+							"SourcePanel": {
+								"TableName": "PANEL"
+							},
+							"INCSV": {
+								"TableName": "InCSV_NEW"
+							},
+							"sinkPanelTable": {
+								"TableName": "PANEL"
+							},
+							"SinkRejectionCSV": {
+								"Container_Name": "test",
+								"File_Name": "Rejection_Panel.csv"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "None",
+					"cacheSinks": {
+						"firstRowOnly": true
+					}
+				}
 			}
 		],
 		"variables": {

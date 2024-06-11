@@ -40,9 +40,6 @@
 							},
 							"sinkColorCHIPTable": {
 								"TableName": "COLOR_CHIP"
-							},
-							"SinkColorChipTablewsql": {
-								"TableName": "COLOR_CHIP"
 							}
 						}
 					},
