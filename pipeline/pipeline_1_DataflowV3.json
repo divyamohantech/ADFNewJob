@@ -238,9 +238,9 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"variableName": "MaxColorId",
+					"variableName": "Max_COLOR_TOOL_ID",
 					"value": {
-						"value": "@activity('dataflow_Test_Cache').output",
+						"value": "@activity('dataflow_Test_Cache').output.runStatus.output.cache.value",
 						"type": "Expression"
 					}
 				}
@@ -359,6 +359,9 @@
 				"type": "String"
 			},
 			"MaxColorId": {
+				"type": "String"
+			},
+			"Max_COLOR_TOOL_ID": {
 				"type": "String"
 			}
 		},
