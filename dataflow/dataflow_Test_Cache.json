@@ -9,30 +9,15 @@
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference"
 					},
-					"name": "SourceIncsv"
-				},
-				{
-					"dataset": {
-						"referenceName": "SQLDynamicDS",
-						"type": "DatasetReference"
-					},
 					"name": "SourceColorTool"
 				}
 			],
 			"sinks": [
 				{
-					"name": "SinkCacheNewRecordsFile2"
+					"name": "Cache"
 				}
 			],
-			"transformations": [
-				{
-					"name": "SelectData"
-				},
-				{
-					"name": "ExistsTestConditionNewRecords",
-					"description": "Filtering rows from undefined which are not matching in undefined based on columns j1'SourceIncsv@COLOR_Tool_Name, SourceColorTool@COLOR_TOOL_NAME'"
-				}
-			],
+			"transformations": [],
 			"scriptLines": [
 				"source(output(",
 				"          COLOR_CHIP_ID as integer,",
@@ -47,36 +32,15 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> SourceIncsv",
-				"source(output(",
-				"          COLOR_CHIP_ID as integer,",
-				"          PANEL_ID as integer,",
-				"          CHIP_SOURCE as string,",
-				"          IS_ACTIVE as integer,",
-				"          LAST_UPDATED_DATE as timestamp,",
-				"          COLOR_TOOL_ID as integer,",
-				"          SOURCE_SYSTEM_NAME as string,",
-				"          SOURCE_SYSTEM_ID as integer",
-				"     ),",
-				"     allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> SourceColorTool",
-				"ExistsTestConditionNewRecords select(mapColumn(",
-				"          COLOR_Tool_Name",
-				"     ),",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> SelectData",
-				"SourceIncsv, SourceColorTool exists(SourceIncsv@COLOR_Tool_Name == SourceColorTool@COLOR_TOOL_NAME,",
-				"     negate:true,",
-				"     broadcast: 'auto')~> ExistsTestConditionNewRecords",
-				"SelectData sink(validateSchema: false,",
+				"     query: 'Select  max(COLOR_TOOL_ID) as Max_COLOR_TOOL_ID from [dbo].[COLOR_TOOL]',",
+				"     format: 'query') ~> SourceColorTool",
+				"SourceColorTool sink(validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     store: 'cache',",
 				"     format: 'inline',",
 				"     output: true,",
-				"     saveOrder: 1) ~> SinkCacheNewRecordsFile2"
+				"     saveOrder: 1) ~> Cache"
 			]
 		}
 	}
