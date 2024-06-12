@@ -55,15 +55,13 @@
 				}
 			},
 			{
-				"name": "Copy data into color tool CSV",
+				"name": "Copy data to Color_Tool CSV",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "dataflowV3",
 						"dependencyConditions": [
-							"Succeeded"
+							"Completed"
 						]
 					}
 				],
@@ -78,6 +76,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
+						"sqlReaderQuery": "select * from [dbo].[COLOR_TOOL] where COLOR_TOOL_ID > 1",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -152,7 +151,11 @@
 				"outputs": [
 					{
 						"referenceName": "DelimitedTextDymanicCSVFiles",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"Container_Name": "test",
+							"File_Name": "Color_Tool_APP.csv"
+						}
 					}
 				]
 			}
