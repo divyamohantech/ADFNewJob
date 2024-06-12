@@ -1,5 +1,5 @@
 {
-	"name": "dataflow_dynamic_2",
+	"name": "DF2_Panel",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
@@ -9,28 +9,28 @@
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference"
 					},
-					"name": "SourceInCsv"
+					"name": "SRInCsv"
 				},
 				{
 					"dataset": {
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference"
 					},
-					"name": "SourceUserProfile"
+					"name": "SRUserProfile"
 				},
 				{
 					"dataset": {
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference"
 					},
-					"name": "SourcePanel"
+					"name": "SRPanel"
 				},
 				{
 					"dataset": {
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference"
 					},
-					"name": "INCSV"
+					"name": "SRInCsvTable"
 				}
 			],
 			"sinks": [
@@ -42,14 +42,14 @@
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference"
 					},
-					"name": "sinkPanelTable"
+					"name": "SKPanelTable"
 				},
 				{
 					"dataset": {
 						"referenceName": "DelimitedTextDymanicCSVFiles",
 						"type": "DatasetReference"
 					},
-					"name": "SinkRejectionCSV"
+					"name": "SKRejectionCSV"
 				}
 			],
 			"transformations": [
@@ -114,7 +114,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> SourceInCsv",
+				"     format: 'table') ~> SRInCsv",
 				"source(output(",
 				"          ENTITY_ID as integer",
 				"     ),",
@@ -122,7 +122,7 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     query: 'Select ENTITY_ID as ENTITY_ID from [dbo].[USER_PROFILE] Where User_Name =\\'pfadmin\\'',",
-				"     format: 'query') ~> SourceUserProfile",
+				"     format: 'query') ~> SRUserProfile",
 				"source(output(",
 				"          PANEL_ID as integer,",
 				"          NAME as string,",
@@ -139,7 +139,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> SourcePanel",
+				"     format: 'table') ~> SRPanel",
 				"source(output(",
 				"          COLOR_Tool_Name as string,",
 				"          Color_Chip_Name as string,",
@@ -183,15 +183,15 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> INCSV",
-				"SourceUserProfile derive(ENTITY_ID = toInteger(ENTITY_ID)) ~> AddColumnsValueEntityID",
-				"SourceInCsv select(mapColumn(",
+				"     format: 'table') ~> SRInCsvTable",
+				"SRUserProfile derive(ENTITY_ID = toInteger(ENTITY_ID)) ~> AddColumnsValueEntityID",
+				"SRInCsv select(mapColumn(",
 				"          COLOR_Tool_Name",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select1",
 				"select1 derive(ENTITY_ID = SinkEntityIDValue#output()) ~> derivedColumn1",
-				"INCSV, SourcePanel join(COLOR_Tool_Name == NAME,",
+				"SRInCsvTable, SRPanel join(COLOR_Tool_Name == NAME,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
@@ -232,7 +232,7 @@
 				"     mapColumn(",
 				"          NAME = COLOR_Tool_Name,",
 				"          ENTITY_ID = ENTITY_ID.ENTITY_ID",
-				"     )) ~> sinkPanelTable",
+				"     )) ~> SKPanelTable",
 				"selectColumns sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -242,7 +242,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     saveOrder: 1) ~> SinkRejectionCSV"
+				"     saveOrder: 1) ~> SKRejectionCSV"
 			]
 		}
 	}
