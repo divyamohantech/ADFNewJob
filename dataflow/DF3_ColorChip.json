@@ -1,5 +1,5 @@
 {
-	"name": "dataflow_dynamic_3",
+	"name": "DF3_ColorChip",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
@@ -9,28 +9,28 @@
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference"
 					},
-					"name": "SourceInCSV"
+					"name": "SRInCSV"
 				},
 				{
 					"dataset": {
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference"
 					},
-					"name": "SourceColorTool"
+					"name": "SRColorTool"
 				},
 				{
 					"dataset": {
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference"
 					},
-					"name": "SourcePanel"
+					"name": "SRPanel"
 				},
 				{
 					"dataset": {
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference"
 					},
-					"name": "SourceCSVIn"
+					"name": "SRCSVIn"
 				}
 			],
 			"sinks": [
@@ -39,14 +39,14 @@
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference"
 					},
-					"name": "sinkColorCHIPTable"
+					"name": "SKColorCHIP"
 				},
 				{
 					"dataset": {
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference"
 					},
-					"name": "Sink1"
+					"name": "SK1"
 				}
 			],
 			"transformations": [
@@ -113,7 +113,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> SourceInCSV",
+				"     format: 'table') ~> SRInCSV",
 				"source(output(",
 				"          COLOR_TOOL_ID as integer,",
 				"          COLOR_TOOL_NAME as string,",
@@ -122,7 +122,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> SourceColorTool",
+				"     format: 'table') ~> SRColorTool",
 				"source(output(",
 				"          PANEL_ID as integer,",
 				"          NAME as string,",
@@ -139,7 +139,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> SourcePanel",
+				"     format: 'table') ~> SRPanel",
 				"source(output(",
 				"          COLOR_Tool_Name as string,",
 				"          Color_Chip_Name as string,",
@@ -183,8 +183,8 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> SourceCSVIn",
-				"SourceInCSV, SourceColorTool exists(SourceInCSV@COLOR_Tool_Name == SourceColorTool@COLOR_TOOL_NAME,",
+				"     format: 'table') ~> SRCSVIn",
+				"SRInCSV, SRColorTool exists(SRInCSV@COLOR_Tool_Name == SRColorTool@COLOR_TOOL_NAME,",
 				"     negate:true,",
 				"     broadcast: 'both')~> NotExistsRecords",
 				"NotExistsRecords select(mapColumn(",
@@ -195,7 +195,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select1",
-				"select1, SourcePanel exists(Color_Chip_Name == NAME,",
+				"select1, SRPanel exists(Color_Chip_Name == NAME,",
 				"     negate:true,",
 				"     broadcast: 'right')~> ExistsUniqueRecords",
 				"ExistsUniqueRecords select(mapColumn(",
@@ -206,12 +206,12 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select2",
-				"SourceCSVIn, SourceColorTool join(SourceCSVIn@COLOR_Tool_Name == SourceColorTool@COLOR_TOOL_NAME,",
+				"SRCSVIn, SRColorTool join(SRCSVIn@COLOR_Tool_Name == SRColorTool@COLOR_TOOL_NAME,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> JoinCondition",
-				"JoinCondition, SourcePanel join(Color_Chip_Name == NAME,",
+				"JoinCondition, SRPanel join(Color_Chip_Name == NAME,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
@@ -232,7 +232,7 @@
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     saveOrder: 1,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> sinkColorCHIPTable",
+				"     errorHandlingOption: 'stopOnFirstError') ~> SKColorCHIP",
 				"Join sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -248,7 +248,7 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> Sink1"
+				"     errorHandlingOption: 'stopOnFirstError') ~> SK1"
 			]
 		}
 	}
