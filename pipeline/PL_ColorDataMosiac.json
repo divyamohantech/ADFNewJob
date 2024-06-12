@@ -609,7 +609,18 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "DF4_SpectralReading",
-						"type": "DataFlowReference"
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"SRInCSV": {
+								"TableName": "InCSV_NEW"
+							},
+							"SRPanel": {
+								"TableName": "Panel"
+							},
+							"SKSpectralReading": {
+								"TableName": "SPECTRAL_READING"
+							}
+						}
 					},
 					"compute": {
 						"coreCount": 8,
