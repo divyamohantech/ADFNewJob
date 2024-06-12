@@ -1,5 +1,5 @@
 {
-	"name": "dataflow_dynamic_4",
+	"name": "DF4_SpectralReading",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
@@ -9,14 +9,14 @@
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference"
 					},
-					"name": "SourceInCSV"
+					"name": "SRInCSV"
 				},
 				{
 					"dataset": {
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference"
 					},
-					"name": "SourcePanel"
+					"name": "SRPanel"
 				}
 			],
 			"sinks": [
@@ -25,7 +25,7 @@
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference"
 					},
-					"name": "SinkSRTable"
+					"name": "SKSpectralReading"
 				}
 			],
 			"transformations": [
@@ -80,7 +80,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> SourceInCSV",
+				"     format: 'table') ~> SRInCSV",
 				"source(output(",
 				"          PANEL_ID as integer,",
 				"          NAME as string,",
@@ -97,8 +97,8 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> SourcePanel",
-				"SourceInCSV, SourcePanel join(COLOR_Tool_Name == NAME,",
+				"     format: 'table') ~> SRPanel",
+				"SRInCSV, SRPanel join(COLOR_Tool_Name == NAME,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
@@ -113,11 +113,10 @@
 				"aggregate1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
+				"          MEASUREMENT_ID as integer,",
 				"          READING_ID as integer,",
-				"          PANEL_ID as integer,",
-				"          READING_DATE as timestamp,",
-				"          MEASUREMENT_SCHEME as string,",
-				"          DEVICE_NAME as string",
+				"          GEOMETRY as string,",
+				"          RAW_DATA as string",
 				"     ),",
 				"     deletable:false,",
 				"     insertable:true,",
@@ -132,7 +131,7 @@
 				"          READING_DATE = DateTime,",
 				"          MEASUREMENT_SCHEME = Scheme1,",
 				"          DEVICE_NAME = Instrument",
-				"     )) ~> SinkSRTable"
+				"     )) ~> SKSpectralReading"
 			]
 		}
 	}
