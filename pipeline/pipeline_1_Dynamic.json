@@ -147,19 +147,8 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "dataflow_dynamic_2",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"SourceInCsv": {
-								"TableName": "InCSV_NEW"
-							},
-							"SourceUserProfile": {
-								"TableName": "USER_PROFILE"
-							},
-							"SourcePanel": {
-								"TableName": "PANEL"
-							}
-						}
+						"referenceName": "DF2_Panel",
+						"type": "DataFlowReference"
 					},
 					"compute": {
 						"coreCount": 8,

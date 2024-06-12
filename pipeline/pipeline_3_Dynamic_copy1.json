@@ -16,25 +16,8 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "dataflow_dynamic_3",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"SourceInCSV": {
-								"TableName": "InCSV_NEW"
-							},
-							"SourceColorTool": {
-								"TableName": "COLOR_TOOL"
-							},
-							"SourcePanel": {
-								"TableName": "PANEL"
-							},
-							"SourceCSVIn": {
-								"TableName": "InCSV_NEW"
-							},
-							"sinkColorCHIPTable": {
-								"TableName": "COLOR_CHIP"
-							}
-						}
+						"referenceName": "DF3_ColorChip",
+						"type": "DataFlowReference"
 					},
 					"compute": {
 						"coreCount": 8,

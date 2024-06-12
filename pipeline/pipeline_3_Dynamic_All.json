@@ -23,28 +23,8 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "dataflow_dynamic_3",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"SourceInCSV": {
-								"TableName": "InCSV_NEW"
-							},
-							"SourceColorTool": {
-								"TableName": "COLOR_TOOL"
-							},
-							"SourcePanel": {
-								"TableName": "PANEL"
-							},
-							"SourceCSVIn": {
-								"TableName": "InCSV_NEW"
-							},
-							"sinkColorCHIPTable": {
-								"TableName": "COLOR_CHIP"
-							},
-							"Sink1": {
-								"TableName": "COLOR_CHIP"
-							}
-						}
+						"referenceName": "DF3_ColorChip",
+						"type": "DataFlowReference"
 					},
 					"compute": {
 						"coreCount": 8,
@@ -206,29 +186,8 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "dataflow_dynamic_2",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"SourceInCsv": {
-								"TableName": "InCSV_NEW"
-							},
-							"SourceUserProfile": {
-								"TableName": "USER_PROFILE"
-							},
-							"SourcePanel": {
-								"TableName": "PANEL"
-							},
-							"INCSV": {
-								"TableName": "InCSV_NEW"
-							},
-							"sinkPanelTable": {
-								"TableName": "PANEL"
-							},
-							"SinkRejectionCSV": {
-								"Container_Name": "test",
-								"File_Name": "Rejection_Panel_APP.csv"
-							}
-						}
+						"referenceName": "DF2_Panel",
+						"type": "DataFlowReference"
 					},
 					"compute": {
 						"coreCount": 8,
@@ -254,26 +213,23 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "dataflow_dynamic_1_Complete_v2_with_rejection",
+						"referenceName": "DF1_ColorTool",
 						"type": "DataFlowReference",
 						"datasetParameters": {
-							"SourceIncsv": {
+							"SRINCSV": {
 								"TableName": "InCSV_NEW"
 							},
-							"SourceColorTool": {
-								"TableName": "COLOR_TOOL"
-							},
-							"SourceInCSVtable": {
+							"SRInCSVtable": {
 								"TableName": "InCSV_NEW"
 							},
-							"SourceColorToolTbale": {
+							"SRColorTooltable": {
 								"TableName": "COLOR_TOOL"
 							},
-							"sinkDataColorRejectCSV": {
+							"SRColorToolRejectCSV": {
 								"Container_Name": "test",
 								"File_Name": "Rejection_color_tool_APP.csv"
 							},
-							"SinkNewrecorddataintocolotoolTable": {
+							"SKColorTool": {
 								"TableName": "COLOR_TOOL"
 							}
 						}
@@ -611,19 +567,8 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "dataflow_dynamic_4",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"SourceInCSV": {
-								"TableName": "InCSV_NEW"
-							},
-							"SourcePanel": {
-								"TableName": "PANEL"
-							},
-							"SinkSRTable": {
-								"TableName": "SPECTRAL_READING"
-							}
-						}
+						"referenceName": "DF4_SpectralReading",
+						"type": "DataFlowReference"
 					},
 					"compute": {
 						"coreCount": 8,

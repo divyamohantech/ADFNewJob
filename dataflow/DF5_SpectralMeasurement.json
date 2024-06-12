@@ -1,5 +1,5 @@
 {
-	"name": "dataflow_dynamic_5",
+	"name": "DF5_SpectralMeasurement",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
@@ -9,21 +9,21 @@
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference"
 					},
-					"name": "SourceInCSV"
+					"name": "SRInCSV"
 				},
 				{
 					"dataset": {
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference"
 					},
-					"name": "SourcePanel"
+					"name": "SRPanel"
 				},
 				{
 					"dataset": {
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference"
 					},
-					"name": "SourceSR"
+					"name": "SRSpectralReading"
 				}
 			],
 			"sinks": [
@@ -32,7 +32,7 @@
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference"
 					},
-					"name": "SinkSM"
+					"name": "SKSpectralMeasurement"
 				}
 			],
 			"transformations": [
@@ -90,7 +90,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> SourceInCSV",
+				"     format: 'table') ~> SRInCSV",
 				"source(output(",
 				"          PANEL_ID as integer,",
 				"          NAME as string,",
@@ -107,7 +107,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> SourcePanel",
+				"     format: 'table') ~> SRPanel",
 				"source(output(",
 				"          READING_ID as integer,",
 				"          PANEL_ID as integer,",
@@ -118,13 +118,13 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> SourceSR",
-				"SourceInCSV, SourcePanel join(COLOR_Tool_Name == NAME,",
+				"     format: 'table') ~> SRSpectralReading",
+				"SRInCSV, SRPanel join(COLOR_Tool_Name == NAME,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> join1",
-				"join1, SourceSR join(SourcePanel@PANEL_ID == SourceSR@PANEL_ID,",
+				"join1, SRSpectralReading join(SRPanel@PANEL_ID == SRSpectralReading@PANEL_ID,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
@@ -132,11 +132,10 @@
 				"join2 aggregate(groupBy(READING_ID,",
 				"          Geometry,",
 				"          {400},",
-				"          {410}),",
+				"          SRPanel@PANEL_ID),",
 				"     READING_ID_1 = first(READING_ID),",
 				"          Geometry_1 = first(Geometry),",
-				"          {400_1} = first(400),",
-				"          PANEL_ID_1 = first(PANEL_ID)) ~> aggregate1",
+				"          {400_1} = first(400)) ~> aggregate1",
 				"aggregate1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -154,8 +153,11 @@
 				"     skipDuplicateMapOutputs: true,",
 				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
-				"          READING_ID",
-				"     )) ~> SinkSM"
+				"          MEASUREMENT_ID = PANEL_ID,",
+				"          READING_ID,",
+				"          GEOMETRY = Geometry,",
+				"          RAW_DATA = {400_1}",
+				"     )) ~> SKSpectralMeasurement"
 			]
 		}
 	}

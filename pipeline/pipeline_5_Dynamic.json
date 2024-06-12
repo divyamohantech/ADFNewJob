@@ -16,27 +16,20 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "dataflow_dynamic_5",
+						"referenceName": "DF5_SpectralMeasurement",
 						"type": "DataFlowReference",
 						"datasetParameters": {
-							"SourceInCSV": {
+							"SRInCSV": {
 								"TableName": "InCSV_NEW"
 							},
-							"SourcePanel": {
+							"SRPanel": {
 								"TableName": "PANEL"
 							},
-							"SourceSR": {
+							"SRSpectralReading": {
 								"TableName": "SPECTRAL_READING"
 							},
-							"SinkSM": {
+							"SKSpectralMeasurement": {
 								"TableName": "SPECTRAL_MEASUREMENT"
-							}
-						},
-						"linkedServiceParameters": {
-							"SinkSM": {
-								"schemaLinkedService": {
-									"TableName": "SPECTRAL_MEASUREMENT"
-								}
 							}
 						}
 					},
