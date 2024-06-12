@@ -59,9 +59,9 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "dataflowV3",
+						"activity": "ColorToolId",
 						"dependencyConditions": [
-							"Completed"
+							"Succeeded"
 						]
 					}
 				],
@@ -76,7 +76,10 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "select * from [dbo].[COLOR_TOOL] where COLOR_TOOL_ID > 1",
+						"sqlReaderQuery": {
+							"value": "select * from [dbo].[COLOR_TOOL] where COLOR_TOOL_ID > 1",
+							"type": "Expression"
+						},
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -158,10 +161,37 @@
 						}
 					}
 				]
+			},
+			{
+				"name": "ColorToolId",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "dataflowV3",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "MaxColorId",
+					"value": {
+						"value": "@activity('dataflowV3').output.runStatus.output.sinkcache.value",
+						"type": "Expression"
+					}
+				}
 			}
 		],
 		"variables": {
 			"csv": {
+				"type": "String"
+			},
+			"MaxColorId": {
 				"type": "String"
 			}
 		},
