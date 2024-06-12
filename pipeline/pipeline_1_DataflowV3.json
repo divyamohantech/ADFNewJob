@@ -165,6 +165,8 @@
 			{
 				"name": "ColorToolId",
 				"type": "SetVariable",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "dataflowV3",
@@ -179,11 +181,8 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"variableName": "MaxColorId",
-					"value": {
-						"value": "@activity('dataflowV3').output.runStatus.output.sinkcache.value",
-						"type": "Expression"
-					}
+					"variableName": "pipelineReturnValue",
+					"setSystemVariable": true
 				}
 			}
 		],
