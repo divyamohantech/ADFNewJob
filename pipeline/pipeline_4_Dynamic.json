@@ -28,13 +28,6 @@
 							"SinkSRTable": {
 								"TableName": "SPECTRAL_READING"
 							}
-						},
-						"linkedServiceParameters": {
-							"SinkSRTable": {
-								"schemaLinkedService": {
-									"TableName": "SPECTRAL_READING"
-								}
-							}
 						}
 					},
 					"compute": {
