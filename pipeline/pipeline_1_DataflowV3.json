@@ -59,6 +59,8 @@
 			{
 				"name": "Copy data to Color_Tool CSV",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "ColorToolId",
