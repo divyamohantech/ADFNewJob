@@ -1,5 +1,5 @@
 {
-	"name": "pipeline_3_Dynamic",
+	"name": "pipeline_3_Dynamic_All",
 	"properties": {
 		"activities": [
 			{
@@ -39,6 +39,9 @@
 								"TableName": "InCSV_NEW"
 							},
 							"sinkColorCHIPTable": {
+								"TableName": "COLOR_CHIP"
+							},
+							"Sink1": {
 								"TableName": "COLOR_CHIP"
 							}
 						}
