@@ -203,7 +203,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "dataflow_Test_Cache",
+						"referenceName": "dataflow_Test_Cache1",
 						"type": "DataFlowReference",
 						"datasetParameters": {
 							"SourceColorTool": {
@@ -215,10 +215,7 @@
 						"coreCount": 8,
 						"computeType": "General"
 					},
-					"traceLevel": "None",
-					"cacheSinks": {
-						"firstRowOnly": false
-					}
+					"traceLevel": "None"
 				}
 			},
 			{
@@ -268,7 +265,7 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "select * from [dbo].[COLOR_TOOL] where COLOR_TOOL_NAME \n= @json(variables('Max_COLOR_TOOL_ID')).value",
+							"value": "select * from [dbo].[COLOR_TOOL] where COLOR_TOOL_ID\n= @json(variables('Max_COLOR_TOOL_ID')).value",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
@@ -363,6 +360,12 @@
 			},
 			"Max_COLOR_TOOL_ID": {
 				"type": "String"
+			},
+			"Max_Panel_ID": {
+				"type": "String"
+			},
+			"Max_Panel_ID_val": {
+				"type": "Integer"
 			}
 		},
 		"annotations": []
