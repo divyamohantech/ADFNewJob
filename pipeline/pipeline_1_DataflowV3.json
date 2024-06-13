@@ -268,7 +268,7 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "select * from [dbo].[COLOR_TOOL] where COLOR_TOOL_NAME = @{variables('Max_COLOR_TOOL_ID')}",
+							"value": "select * from [dbo].[COLOR_TOOL] where COLOR_TOOL_NAME \n= @json(variables('Max_COLOR_TOOL_ID')).value",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
