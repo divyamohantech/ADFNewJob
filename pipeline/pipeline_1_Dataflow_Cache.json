@@ -163,12 +163,9 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "dataflow_Test_Cache",
+						"referenceName": "dataflow_Test_Cache1",
 						"type": "DataFlowReference",
 						"datasetParameters": {
-							"SourceIncsv": {
-								"TableName": "InCSV_NEW"
-							},
 							"SourceColorTool": {
 								"TableName": "COLOR_TOOL"
 							}
