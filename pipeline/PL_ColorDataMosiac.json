@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "dataflow_dynamic_3",
+				"name": "DF3_ColorChip",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [
 					{
@@ -61,7 +61,7 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "dataflow_dynamic_3",
+						"activity": "DF3_ColorChip",
 						"dependencyConditions": [
 							"Completed"
 						]
@@ -186,7 +186,7 @@
 				]
 			},
 			{
-				"name": "dataflow_dynamic_2",
+				"name": "DF2_Panel",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [
 					{
@@ -241,7 +241,7 @@
 				}
 			},
 			{
-				"name": "dataflow_dynamic_1_Complete_v2_with_rejection",
+				"name": "DF1_ColorTool",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -287,7 +287,7 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "dataflow_dynamic_1_Complete_v2_with_rejection",
+						"activity": "DF1_ColorTool",
 						"dependencyConditions": [
 							"Completed"
 						]
@@ -392,7 +392,7 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "dataflow_dynamic_2",
+						"activity": "DF2_Panel",
 						"dependencyConditions": [
 							"Completed"
 						]
@@ -588,7 +588,7 @@
 				]
 			},
 			{
-				"name": "dataflow_dynamic_4",
+				"name": "DF4_SpectralReading",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [
 					{
@@ -637,7 +637,7 @@
 				"type": "ExecuteDataFlow",
 				"dependsOn": [
 					{
-						"activity": "dataflow_dynamic_4",
+						"activity": "DF4_SpectralReading",
 						"dependencyConditions": [
 							"Completed"
 						]
