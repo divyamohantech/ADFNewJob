@@ -260,6 +260,9 @@
 							"SRINCSV": {
 								"TableName": "InCSV_NEW"
 							},
+							"SRColorTool": {
+								"TableName": "COLOR_TOOL"
+							},
 							"SRInCSVtable": {
 								"TableName": "InCSV_NEW"
 							},
