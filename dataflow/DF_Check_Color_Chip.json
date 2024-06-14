@@ -44,6 +44,9 @@
 				},
 				{
 					"name": "select1"
+				},
+				{
+					"name": "derivedColumn1"
 				}
 			],
 			"scriptLines": [
@@ -135,7 +138,9 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select1",
-				"select1 sink(allowSchemaDrift: true,",
+				"select1 derive(PANEL_ID = PANEL_ID,",
+				"          COLOR_TOOL_ID = COLOR_TOOL_ID) ~> derivedColumn1",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          MEASUREMENT_ID as integer,",
