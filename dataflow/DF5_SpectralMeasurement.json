@@ -153,10 +153,8 @@
 				"     skipDuplicateMapOutputs: true,",
 				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
-				"          MEASUREMENT_ID = PANEL_ID,",
 				"          READING_ID,",
-				"          GEOMETRY = Geometry,",
-				"          RAW_DATA = {400_1}",
+				"          GEOMETRY = Geometry",
 				"     )) ~> SKSpectralMeasurement"
 			]
 		}
