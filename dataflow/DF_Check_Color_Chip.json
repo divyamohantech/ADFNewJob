@@ -17,12 +17,30 @@
 						"type": "DatasetReference"
 					},
 					"name": "SRPanel"
+				},
+				{
+					"dataset": {
+						"referenceName": "SQLDynamicDS",
+						"type": "DatasetReference"
+					},
+					"name": "SRColorTool"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "SQLDynamicDS",
+						"type": "DatasetReference"
+					},
+					"name": "SKColorTool"
+				}
+			],
 			"transformations": [
 				{
 					"name": "join1"
+				},
+				{
+					"name": "join2"
 				}
 			],
 			"scriptLines": [
@@ -87,11 +105,44 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> SRPanel",
+				"source(output(",
+				"          COLOR_TOOL_ID as integer,",
+				"          COLOR_TOOL_NAME as string,",
+				"          COLOR_TOOL_TYPE_ID as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> SRColorTool",
 				"SRInCSV, SRPanel join(Color_Chip_Name == NAME,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> join1"
+				"     broadcast: 'auto')~> join1",
+				"join1, SRColorTool join(SRInCSV@COLOR_Tool_Name == SRColorTool@COLOR_TOOL_NAME,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join2",
+				"join2 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          MEASUREMENT_ID as integer,",
+				"          READING_ID as integer,",
+				"          GEOMETRY as string,",
+				"          RAW_DATA as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          PANEL_ID",
+				"     )) ~> SKColorTool"
 			]
 		}
 	}
