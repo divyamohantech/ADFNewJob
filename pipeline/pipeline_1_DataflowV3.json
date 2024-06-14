@@ -58,6 +58,8 @@
 			{
 				"name": "Copy Logs Query",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Set Max_ColorToolID",
