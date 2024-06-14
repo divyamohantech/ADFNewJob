@@ -181,7 +181,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"variableName": "Max_COLOR_TOOL_ID",
-					"value": "@JSON(string(activity('dataflow_Test_Cache').output.runStatus.output.cache.value[0].Max_COLOR_TOOL_ID))"
+					"value": "@{jsonstring(activity('dataflow_Test_Cache').output.runStatus.output.cache.value[0].Max_COLOR_TOOL_ID)}"
 				}
 			}
 		],
