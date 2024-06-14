@@ -141,7 +141,7 @@
 				"     skipDuplicateMapOutputs: true,",
 				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
-				"          PANEL_ID",
+				"          MEASUREMENT_ID = PANEL_ID",
 				"     )) ~> SKColorTool"
 			]
 		}
