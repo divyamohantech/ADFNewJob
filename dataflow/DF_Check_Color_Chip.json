@@ -41,6 +41,9 @@
 				},
 				{
 					"name": "join2"
+				},
+				{
+					"name": "select1"
 				}
 			],
 			"scriptLines": [
@@ -124,7 +127,15 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> join2",
-				"join2 sink(allowSchemaDrift: true,",
+				"join2 select(mapColumn(",
+				"          PANEL_ID,",
+				"          Color_Chip_Source,",
+				"          DateTime,",
+				"          COLOR_TOOL_ID",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          MEASUREMENT_ID as integer,",
@@ -139,7 +150,10 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> SKColorTool"
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          RAW_DATA = PANEL_ID",
+				"     )) ~> SKColorTool"
 			]
 		}
 	}
