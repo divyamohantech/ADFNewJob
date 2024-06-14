@@ -219,7 +219,7 @@
 				}
 			},
 			{
-				"name": "ColorToolId_copy1",
+				"name": "Set Max_ColorToolID",
 				"type": "SetVariable",
 				"dependsOn": [
 					{
@@ -243,11 +243,11 @@
 				}
 			},
 			{
-				"name": "Copy data to Color_Tool CSV_copy1",
+				"name": "Copy Logs Query",
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "ColorToolId_copy1",
+						"activity": "Set Max_ColorToolID",
 						"dependencyConditions": [
 							"Completed"
 						]
