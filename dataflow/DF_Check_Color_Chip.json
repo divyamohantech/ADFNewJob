@@ -139,10 +139,7 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError',",
-				"     mapColumn(",
-				"          MEASUREMENT_ID = PANEL_ID",
-				"     )) ~> SKColorTool"
+				"     errorHandlingOption: 'stopOnFirstError') ~> SKColorTool"
 			]
 		}
 	}
