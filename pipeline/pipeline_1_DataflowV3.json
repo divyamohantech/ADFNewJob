@@ -223,9 +223,9 @@
 				"type": "SetVariable",
 				"dependsOn": [
 					{
-						"activity": "dataflow_Test_Cache",
+						"activity": "setMax2",
 						"dependencyConditions": [
-							"Completed"
+							"Succeeded"
 						]
 					}
 				],
@@ -349,6 +349,27 @@
 						}
 					}
 				]
+			},
+			{
+				"name": "setMax2",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "dataflow_Test_Cache",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "Max_COLOR_TOOL_ID",
+					"value": "@activity('dataflow_Test_Cache').output.runStatus.output.cache.value[0].Max_COLOR_TOOL_ID"
+				}
 			}
 		],
 		"variables": {
