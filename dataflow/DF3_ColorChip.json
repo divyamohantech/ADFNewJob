@@ -191,7 +191,7 @@
 				"     format: 'table') ~> SRInCsvRej",
 				"SRInCsv, SRTableColorChip exists(Color_Chip_Source == CHIP_SOURCE,",
 				"     negate:true,",
-				"     broadcast: 'both')~> NotExistsRecords",
+				"     broadcast: 'left')~> NotExistsRecords",
 				"NotExistsRecords select(mapColumn(",
 				"          COLOR_Tool_Name,",
 				"          Color_Chip_Name,",
