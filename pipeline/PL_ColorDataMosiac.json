@@ -568,7 +568,7 @@
 						"referenceName": "DF4_SpectralReading",
 						"type": "DataFlowReference",
 						"datasetParameters": {
-							"SRInCSV": {
+							"SRInCsv": {
 								"TableName": "InCSV_NEW"
 							}
 						}
