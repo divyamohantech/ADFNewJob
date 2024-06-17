@@ -16,7 +16,7 @@
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference"
 					},
-					"name": "SRPanel"
+					"name": "SRTablePanel"
 				},
 				{
 					"dataset": {
@@ -37,10 +37,10 @@
 			],
 			"transformations": [
 				{
-					"name": "join1"
+					"name": "SRInCSVjoinSRTablePanel"
 				},
 				{
-					"name": "join2"
+					"name": "joinWithSRSpectralReading"
 				},
 				{
 					"name": "aggregate1"
@@ -107,7 +107,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> SRPanel",
+				"     format: 'table') ~> SRTablePanel",
 				"source(output(",
 				"          READING_ID as integer,",
 				"          PANEL_ID as integer,",
@@ -119,20 +119,20 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> SRSpectralReading",
-				"SRInCSV, SRPanel join(COLOR_Tool_Name == NAME,",
+				"SRInCSV, SRTablePanel join(COLOR_Tool_Name == NAME,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> join1",
-				"join1, SRSpectralReading join(SRPanel@PANEL_ID == SRSpectralReading@PANEL_ID,",
+				"     broadcast: 'auto')~> SRInCSVjoinSRTablePanel",
+				"SRInCSVjoinSRTablePanel, SRSpectralReading join(SRTablePanel@PANEL_ID == SRSpectralReading@PANEL_ID,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> join2",
-				"join2 aggregate(groupBy(READING_ID,",
+				"     broadcast: 'auto')~> joinWithSRSpectralReading",
+				"joinWithSRSpectralReading aggregate(groupBy(READING_ID,",
 				"          Geometry,",
 				"          {400},",
-				"          SRPanel@PANEL_ID),",
+				"          SRTablePanel@PANEL_ID),",
 				"     READING_ID_1 = first(READING_ID),",
 				"          Geometry_1 = first(Geometry),",
 				"          {400_1} = first(400)) ~> aggregate1",
