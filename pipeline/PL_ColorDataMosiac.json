@@ -177,8 +177,6 @@
 			{
 				"name": "DF2_Panel",
 				"type": "ExecuteDataFlow",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Copy data to Color_Tool CSV",
@@ -203,8 +201,21 @@
 							"SRInCsv": {
 								"TableName": "InCSV_NEW"
 							},
+							"SRTableUserProfile": {
+								"TableName": "USER_PROFILE"
+							},
+							"SRTablePanel": {
+								"TableName": "PANEL"
+							},
 							"SRInCsvTable": {
 								"TableName": "InCSV_NEW"
+							},
+							"SKTablePanel": {
+								"TableName": "PANEL"
+							},
+							"SKFileRejectionCSV": {
+								"Container_Name": "test",
+								"File_Name": "Rejected_Panel.csv"
 							}
 						}
 					},
