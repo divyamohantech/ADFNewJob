@@ -219,7 +219,7 @@
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> SelectNewRecords",
 				"JoinWithColorTool select(mapColumn(",
-				"          COLOR_Tool_Name = PANEL_ID,",
+				"          PANEL_ID,",
 				"          CHIP_SOURCE = Color_Chip_Source,",
 				"          LAST_UPDATED_DATE = DateTime,",
 				"          COLOR_TOOL_ID",
