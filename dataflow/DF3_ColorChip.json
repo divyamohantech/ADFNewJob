@@ -46,7 +46,7 @@
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference"
 					},
-					"name": "SKTableColorCHIP1"
+					"name": "SKTableColorCHIPs"
 				}
 			],
 			"transformations": [
@@ -247,7 +247,7 @@
 				"     upsertable:false,",
 				"     format: 'table',",
 				"     saveOrder: 1,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> SKTableColorCHIP1"
+				"     errorHandlingOption: 'stopOnFirstError') ~> SKTableColorCHIPs"
 			]
 		}
 	}
