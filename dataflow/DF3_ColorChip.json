@@ -56,7 +56,7 @@
 						"referenceName": "DelimitedTextDymanicCSVFiles",
 						"type": "DatasetReference"
 					},
-					"name": "SKTableColorCHIPs"
+					"name": "SKFileColorCHIP"
 				}
 			],
 			"transformations": [
@@ -272,17 +272,16 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     saveOrder: 2,",
+				"     saveOrder: 1,",
 				"     errorHandlingOption: 'stopOnFirstError') ~> SKTableColorChip",
 				"SelectColumnColorChipSource sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     partitionFileNames:['Rejected Color_Chip.csv'],",
-				"     saveOrder: 1,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
 				"     mapColumn(",
-				"          CHIP_SOURCE = Color_Chip_Source",
-				"     ),",
-				"     partitionBy('hash', 1),",
-				"     format: 'table') ~> SKTableColorCHIPs"
+				"          Chip_Source = Color_Chip_Source",
+				"     )) ~> SKFileColorCHIP"
 			]
 		}
 	}
