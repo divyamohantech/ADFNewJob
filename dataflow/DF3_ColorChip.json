@@ -219,7 +219,7 @@
 				"     skipDuplicateMapOutputs: true) ~> select",
 				"select, SRTablePanel exists(Color_Chip_Name == NAME,",
 				"     negate:true,",
-				"     broadcast: 'right')~> JoinWithPanel",
+				"     broadcast: 'both')~> JoinWithPanel",
 				"JoinWithColorTool select(mapColumn(",
 				"          COLOR_Tool_Name = select@COLOR_Tool_Name,",
 				"          Color_Chip_Name,",
