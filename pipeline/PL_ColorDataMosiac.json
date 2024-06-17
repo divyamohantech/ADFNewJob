@@ -181,7 +181,7 @@
 				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
-						"activity": "Copy data to Color_Tool CSV",
+						"activity": "SET_MAX_PANEL_ID",
 						"dependencyConditions": [
 							"Completed"
 						]
@@ -666,6 +666,30 @@
 						"activity": "DF1_ColorTool",
 						"dependencyConditions": [
 							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "MAX_COLOR_TOOL_ID",
+					"value": {
+						"value": "@activity('DF1_ColorTool').output.runStatus.output.SKCacheMAXCOLORTOOLID.value[0].MAX_COLOR_TOOL_ID",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "SET_MAX_PANEL_ID",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Copy data to Color_Tool CSV",
+						"dependencyConditions": [
+							"Completed"
 						]
 					}
 				],
