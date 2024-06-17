@@ -33,7 +33,7 @@
 						"type": "DatasetReference"
 					},
 					"name": "SKFileColorToolRejectCSV",
-					"description": "Export data to  DelimitedTextDymanicCSVFiles"
+					"description": "Export data to DelimitedTextDymanicCSVFiles"
 				},
 				{
 					"dataset": {
