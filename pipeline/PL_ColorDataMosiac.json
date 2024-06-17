@@ -63,8 +63,6 @@
 			{
 				"name": "Log data to ColorChip CSV",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "SET_MAX_COLOR_CHIP_ID",
@@ -695,7 +693,7 @@
 				"typeProperties": {
 					"variableName": "MAX_COLOR_TOOL_ID",
 					"value": {
-						"value": "@activity('DF1_ColorTool').output.runStatus.output.SKCacheMAXCOLORTOOLID.value[0].MAX_COLOR_TOOL_ID",
+						"value": "@activity('DF3_ColorChip').output.runStatus.output.SKCacheMAXCOLORCHIPID.value[0].MAX_COLOR_CHIP_ID",
 						"type": "Expression"
 					}
 				}
