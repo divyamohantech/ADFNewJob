@@ -146,6 +146,11 @@
 				]
 			}
 		],
+		"variables": {
+			"Max_PanelID": {
+				"type": "Integer"
+			}
+		},
 		"annotations": []
 	}
 }

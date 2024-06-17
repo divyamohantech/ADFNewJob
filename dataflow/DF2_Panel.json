@@ -50,6 +50,9 @@
 						"type": "DatasetReference"
 					},
 					"name": "SKFileRejectionCSV"
+				},
+				{
+					"name": "SKCacheMAXPANELID"
 				}
 			],
 			"transformations": [
@@ -68,6 +71,9 @@
 				},
 				{
 					"name": "selectColumns"
+				},
+				{
+					"name": "FNAggMAXPANEL"
 				}
 			],
 			"scriptLines": [
@@ -202,6 +208,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> selectColumns",
+				"SRTablePanel aggregate(Max_PanelID = max(Max_PanelID)) ~> FNAggMAXPANEL",
 				"AddColumnsValueEntityID sink(validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
@@ -242,7 +249,14 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     saveOrder: 1) ~> SKFileRejectionCSV"
+				"     saveOrder: 1) ~> SKFileRejectionCSV",
+				"FNAggMAXPANEL sink(validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     store: 'cache',",
+				"     format: 'inline',",
+				"     output: false,",
+				"     saveOrder: 1) ~> SKCacheMAXPANELID"
 			]
 		}
 	}

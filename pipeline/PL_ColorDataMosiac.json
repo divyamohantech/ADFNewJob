@@ -26,23 +26,8 @@
 						"referenceName": "DF3_ColorChip",
 						"type": "DataFlowReference",
 						"datasetParameters": {
-							"SRInCSV": {
-								"TableName": "InCSV_NEW"
-							},
-							"SRColorTool": {
-								"TableName": "COLOR_TOOL"
-							},
-							"SRPanel": {
-								"TableName": "PANEL"
-							},
 							"SRCSVIn": {
 								"TableName": "InCSV_NEW"
-							},
-							"SKColorCHIP": {
-								"TableName": "COLOR_CHIP"
-							},
-							"SK1": {
-								"TableName": "COLOR_CHIP"
 							}
 						}
 					},
@@ -212,21 +197,8 @@
 							"SRInCsv": {
 								"TableName": "InCSV_NEW"
 							},
-							"SRUserProfile": {
-								"TableName": "USER_PROFILE"
-							},
-							"SRPanel": {
-								"TableName": "PANEL"
-							},
 							"SRInCsvTable": {
 								"TableName": "InCSV_NEW"
-							},
-							"SKPanelTable": {
-								"TableName": "PANEL"
-							},
-							"SKRejectionCSV": {
-								"Container_Name": "test",
-								"File_Name": "Panel_Rejction_App.csv"
 							}
 						}
 					},
@@ -267,7 +239,7 @@
 								"TableName": "COLOR_TOOL"
 							},
 							"SKFileColorToolRejectCSV": {
-								"Container_Name": "test",
+								"Container_Name": "Test",
 								"File_Name": "ColorToolRejected.csv"
 							},
 							"SKTableColorTool": {
@@ -276,7 +248,7 @@
 						}
 					},
 					"compute": {
-						"coreCount": 32,
+						"coreCount": 8,
 						"computeType": "General"
 					},
 					"traceLevel": "None",
@@ -307,7 +279,10 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "select * from [dbo].[COLOR_TOOL] where COLOR_TOOL_ID  > @{variables('MAX_COLOR_TOOL_ID')}",
+						"sqlReaderQuery": {
+							"value": "select * from [dbo].[COLOR_TOOL] where COLOR_TOOL_ID  > @{variables('Max_COLOR_TOOL_ID')}",
+							"type": "Expression"
+						},
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -616,12 +591,6 @@
 						"datasetParameters": {
 							"SRInCSV": {
 								"TableName": "InCSV_NEW"
-							},
-							"SRPanel": {
-								"TableName": "Panel"
-							},
-							"SKSpectralReading": {
-								"TableName": "SPECTRAL_READING"
 							}
 						}
 					},
@@ -662,9 +631,6 @@
 							"SRInCSV": {
 								"TableName": "InCSV_NEW"
 							},
-							"SRPanel": {
-								"TableName": "PANEL"
-							},
 							"SRSpectralReading": {
 								"TableName": "SPECTRAL_READING"
 							},
@@ -698,7 +664,10 @@
 				"userProperties": [],
 				"typeProperties": {
 					"variableName": "MAX_COLOR_TOOL_ID",
-					"value": "@activity('DF1_ColorTool').output.runStatus.output.SKCacheMAXCOLORTOOLID.value[0].MAX_COLOR_TOOL_ID"
+					"value": {
+						"value": "@last(split( string(activity('DF1_ColorTool').output.runStatus.output.cache.value[0].\nMAX_COLOR_TOOL_ID),':'))",
+						"type": "Expression"
+					}
 				}
 			}
 		],
@@ -706,7 +675,10 @@
 			"MAX_COLOR_TOOL_ID": {
 				"type": "String"
 			},
-			"newMaxId": {
+			"Max_PANEL_ID": {
+				"type": "String"
+			},
+			"Max_PanelID": {
 				"type": "Integer"
 			}
 		},

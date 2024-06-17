@@ -26,7 +26,7 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "setMaxPanel_ID_V3",
+						"activity": "setMaxPanelV3",
 						"dependencyConditions": [
 							"Completed"
 						]
@@ -44,7 +44,7 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "\nselect * from [dbo].[PANEL] WHERE PANEL_ID \n> @{variables('Max_PANEL_ID')}",
+							"value": "variables('Max_PanelID')\nselect * from [dbo].[PANEL] WHERE PANEL_ID \n> @{variables('Max_PanelID')}",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
@@ -92,30 +92,6 @@
 				]
 			},
 			{
-				"name": "setMaxPanel_ID_V3",
-				"type": "SetVariable",
-				"dependsOn": [
-					{
-						"activity": "dataflow_Test_Cache2",
-						"dependencyConditions": [
-							"Completed"
-						]
-					}
-				],
-				"policy": {
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"variableName": "Max_PANEL_ID",
-					"value": {
-						"value": "@last(split( string(activity('dataflow_Test_Cache2').output.runStatus.output.cache.value[0].activity('dataflow_Test_Cache2').outputMax_COLOR_TOOL_ID),':'))",
-						"type": "Expression"
-					}
-				}
-			},
-			{
 				"name": "dataflow_Test_Cache2",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
@@ -141,7 +117,34 @@
 						"coreCount": 8,
 						"computeType": "General"
 					},
-					"traceLevel": "Fine"
+					"traceLevel": "None",
+					"cacheSinks": {
+						"firstRowOnly": true
+					}
+				}
+			},
+			{
+				"name": "setMaxPanelV3",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "dataflow_Test_Cache2",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "Max_PanelID",
+					"value": {
+						"value": "@last(split( string(activity('dataflow_Test_Cache2').output.runStatus.output.cache.value[0].\nMax_PanelID),':')) ",
+						"type": "Expression"
+					}
 				}
 			}
 		],
@@ -151,6 +154,9 @@
 			},
 			"Max_PANEL_ID": {
 				"type": "String"
+			},
+			"Max_PanelID": {
+				"type": "Integer"
 			}
 		},
 		"annotations": []
