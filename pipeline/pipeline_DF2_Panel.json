@@ -147,7 +147,7 @@
 		],
 		"variables": {
 			"MAX_PANEL_ID": {
-				"type": "String"
+				"type": "Integer"
 			}
 		},
 		"annotations": []
