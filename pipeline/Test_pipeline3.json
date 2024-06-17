@@ -81,19 +81,6 @@
 								"Container_Name": "test",
 								"File_Name": "Rejected Panel"
 							}
-						},
-						"linkedServiceParameters": {
-							"SKTablePanel": {
-								"schemaLinkedService": {
-									"TableName": "PANEL"
-								}
-							},
-							"SKFileRejectionCSV": {
-								"schemaLinkedService": {
-									"Container_Name": "test",
-									"File_Name": "Rejected Panel"
-								}
-							}
 						}
 					},
 					"compute": {
@@ -112,6 +99,9 @@
 				"type": "String"
 			},
 			"Max_PanelID": {
+				"type": "Integer"
+			},
+			"MAX_PANEL_ID": {
 				"type": "Integer"
 			}
 		},
