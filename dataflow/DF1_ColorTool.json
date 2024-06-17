@@ -39,7 +39,7 @@
 						"referenceName": "DelimitedTextDymanicCSVFiles",
 						"type": "DatasetReference"
 					},
-					"name": "SRColorToolRejectCSV"
+					"name": "SKColorToolRejectCSV"
 				},
 				{
 					"dataset": {
@@ -203,7 +203,7 @@
 				"     saveOrder: 1,",
 				"     mapColumn(",
 				"          COLOR_TOOL_NAME = COLOR_Tool_Name",
-				"     )) ~> SRColorToolRejectCSV",
+				"     )) ~> SKColorToolRejectCSV",
 				"SelectData sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",

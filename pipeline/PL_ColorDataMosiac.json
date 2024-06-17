@@ -7,7 +7,7 @@
 				"type": "ExecuteDataFlow",
 				"dependsOn": [
 					{
-						"activity": "Copy data to Panel CSV",
+						"activity": "Logged data to Panel CSV",
 						"dependencyConditions": [
 							"Completed"
 						]
@@ -57,7 +57,7 @@
 				}
 			},
 			{
-				"name": "Copy Data to ColorChip Csv",
+				"name": "Logged Data to ColorChip Csv",
 				"type": "Copy",
 				"dependsOn": [
 					{
@@ -190,7 +190,7 @@
 				"type": "ExecuteDataFlow",
 				"dependsOn": [
 					{
-						"activity": "Copy data to Color_Tool CSV",
+						"activity": "Logged data to Color_Tool CSV",
 						"dependencyConditions": [
 							"Completed"
 						]
@@ -269,10 +269,6 @@
 							"SRColorTooltable": {
 								"TableName": "COLOR_TOOL"
 							},
-							"SRColorToolRejectCSV": {
-								"Container_Name": "test",
-								"File_Name": "Rejection_color_tool_APP.csv"
-							},
 							"SKColorTool": {
 								"TableName": "COLOR_TOOL"
 							}
@@ -286,7 +282,7 @@
 				}
 			},
 			{
-				"name": "Copy data to Color_Tool CSV",
+				"name": "Logged data to Color_Tool CSV",
 				"type": "Copy",
 				"dependsOn": [
 					{
@@ -391,7 +387,7 @@
 				]
 			},
 			{
-				"name": "Copy data to Panel CSV",
+				"name": "Logged data to Panel CSV",
 				"type": "Copy",
 				"dependsOn": [
 					{
@@ -595,7 +591,7 @@
 				"type": "ExecuteDataFlow",
 				"dependsOn": [
 					{
-						"activity": "Copy Data to ColorChip Csv",
+						"activity": "Logged Data to ColorChip Csv",
 						"dependencyConditions": [
 							"Completed"
 						]
