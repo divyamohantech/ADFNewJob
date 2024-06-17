@@ -57,6 +57,9 @@
 						"type": "DatasetReference"
 					},
 					"name": "SKFileColorCHIP"
+				},
+				{
+					"name": "SKCacheMAXCOLORCHIPID"
 				}
 			],
 			"transformations": [
@@ -285,7 +288,14 @@
 				"     skipDuplicateMapOutputs: true,",
 				"     mapColumn(",
 				"          Chip_Source = Color_Chip_Source",
-				"     )) ~> SKFileColorCHIP"
+				"     )) ~> SKFileColorCHIP",
+				"FNAggMAXCOLORCHIPID sink(validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     store: 'cache',",
+				"     format: 'inline',",
+				"     output: true,",
+				"     saveOrder: 1) ~> SKCacheMAXCOLORCHIPID"
 			]
 		}
 	}
