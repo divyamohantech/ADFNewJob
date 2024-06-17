@@ -215,10 +215,12 @@
 				"     mapColumn(",
 				"          COLOR_TOOL_NAME = COLOR_Tool_Name",
 				"     )) ~> SKTableColorTool",
-				"FNAggMAXCOLORTOOLID sink(allowSchemaDrift: true,",
-				"     validateSchema: false,",
+				"FNAggMAXCOLORTOOLID sink(validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
+				"     store: 'cache',",
+				"     format: 'inline',",
+				"     output: true,",
 				"     saveOrder: 1) ~> SKCacheMAXCOLORTOOLID"
 			]
 		}
