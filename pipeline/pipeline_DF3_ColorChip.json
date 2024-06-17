@@ -1,9 +1,9 @@
 {
-	"name": "pipeline_3_Dynamic_copy1",
+	"name": "pipeline_DF3_ColorChip",
 	"properties": {
 		"activities": [
 			{
-				"name": "dataflow_dynamic_3",
+				"name": "DF3_ColorChip",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -34,7 +34,7 @@
 				"type": "SetVariable",
 				"dependsOn": [
 					{
-						"activity": "dataflow_dynamic_3",
+						"activity": "DF3_ColorChip",
 						"dependencyConditions": [
 							"Completed"
 						]
