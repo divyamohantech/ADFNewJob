@@ -25,7 +25,7 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "variables('Max_PanelID')\nselect * from [dbo].[PANEL] WHERE PANEL_ID \n> @{variables('Max_PanelID')}",
+							"value": "select * from [dbo].[PANEL] WHERE PANEL_ID \n> @{variables('MAX_PANEL_ID')}",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
