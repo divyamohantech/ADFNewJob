@@ -177,6 +177,8 @@
 			{
 				"name": "DF2_Panel",
 				"type": "ExecuteDataFlow",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Copy data to Color_Tool CSV",
@@ -372,6 +374,8 @@
 			{
 				"name": "Copy data to Panel CSV",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "DF2_Panel",
