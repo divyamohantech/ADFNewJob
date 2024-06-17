@@ -65,7 +65,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"variableName": "csv",
+					"variableName": "newMaxId",
 					"value": {
 						"value": "@activity('DF1_ColorTool').output.runStatus.output.SKCacheMAXCOLORTOOLID.value[0].MAX_COLOR_TOOL_ID",
 						"type": "Expression"
@@ -76,6 +76,9 @@
 		"variables": {
 			"csv": {
 				"type": "String"
+			},
+			"newMaxId": {
+				"type": "Integer"
 			}
 		},
 		"annotations": []
