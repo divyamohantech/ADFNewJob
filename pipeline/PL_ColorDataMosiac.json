@@ -294,7 +294,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "select * from [dbo].[COLOR_TOOL] where COLOR_TOOL_ID > 1",
+						"sqlReaderQuery": "select * from [dbo].[COLOR_TOOL] where COLOR_TOOL_ID  > @{variables('Max_COLOR_TOOL_ID')}",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
