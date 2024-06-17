@@ -19,23 +19,8 @@
 						"referenceName": "DF3_ColorChip",
 						"type": "DataFlowReference",
 						"datasetParameters": {
-							"SRInCSV": {
-								"TableName": "InCSV_NEW"
-							},
-							"SRColorTool": {
-								"TableName": "COLOR_TOOL"
-							},
-							"SRPanel": {
-								"TableName": "PANEL"
-							},
 							"SRCSVIn": {
 								"TableName": "InCSV_NEW"
-							},
-							"SKColorCHIP": {
-								"TableName": "COLOR_CHIP"
-							},
-							"SK1": {
-								"TableName": "COLOR_CHIP"
 							}
 						}
 					},
