@@ -16,7 +16,8 @@
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference"
 					},
-					"name": "SRTableColorChip"
+					"name": "SRTableColorChip",
+					"description": "Import data from SQLDynamicDS "
 				},
 				{
 					"dataset": {
@@ -58,9 +59,6 @@
 			],
 			"transformations": [
 				{
-					"name": "NotExistsRecords1"
-				},
-				{
 					"name": "select"
 				},
 				{
@@ -79,7 +77,7 @@
 					"name": "JoinWithColorTool"
 				},
 				{
-					"name": "join1"
+					"name": "LeftjoinNewRecords"
 				}
 			],
 			"scriptLines": [
@@ -211,10 +209,7 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> SRTableColorTool",
-				"join1, SRTableColorChip exists(SRInCsv@Color_Chip_Source == SRTableColorChip@CHIP_SOURCE,",
-				"     negate:true,",
-				"     broadcast: 'both')~> NotExistsRecords1",
-				"NotExistsRecords1 select(mapColumn(",
+				"LeftjoinNewRecords select(mapColumn(",
 				"          COLOR_Tool_Name,",
 				"          Color_Chip_Name,",
 				"          DateTime,",
@@ -297,7 +292,7 @@
 				"     joinType:'left',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> join1",
+				"     broadcast: 'auto')~> LeftjoinNewRecords",
 				"SelectTableColumnColorChip sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
