@@ -209,7 +209,7 @@
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> SRTableColorTool",
 				"SRInCsv, SRTableColorChip exists(Color_Chip_Source == CHIP_SOURCE,",
-				"     negate:true,",
+				"     negate:false,",
 				"     broadcast: 'left')~> NotExistsRecords1",
 				"NotExistsRecords1 select(mapColumn(",
 				"          COLOR_Tool_Name,",
