@@ -211,7 +211,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select2",
-				"SRInCsvRej, SRTableColorChip join(Color_Chip_Source == SRTableColorChip@CHIP_SOURCE,",
+				"SRInCsvRej, SRTableColorChip join(Color_Chip_Source == CHIP_SOURCE,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
