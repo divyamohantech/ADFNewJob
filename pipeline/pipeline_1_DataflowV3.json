@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "dataflow_Test_Cache",
+				"name": "dataflow_Test_Cache1",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -58,8 +58,6 @@
 			{
 				"name": "Copy Logs Query",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Set Max_ColorToolID",
@@ -170,7 +168,7 @@
 				"type": "SetVariable",
 				"dependsOn": [
 					{
-						"activity": "dataflow_Test_Cache",
+						"activity": "dataflow_Test_Cache1",
 						"dependencyConditions": [
 							"Completed"
 						]
