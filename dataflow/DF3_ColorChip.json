@@ -9,7 +9,31 @@
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference"
 					},
-					"name": "SRInCSVTable"
+					"name": "SRInCsv"
+				},
+				{
+					"dataset": {
+						"referenceName": "SQLDynamicDS",
+						"type": "DatasetReference"
+					},
+					"name": "SRTableColorChip",
+					"description": "Import data from SQLDynamicDS "
+				},
+				{
+					"dataset": {
+						"referenceName": "SQLDynamicDS",
+						"type": "DatasetReference"
+					},
+					"name": "SRTablePanel",
+					"description": "Import data from SQLDynamicDS "
+				},
+				{
+					"dataset": {
+						"referenceName": "SQLDynamicDS",
+						"type": "DatasetReference"
+					},
+					"name": "SRInCsvRej",
+					"description": "Import data from SQLDynamicDS"
 				},
 				{
 					"dataset": {
@@ -17,20 +41,6 @@
 						"type": "DatasetReference"
 					},
 					"name": "SRTableColorTool"
-				},
-				{
-					"dataset": {
-						"referenceName": "SQLDynamicDS",
-						"type": "DatasetReference"
-					},
-					"name": "SRTablePanel"
-				},
-				{
-					"dataset": {
-						"referenceName": "SQLDynamicDS",
-						"type": "DatasetReference"
-					},
-					"name": "SRCSVIn"
 				}
 			],
 			"sinks": [
@@ -39,34 +49,43 @@
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference"
 					},
-					"name": "SKTableColorCHIP"
+					"name": "SKTableColorChip"
 				},
 				{
 					"dataset": {
-						"referenceName": "SQLDynamicDS",
+						"referenceName": "DelimitedTextDymanicCSVFiles",
 						"type": "DatasetReference"
 					},
-					"name": "SKTableColorCHIPs"
+					"name": "SKFileColorCHIP"
+				},
+				{
+					"name": "SKCacheMAXCOLORCHIPID"
 				}
 			],
 			"transformations": [
 				{
-					"name": "NotExistsRecords"
+					"name": "SelectNewRecords"
 				},
 				{
-					"name": "select"
-				},
-				{
-					"name": "ExistsUniqueRecords"
-				},
-				{
-					"name": "select2"
+					"name": "SelectTableColumnColorChip"
 				},
 				{
 					"name": "JoinColorTool"
 				},
 				{
+					"name": "SelectColumnColorChipSource"
+				},
+				{
+					"name": "JoinWithColorTool"
+				},
+				{
+					"name": "DontExistsNewRecords"
+				},
+				{
 					"name": "JoinWithPanel"
+				},
+				{
+					"name": "FNAggMAXCOLORCHIPID"
 				}
 			],
 			"scriptLines": [
@@ -113,16 +132,21 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> SRInCSVTable",
+				"     format: 'table') ~> SRInCsv",
 				"source(output(",
+				"          COLOR_CHIP_ID as integer,",
+				"          PANEL_ID as integer,",
+				"          CHIP_SOURCE as string,",
+				"          IS_ACTIVE as integer,",
+				"          LAST_UPDATED_DATE as timestamp,",
 				"          COLOR_TOOL_ID as integer,",
-				"          COLOR_TOOL_NAME as string,",
-				"          COLOR_TOOL_TYPE_ID as integer",
+				"          SOURCE_SYSTEM_NAME as string,",
+				"          SOURCE_SYSTEM_ID as integer",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> SRTableColorTool",
+				"     format: 'table') ~> SRTableColorChip",
 				"source(output(",
 				"          PANEL_ID as integer,",
 				"          NAME as string,",
@@ -183,46 +207,70 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> SRCSVIn",
-				"SRInCSVTable, SRTableColorTool exists(SRInCSVTable@COLOR_Tool_Name == SRTableColorTool@COLOR_TOOL_NAME,",
-				"     negate:true,",
-				"     broadcast: 'both')~> NotExistsRecords",
-				"NotExistsRecords select(mapColumn(",
+				"     format: 'table') ~> SRInCsvRej",
+				"source(output(",
+				"          COLOR_TOOL_ID as integer,",
+				"          COLOR_TOOL_NAME as string,",
+				"          COLOR_TOOL_TYPE_ID as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> SRTableColorTool",
+				"DontExistsNewRecords select(mapColumn(",
 				"          COLOR_Tool_Name,",
 				"          Color_Chip_Name,",
 				"          DateTime,",
 				"          Color_Chip_Source",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select",
-				"select, SRTablePanel exists(Color_Chip_Name == NAME,",
-				"     negate:true,",
-				"     broadcast: 'right')~> ExistsUniqueRecords",
-				"ExistsUniqueRecords select(mapColumn(",
-				"          COLOR_Tool_Name,",
-				"          Color_Chip_Name,",
-				"          DateTime,",
-				"          Color_Chip_Source",
+				"     skipDuplicateMapOutputs: true) ~> SelectNewRecords",
+				"JoinWithColorTool select(mapColumn(",
+				"          PANEL_ID,",
+				"          CHIP_SOURCE = Color_Chip_Source,",
+				"          LAST_UPDATED_DATE = DateTime,",
+				"          COLOR_TOOL_ID",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select2",
-				"SRCSVIn, SRTableColorTool join(SRCSVIn@COLOR_Tool_Name == SRTableColorTool@COLOR_TOOL_NAME,",
+				"     skipDuplicateMapOutputs: true) ~> SelectTableColumnColorChip",
+				"SRInCsvRej, SRTableColorChip join(Color_Chip_Source == CHIP_SOURCE,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> JoinColorTool",
-				"JoinColorTool, SRTablePanel join(Color_Chip_Name == NAME,",
+				"JoinColorTool select(mapColumn(",
+				"          Color_Chip_Source",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SelectColumnColorChipSource",
+				"JoinWithPanel, SRTableColorTool join(SelectNewRecords@COLOR_Tool_Name == SRTableColorTool@COLOR_TOOL_NAME,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> JoinWithColorTool",
+				"SRInCsv, SRTableColorChip exists(Color_Chip_Source == CHIP_SOURCE,",
+				"     negate:true,",
+				"     broadcast: 'auto')~> DontExistsNewRecords",
+				"SelectNewRecords, SRTablePanel join(Color_Chip_Name == NAME,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> JoinWithPanel",
-				"select2 sink(allowSchemaDrift: true,",
+				"SRTableColorChip aggregate(MAX_COLOR_CHIP_ID = max(COLOR_CHIP_ID)) ~> FNAggMAXCOLORCHIPID",
+				"SelectTableColumnColorChip sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
-				"          MEASUREMENT_ID as integer,",
-				"          READING_ID as integer,",
-				"          GEOMETRY as string,",
-				"          RAW_DATA as string",
+				"          PANEL_ID as integer,",
+				"          NAME as string,",
+				"          IS_METALLIC as integer,",
+				"          CREATE_USER_ID as integer,",
+				"          CREATE_DATE as timestamp,",
+				"          NOTES as string,",
+				"          IS_PUBLIC as integer,",
+				"          ENTITY_ID as integer,",
+				"          IS_INACTIVE as integer,",
+				"          AUDIT_SEARCH_INDEX_DATE as timestamp,",
+				"          IS_FLAGGED as string",
 				"     ),",
 				"     deletable:false,",
 				"     insertable:true,",
@@ -231,23 +279,23 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     saveOrder: 2,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> SKTableColorCHIP",
-				"JoinWithPanel sink(allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     input(",
-				"          MEASUREMENT_ID as integer,",
-				"          READING_ID as integer,",
-				"          GEOMETRY as string,",
-				"          RAW_DATA as string",
-				"     ),",
-				"     deletable:false,",
-				"     insertable:true,",
-				"     updateable:false,",
-				"     upsertable:false,",
-				"     format: 'table',",
 				"     saveOrder: 1,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> SKTableColorCHIPs"
+				"     errorHandlingOption: 'stopOnFirstError') ~> SKTableColorChip",
+				"SelectColumnColorChipSource sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['Rejected Color_Chip.csv'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     mapColumn(",
+				"          Chip_Source = Color_Chip_Source",
+				"     )) ~> SKFileColorCHIP",
+				"FNAggMAXCOLORCHIPID sink(validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     store: 'cache',",
+				"     format: 'inline',",
+				"     output: true,",
+				"     saveOrder: 1) ~> SKCacheMAXCOLORCHIPID"
 			]
 		}
 	}

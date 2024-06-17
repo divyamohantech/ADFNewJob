@@ -1,9 +1,9 @@
 {
-	"name": "pipeline_3_Dynamic_copy1",
+	"name": "pipeline_DF3_ColorChip",
 	"properties": {
 		"activities": [
 			{
-				"name": "dataflow_dynamic_3",
+				"name": "DF3_ColorChip",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -19,23 +19,27 @@
 						"referenceName": "DF3_ColorChip",
 						"type": "DataFlowReference",
 						"datasetParameters": {
-							"SRInCSV": {
+							"SRInCsv": {
 								"TableName": "InCSV_NEW"
 							},
-							"SRColorTool": {
-								"TableName": "COLOR_TOOL"
+							"SRTableColorChip": {
+								"TableName": "COLOR_CHIP"
 							},
-							"SRPanel": {
+							"SRTablePanel": {
 								"TableName": "PANEL"
 							},
-							"SRCSVIn": {
+							"SRInCsvRej": {
 								"TableName": "InCSV_NEW"
 							},
-							"SKColorCHIP": {
+							"SRTableColorTool": {
+								"TableName": "COLOR_TOOL"
+							},
+							"SKTableColorChip": {
 								"TableName": "COLOR_CHIP"
 							},
-							"SK1": {
-								"TableName": "COLOR_CHIP"
+							"SKFileColorCHIP": {
+								"Container_Name": "test",
+								"File_Name": "colorchipRejected.csv"
 							}
 						}
 					},
@@ -50,11 +54,35 @@
 				}
 			},
 			{
-				"name": "Copy Data to ColorChip Csv",
+				"name": "SET_MAX_COLOR_CHIP_ID",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "DF3_ColorChip",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "MAX_COLOR_CHIP_ID",
+					"value": {
+						"value": "@activity('DF3_ColorChip').output.runStatus.output.SKCacheMAXCOLORCHIPID.value[0].MAX_COLOR_CHIP_ID",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Log data to ColorChip CSV",
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "dataflow_dynamic_3",
+						"activity": "SET_MAX_COLOR_CHIP_ID",
 						"dependencyConditions": [
 							"Completed"
 						]
@@ -71,7 +99,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "select * from [dbo].[COLOR_CHIP] where COLOR_CHIP_ID > 1",
+						"sqlReaderQuery": "select * from [dbo].[COLOR_CHIP] where COLOR_CHIP_ID > @{variables('MAX_COLOR_CHIP_ID')}",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -179,6 +207,11 @@
 				]
 			}
 		],
+		"variables": {
+			"MAX_PANEL_ID": {
+				"type": "Integer"
+			}
+		},
 		"annotations": []
 	}
 }

@@ -1,9 +1,9 @@
 {
-	"name": "pipeline_2_Dynamic",
+	"name": "pipeline_DF4_SpectralReading",
 	"properties": {
 		"activities": [
 			{
-				"name": "dataflow_dynamic_2",
+				"name": "DF4_SpectralReading",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -16,25 +16,22 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "DF2_Panel",
+						"referenceName": "DF4_SpectralReading",
 						"type": "DataFlowReference"
 					},
 					"compute": {
 						"coreCount": 8,
 						"computeType": "General"
 					},
-					"traceLevel": "None",
-					"cacheSinks": {
-						"firstRowOnly": true
-					}
+					"traceLevel": "Fine"
 				}
 			},
 			{
-				"name": "Copy data to panel table",
+				"name": "Copy data from SR table to CSV",
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "dataflow_dynamic_2",
+						"activity": "DF4_SpectralReading",
 						"dependencyConditions": [
 							"Completed"
 						]
@@ -71,6 +68,18 @@
 						"mappings": [
 							{
 								"source": {
+									"name": "READING_ID",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "READING_ID",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
 									"name": "PANEL_ID",
 									"type": "Int32",
 									"physicalType": "int"
@@ -83,36 +92,36 @@
 							},
 							{
 								"source": {
-									"name": "NAME",
-									"type": "String",
-									"physicalType": "varchar"
-								},
-								"sink": {
-									"name": "NAME",
-									"type": "String",
-									"physicalType": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "CREATE_DATE",
+									"name": "READING_DATE",
 									"type": "DateTime",
 									"physicalType": "datetime"
 								},
 								"sink": {
-									"name": "CREATE_DATE",
+									"name": "READING_DATE",
 									"type": "String",
 									"physicalType": "String"
 								}
 							},
 							{
 								"source": {
-									"name": "ENTITY_ID",
-									"type": "Int32",
-									"physicalType": "int"
+									"name": "MEASUREMENT_SCHEME",
+									"type": "String",
+									"physicalType": "varchar"
 								},
 								"sink": {
-									"name": "ENTITY_ID",
+									"name": "MEASUREMENT_SCHEME",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DEVICE_NAME",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "DEVICE_NAME",
 									"type": "String",
 									"physicalType": "String"
 								}
@@ -130,7 +139,7 @@
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference",
 						"parameters": {
-							"TableName": "PANEL"
+							"TableName": "SPECTRAL_READING"
 						}
 					}
 				],
@@ -139,18 +148,13 @@
 						"referenceName": "DelimitedTextDymanicCSVFiles",
 						"type": "DatasetReference",
 						"parameters": {
-							"Container_Name": "test",
-							"File_Name": "samplePanel.csv"
+							"Container_Name": "Test",
+							"File_Name": "Test_SPECTRAL_READING.csv"
 						}
 					}
 				]
 			}
 		],
-		"variables": {
-			"Max_PanelID": {
-				"type": "Integer"
-			}
-		},
 		"annotations": []
 	}
 }

@@ -9,7 +9,8 @@
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference"
 					},
-					"name": "SRInCSV"
+					"name": "SRInCsv",
+					"description": "Import data from SQLDynamicDS  "
 				},
 				{
 					"dataset": {
@@ -17,6 +18,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "SRTablePanel"
+				},
+				{
+					"dataset": {
+						"referenceName": "SQLDynamicDS",
+						"type": "DatasetReference"
+					},
+					"name": "SRTableSpectralReading"
 				}
 			],
 			"sinks": [
@@ -33,7 +41,10 @@
 					"name": "SRInCSVjoinSRTablePanel"
 				},
 				{
-					"name": "aggregate1"
+					"name": "DistinctValues"
+				},
+				{
+					"name": "DontExistsNewRecords"
 				}
 			],
 			"scriptLines": [
@@ -80,7 +91,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> SRInCSV",
+				"     format: 'table') ~> SRInCsv",
 				"source(output(",
 				"          PANEL_ID as integer,",
 				"          NAME as string,",
@@ -98,7 +109,18 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> SRTablePanel",
-				"SRInCSV, SRTablePanel join(COLOR_Tool_Name == NAME,",
+				"source(output(",
+				"          READING_ID as integer,",
+				"          PANEL_ID as integer,",
+				"          READING_DATE as timestamp,",
+				"          MEASUREMENT_SCHEME as string,",
+				"          DEVICE_NAME as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> SRTableSpectralReading",
+				"DontExistsNewRecords, SRTablePanel join(Color_Chip_Name == NAME,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
@@ -106,17 +128,25 @@
 				"SRInCSVjoinSRTablePanel aggregate(groupBy(Scheme,",
 				"          Instrument,",
 				"          DateTime),",
-				"     Scheme1 = first(Scheme),",
-				"          DateTime1 = first(DateTime),",
-				"          Instrument1 = first(Instrument),",
-				"          PANEL_ID = max(PANEL_ID)) ~> aggregate1",
-				"aggregate1 sink(allowSchemaDrift: true,",
+				"     PANEL_ID = first(PANEL_ID)) ~> DistinctValues",
+				"SRInCsv, SRTableSpectralReading exists(Scheme == MEASUREMENT_SCHEME",
+				"     && Instrument == DEVICE_NAME,",
+				"     negate:true,",
+				"     broadcast: 'auto')~> DontExistsNewRecords",
+				"DistinctValues sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
-				"          MEASUREMENT_ID as integer,",
-				"          READING_ID as integer,",
-				"          GEOMETRY as string,",
-				"          RAW_DATA as string",
+				"          PANEL_ID as integer,",
+				"          NAME as string,",
+				"          IS_METALLIC as integer,",
+				"          CREATE_USER_ID as integer,",
+				"          CREATE_DATE as timestamp,",
+				"          NOTES as string,",
+				"          IS_PUBLIC as integer,",
+				"          ENTITY_ID as integer,",
+				"          IS_INACTIVE as integer,",
+				"          AUDIT_SEARCH_INDEX_DATE as timestamp,",
+				"          IS_FLAGGED as string",
 				"     ),",
 				"     deletable:false,",
 				"     insertable:true,",
@@ -125,13 +155,8 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError',",
-				"     mapColumn(",
-				"          PANEL_ID,",
-				"          READING_DATE = DateTime,",
-				"          MEASUREMENT_SCHEME = Scheme1,",
-				"          DEVICE_NAME = Instrument",
-				"     )) ~> SKTableSpectralReading"
+				"     saveOrder: 1,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> SKTableSpectralReading"
 			]
 		}
 	}

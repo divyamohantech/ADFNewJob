@@ -32,19 +32,6 @@
 			"firstRowAsHeader": true,
 			"quoteChar": "\""
 		},
-		"schema": [
-			{
-				"name": "COLOR_TOOL_ID",
-				"type": "String"
-			},
-			{
-				"name": "COLOR_TOOL_NAME",
-				"type": "String"
-			},
-			{
-				"name": "COLOR_TOOL_TYPE_ID",
-				"type": "String"
-			}
-		]
+		"schema": []
 	}
 }

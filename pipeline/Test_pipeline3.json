@@ -5,6 +5,8 @@
 			{
 				"name": "DF_Check_Color_Chip",
 				"type": "ExecuteDataFlow",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -42,8 +44,67 @@
 						"firstRowOnly": true
 					}
 				}
+			},
+			{
+				"name": "DF2_Panel",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF2_Panel",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"SRInCsv": {
+								"TableName": "InCSV_NEW"
+							},
+							"SRTableUserProfile": {
+								"TableName": "USER_PROFILE"
+							},
+							"SRTablePanel": {
+								"TableName": "PANEL"
+							},
+							"SRInCsvTable": {
+								"TableName": "InCSV_NEW"
+							},
+							"SKTablePanel": {
+								"TableName": "PANEL"
+							},
+							"SKFileRejectionCSV": {
+								"Container_Name": "test",
+								"File_Name": "Rejected Panel"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "None",
+					"cacheSinks": {
+						"firstRowOnly": true
+					}
+				}
 			}
 		],
+		"variables": {
+			"Max_PANEL_ID": {
+				"type": "String"
+			},
+			"Max_PanelID": {
+				"type": "Integer"
+			},
+			"MAX_PANEL_ID": {
+				"type": "Integer"
+			}
+		},
 		"annotations": []
 	}
 }

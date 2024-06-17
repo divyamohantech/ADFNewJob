@@ -1,26 +1,7 @@
 {
-	"name": "pipeline_2_DataflowsV3",
+	"name": "pipeline_DF2_Panel",
 	"properties": {
 		"activities": [
-			{
-				"name": "Set Max_ColorToolID",
-				"type": "SetVariable",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
-				"dependsOn": [],
-				"policy": {
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"variableName": "Max_COLOR_TOOL_ID",
-					"value": {
-						"value": "@string(activity('dataflow_Test_Cache').output.runStatus.output.cache.value[0].Max_COLOR_TOOL_ID)",
-						"type": "Expression"
-					}
-				}
-			},
 			{
 				"name": "Copy Logs Query",
 				"type": "Copy",
@@ -44,7 +25,7 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "variables('Max_PanelID')\nselect * from [dbo].[PANEL] WHERE PANEL_ID \n> @{variables('Max_PanelID')}",
+							"value": "select * from [dbo].[PANEL] WHERE PANEL_ID \n> @{variables('MAX_PANEL_ID')}",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
@@ -92,7 +73,7 @@
 				]
 			},
 			{
-				"name": "dataflow_Test_Cache2",
+				"name": "DF2_Panel",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -105,11 +86,27 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "dataflow_Test_Cache2",
+						"referenceName": "DF2_Panel",
 						"type": "DataFlowReference",
 						"datasetParameters": {
-							"SRPanel": {
-								"TableName": "Panel"
+							"SRInCsv": {
+								"TableName": "InCSV_NEW"
+							},
+							"SRTableUserProfile": {
+								"TableName": "USER_PROFILE"
+							},
+							"SRTablePanel": {
+								"TableName": "PANEL"
+							},
+							"SRInCsvTable": {
+								"TableName": "InCSV_NEW"
+							},
+							"SKTablePanel": {
+								"TableName": "PANEL"
+							},
+							"SKFileRejectionCSV": {
+								"Container_Name": "test",
+								"File_Name": "panelRej.csv"
 							}
 						}
 					},
@@ -128,7 +125,7 @@
 				"type": "SetVariable",
 				"dependsOn": [
 					{
-						"activity": "dataflow_Test_Cache2",
+						"activity": "DF2_Panel",
 						"dependencyConditions": [
 							"Completed"
 						]
@@ -140,22 +137,16 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"variableName": "Max_PanelID",
+					"variableName": "MAX_PANEL_ID",
 					"value": {
-						"value": "@last(split( string(activity('dataflow_Test_Cache2').output.runStatus.output.cache.value[0].\nMax_PanelID),':')) ",
+						"value": "@activity('DF2_Panel').output.runStatus.output.SKCacheMAXPANELID.value[0].MAX_PANELID",
 						"type": "Expression"
 					}
 				}
 			}
 		],
 		"variables": {
-			"Max_COLOR_TOOL_ID": {
-				"type": "String"
-			},
-			"Max_PANEL_ID": {
-				"type": "String"
-			},
-			"Max_PanelID": {
+			"MAX_PANEL_ID": {
 				"type": "Integer"
 			}
 		},

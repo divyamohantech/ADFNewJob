@@ -5,11 +5,9 @@
 			{
 				"name": "DF3_ColorChip",
 				"type": "ExecuteDataFlow",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
-						"activity": "Copy data to Panel CSV",
+						"activity": "Log data to Panel CSV",
 						"dependencyConditions": [
 							"Completed"
 						]
@@ -28,8 +26,27 @@
 						"referenceName": "DF3_ColorChip",
 						"type": "DataFlowReference",
 						"datasetParameters": {
-							"SRCSVIn": {
+							"SRInCsv": {
 								"TableName": "InCSV_NEW"
+							},
+							"SRTableColorChip": {
+								"TableName": "COLOR_CHIP"
+							},
+							"SRTablePanel": {
+								"TableName": "PANEL"
+							},
+							"SRInCsvRej": {
+								"TableName": "InCSV_NEW"
+							},
+							"SRTableColorTool": {
+								"TableName": "COLOR_TOOL"
+							},
+							"SKTableColorChip": {
+								"TableName": "COLOR_CHIP"
+							},
+							"SKFileColorCHIP": {
+								"Container_Name": "test",
+								"File_Name": "NewColorChip.csv"
 							}
 						}
 					},
@@ -44,13 +61,11 @@
 				}
 			},
 			{
-				"name": "Copy Data to ColorChip Csv",
+				"name": "Log data to ColorChip CSV",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
-						"activity": "DF3_ColorChip",
+						"activity": "SET_MAX_COLOR_CHIP_ID",
 						"dependencyConditions": [
 							"Completed"
 						]
@@ -67,7 +82,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "select * from [dbo].[COLOR_CHIP] where COLOR_CHIP_ID > 1",
+						"sqlReaderQuery": "select * from [dbo].[COLOR_CHIP] where COLOR_CHIP_ID > @{variables('MAX_COLOR_CHIP_ID')}",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -176,12 +191,11 @@
 			},
 			{
 				"name": "DF2_Panel",
+				"description": "new",
 				"type": "ExecuteDataFlow",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
-						"activity": "Copy data to Color_Tool CSV",
+						"activity": "Log data to Color_Tool CSV",
 						"dependencyConditions": [
 							"Completed"
 						]
@@ -203,8 +217,21 @@
 							"SRInCsv": {
 								"TableName": "InCSV_NEW"
 							},
+							"SRTableUserProfile": {
+								"TableName": "USER_PROFILE"
+							},
+							"SRTablePanel": {
+								"TableName": "PANEL"
+							},
 							"SRInCsvTable": {
 								"TableName": "InCSV_NEW"
+							},
+							"SKTablePanel": {
+								"TableName": "PANEL"
+							},
+							"SKFileRejectionCSV": {
+								"Container_Name": "test",
+								"File_Name": "Rejected_Panel.csv"
 							}
 						}
 					},
@@ -264,7 +291,7 @@
 				}
 			},
 			{
-				"name": "Copy data to Color_Tool CSV",
+				"name": "Log data to Color_Tool CSV",
 				"type": "Copy",
 				"dependsOn": [
 					{
@@ -372,13 +399,11 @@
 				]
 			},
 			{
-				"name": "Copy data to Panel CSV",
+				"name": "Log data to Panel CSV",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
-						"activity": "DF2_Panel",
+						"activity": "SET_MAX_PANEL_ID",
 						"dependencyConditions": [
 							"Completed"
 						]
@@ -395,6 +420,10 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
+						"sqlReaderQuery": {
+							"value": "select * from [dbo].[PANEL] where PANEL_ID  > @{variables('MAX_PANEL_ID')}",
+							"type": "Expression"
+						},
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -439,30 +468,6 @@
 							},
 							{
 								"source": {
-									"name": "IS_METALLIC",
-									"type": "Int32",
-									"physicalType": "int"
-								},
-								"sink": {
-									"name": "IS_METALLIC",
-									"type": "String",
-									"physicalType": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "CREATE_USER_ID",
-									"type": "Int32",
-									"physicalType": "int"
-								},
-								"sink": {
-									"name": "CREATE_USER_ID",
-									"type": "String",
-									"physicalType": "String"
-								}
-							},
-							{
-								"source": {
 									"name": "CREATE_DATE",
 									"type": "DateTime",
 									"physicalType": "datetime"
@@ -505,42 +510,6 @@
 								},
 								"sink": {
 									"name": "ENTITY_ID",
-									"type": "String",
-									"physicalType": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "IS_INACTIVE",
-									"type": "Int32",
-									"physicalType": "int"
-								},
-								"sink": {
-									"name": "IS_INACTIVE",
-									"type": "String",
-									"physicalType": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "AUDIT_SEARCH_INDEX_DATE",
-									"type": "DateTime",
-									"physicalType": "datetime"
-								},
-								"sink": {
-									"name": "AUDIT_SEARCH_INDEX_DATE",
-									"type": "String",
-									"physicalType": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "IS_FLAGGED",
-									"type": "String",
-									"physicalType": "varchar"
-								},
-								"sink": {
-									"name": "IS_FLAGGED",
 									"type": "String",
 									"physicalType": "String"
 								}
@@ -568,7 +537,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"Container_Name": "test",
-							"File_Name": "Panel_App.csv"
+							"File_Name": "Panel.csv"
 						}
 					}
 				]
@@ -580,7 +549,7 @@
 				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
-						"activity": "Copy Data to ColorChip Csv",
+						"activity": "Log data to ColorChip CSV",
 						"dependencyConditions": [
 							"Completed"
 						]
@@ -599,7 +568,7 @@
 						"referenceName": "DF4_SpectralReading",
 						"type": "DataFlowReference",
 						"datasetParameters": {
-							"SRInCSV": {
+							"SRInCsv": {
 								"TableName": "InCSV_NEW"
 							}
 						}
@@ -681,13 +650,64 @@
 						"type": "Expression"
 					}
 				}
+			},
+			{
+				"name": "SET_MAX_PANEL_ID",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "DF2_Panel",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "MAX_PANEL_ID",
+					"value": {
+						"value": "@activity('DF2_Panel').output.runStatus.output.SKCacheMAXPANELID.value[0].MAX_PANELID",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "SET_MAX_COLOR_CHIP_ID",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "DF3_ColorChip",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "MAX_COLOR_CHIP_ID",
+					"value": {
+						"value": "@activity('DF3_ColorChip').output.runStatus.output.SKCacheMAXCOLORCHIPID.value[0].MAX_COLOR_CHIP_ID",
+						"type": "Expression"
+					}
+				}
 			}
 		],
 		"variables": {
 			"MAX_COLOR_TOOL_ID": {
 				"type": "Integer"
 			},
-			"newMaxId": {
+			"MAX_PANEL_ID": {
+				"type": "Integer"
+			},
+			"MAX_COLOR_CHIP_ID": {
 				"type": "Integer"
 			}
 		},
