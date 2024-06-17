@@ -1,5 +1,5 @@
 {
-	"name": "pipeline_2_DataflowsV3",
+	"name": "pipeline_DF2_Panel",
 	"properties": {
 		"activities": [
 			{
@@ -73,7 +73,7 @@
 				]
 			},
 			{
-				"name": "dataflow_Test_Cache2",
+				"name": "DF2_Panel",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -109,7 +109,7 @@
 				"type": "SetVariable",
 				"dependsOn": [
 					{
-						"activity": "dataflow_Test_Cache2",
+						"activity": "DF2_Panel",
 						"dependencyConditions": [
 							"Completed"
 						]
