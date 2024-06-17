@@ -30,7 +30,7 @@
 								"TableName": "COLOR_TOOL"
 							},
 							"SKFileColorToolRejectCSV": {
-								"Container_Name": "TEST",
+								"Container_Name": "test",
 								"File_Name": "REJ.CSV"
 							},
 							"SKTableColorTool": {
