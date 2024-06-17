@@ -169,14 +169,7 @@
 			{
 				"name": "setMaxV3",
 				"type": "SetVariable",
-				"dependsOn": [
-					{
-						"activity": "dataflow_Test_Cache",
-						"dependencyConditions": [
-							"Completed"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"secureOutput": false,
 					"secureInput": false
