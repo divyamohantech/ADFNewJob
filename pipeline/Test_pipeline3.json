@@ -64,6 +64,22 @@
 						"datasetParameters": {
 							"SRInCsv": {
 								"TableName": "InCSV_NEW"
+							},
+							"SRTableUserProfile": {
+								"TableName": "USER_PROFILE"
+							},
+							"SRTablePanel": {
+								"TableName": "PANEL"
+							},
+							"SRInCsvTable": {
+								"TableName": "InCSV_NEW"
+							},
+							"SKTablePanel": {
+								"TableName": "PANEL"
+							},
+							"SKFileRejectionCSV": {
+								"Container_Name": "test",
+								"File_Name": "Panel_App.csv"
 							}
 						}
 					},
