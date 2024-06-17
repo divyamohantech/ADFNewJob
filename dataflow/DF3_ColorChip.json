@@ -64,7 +64,7 @@
 					"name": "select"
 				},
 				{
-					"name": "JoinWithPanel1"
+					"name": "JoinWithPanel"
 				},
 				{
 					"name": "select2"
@@ -74,6 +74,9 @@
 				},
 				{
 					"name": "SelectColumnColorChipSource"
+				},
+				{
+					"name": "JoinWithColorTool"
 				}
 			],
 			"scriptLines": [
@@ -218,9 +221,9 @@
 				"     skipDuplicateMapOutputs: true) ~> select",
 				"select, SRTablePanel exists(Color_Chip_Name == NAME,",
 				"     negate:true,",
-				"     broadcast: 'right')~> JoinWithPanel1",
-				"JoinWithPanel1 select(mapColumn(",
-				"          COLOR_Tool_Name,",
+				"     broadcast: 'right')~> JoinWithPanel",
+				"JoinWithColorTool select(mapColumn(",
+				"          COLOR_Tool_Name = select@COLOR_Tool_Name,",
 				"          Color_Chip_Name,",
 				"          DateTime,",
 				"          Color_Chip_Source",
@@ -282,6 +285,11 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> SelectColumnColorChipSource",
+				"JoinWithPanel, SRTableColorTool join(select@COLOR_Tool_Name == SRTableColorTool@COLOR_TOOL_NAME,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> JoinWithColorTool",
 				"select2 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
