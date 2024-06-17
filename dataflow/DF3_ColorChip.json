@@ -289,7 +289,7 @@
 				"SRInCsv, SRTableColorChip exists(Color_Chip_Source == CHIP_SOURCE,",
 				"     negate:true,",
 				"     broadcast: 'auto')~> DontExistsNewRecords",
-				"SelectNewRecords, SRTablePanel join(Color_Chip_Source == NAME,",
+				"SelectNewRecords, SRTablePanel join(Color_Chip_Name == NAME,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
