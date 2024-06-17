@@ -5,8 +5,6 @@
 			{
 				"name": "dataflow_Test_Cache",
 				"type": "ExecuteDataFlow",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -15,6 +13,7 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
+				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "dataflow_Test_Cache1",
@@ -37,14 +36,7 @@
 				"type": "SetVariable",
 				"state": "Inactive",
 				"onInactiveMarkAs": "Succeeded",
-				"dependsOn": [
-					{
-						"activity": "setMaxV3",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"secureOutput": false,
 					"secureInput": false
@@ -63,7 +55,7 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "Set Max_ColorToolID",
+						"activity": "setMaxV3",
 						"dependencyConditions": [
 							"Completed"
 						]
@@ -169,7 +161,14 @@
 			{
 				"name": "setMaxV3",
 				"type": "SetVariable",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "dataflow_Test_Cache",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
 				"policy": {
 					"secureOutput": false,
 					"secureInput": false
