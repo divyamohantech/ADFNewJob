@@ -271,7 +271,7 @@
 				"     skipDuplicateMapOutputs: true,",
 				"     store: 'cache',",
 				"     format: 'inline',",
-				"     output: false,",
+				"     output: true,",
 				"     saveOrder: 1,",
 				"     mapColumn(",
 				"          MAX_PANELID = Max_PanelID",
