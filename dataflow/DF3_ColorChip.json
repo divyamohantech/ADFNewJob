@@ -67,7 +67,7 @@
 					"name": "JoinWithPanel"
 				},
 				{
-					"name": "select2"
+					"name": "SelectTableColumnColorChip"
 				},
 				{
 					"name": "JoinColorTool"
@@ -229,7 +229,7 @@
 				"          Color_Chip_Source",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select2",
+				"     skipDuplicateMapOutputs: true) ~> SelectTableColumnColorChip",
 				"SRInCsvRej, SRTableColorChip join(Color_Chip_Source == CHIP_SOURCE,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
@@ -290,7 +290,7 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> JoinWithColorTool",
-				"select2 sink(allowSchemaDrift: true,",
+				"SelectTableColumnColorChip sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          PANEL_ID as integer,",
