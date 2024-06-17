@@ -80,6 +80,9 @@
 				},
 				{
 					"name": "JoinWithPanel"
+				},
+				{
+					"name": "FNAggMAXCOLORTOOLID"
 				}
 			],
 			"scriptLines": [
@@ -250,6 +253,7 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> JoinWithPanel",
+				"SRTableColorChip aggregate() ~> FNAggMAXCOLORTOOLID",
 				"SelectTableColumnColorChip sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
