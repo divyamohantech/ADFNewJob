@@ -76,7 +76,7 @@
 					"name": "FNAggMAXPANEL"
 				},
 				{
-					"name": "exists1"
+					"name": "Notexists1"
 				}
 			],
 			"scriptLines": [
@@ -194,13 +194,13 @@
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> SRInCsvTable",
 				"SRTableUserProfile derive(ENTITY_ID = toInteger(ENTITY_ID)) ~> AddColumnsValueEntityID",
-				"exists1 select(mapColumn(",
+				"Notexists1 select(mapColumn(",
 				"          COLOR_Tool_Name",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> selectCOLORToolName",
 				"selectCOLORToolName derive(ENTITY_ID = SkEntityIDValue#output()) ~> derivedColumn1",
-				"SRInCsvTable, SRTablePanel join(COLOR_Tool_Name == NAME,",
+				"SRInCsvTable, SRTablePanel join(Color_Chip_Name == NAME,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
@@ -212,9 +212,9 @@
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> selectColumns",
 				"SRTablePanel aggregate(Max_PanelID = max(PANEL_ID)) ~> FNAggMAXPANEL",
-				"SRInCsv, SRTablePanel exists(COLOR_Tool_Name == NAME,",
+				"SRInCsv, SRTablePanel exists(Color_Chip_Name == NAME,",
 				"     negate:true,",
-				"     broadcast: 'auto')~> exists1",
+				"     broadcast: 'auto')~> Notexists1",
 				"AddColumnsValueEntityID sink(validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
