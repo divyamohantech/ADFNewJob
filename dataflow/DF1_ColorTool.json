@@ -32,7 +32,7 @@
 						"referenceName": "DelimitedTextDymanicCSVFiles",
 						"type": "DatasetReference"
 					},
-					"name": "SkFileColorToolRejectCSV"
+					"name": "SKFileColorToolRejectCSV"
 				},
 				{
 					"dataset": {
@@ -41,6 +41,9 @@
 					},
 					"name": "SKTableColorTool",
 					"description": "Export data to SQLDynamicDS "
+				},
+				{
+					"name": "SKCacheMAXCOLORTOOLID"
 				}
 			],
 			"transformations": [
@@ -59,7 +62,7 @@
 					"name": "SelectDataColorTool"
 				},
 				{
-					"name": "aggregate1"
+					"name": "FNAggMAXCOLORTOOLID"
 				}
 			],
 			"scriptLines": [
@@ -178,7 +181,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> SelectDataColorTool",
-				"SRTableColorTool aggregate(MAX_COLOR_TOOL_ID = max(COLOR_TOOL_ID)) ~> aggregate1",
+				"SRTableColorTool aggregate(MAX_COLOR_TOOL_ID = max(COLOR_TOOL_ID)) ~> FNAggMAXCOLORTOOLID",
 				"SelectDataColorTool sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -188,10 +191,10 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     saveOrder: 1,",
+				"     saveOrder: 2,",
 				"     mapColumn(",
 				"          COLOR_TOOL_NAME = COLOR_Tool_Name",
-				"     )) ~> SkFileColorToolRejectCSV",
+				"     )) ~> SKFileColorToolRejectCSV",
 				"SelectData sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -207,11 +210,16 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     saveOrder: 2,",
+				"     saveOrder: 3,",
 				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
 				"          COLOR_TOOL_NAME = COLOR_Tool_Name",
-				"     )) ~> SKTableColorTool"
+				"     )) ~> SKTableColorTool",
+				"FNAggMAXCOLORTOOLID sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     saveOrder: 1) ~> SKCacheMAXCOLORTOOLID"
 			]
 		}
 	}
