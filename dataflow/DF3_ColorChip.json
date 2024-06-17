@@ -59,10 +59,7 @@
 			],
 			"transformations": [
 				{
-					"name": "select"
-				},
-				{
-					"name": "JoinWithPanel"
+					"name": "SelectNewRecords"
 				},
 				{
 					"name": "SelectTableColumnColorChip"
@@ -78,6 +75,9 @@
 				},
 				{
 					"name": "DontExistsNewRecords"
+				},
+				{
+					"name": "JoinWithPanel"
 				}
 			],
 			"scriptLines": [
@@ -216,12 +216,9 @@
 				"          Color_Chip_Source",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select",
-				"select, SRTablePanel exists(Color_Chip_Name == NAME,",
-				"     negate:true,",
-				"     broadcast: 'both')~> JoinWithPanel",
+				"     skipDuplicateMapOutputs: true) ~> SelectNewRecords",
 				"JoinWithColorTool select(mapColumn(",
-				"          COLOR_Tool_Name = select@COLOR_Tool_Name,",
+				"          COLOR_Tool_Name = SelectNewRecords@COLOR_Tool_Name,",
 				"          Color_Chip_Name,",
 				"          DateTime,",
 				"          Color_Chip_Source",
@@ -283,7 +280,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> SelectColumnColorChipSource",
-				"JoinWithPanel, SRTableColorTool join(select@COLOR_Tool_Name == SRTableColorTool@COLOR_TOOL_NAME,",
+				"JoinWithPanel, SRTableColorTool join(SelectNewRecords@COLOR_Tool_Name == SRTableColorTool@COLOR_TOOL_NAME,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
@@ -291,6 +288,11 @@
 				"SRInCsv, SRTableColorChip exists(Color_Chip_Source == CHIP_SOURCE,",
 				"     negate:true,",
 				"     broadcast: 'auto')~> DontExistsNewRecords",
+				"SelectNewRecords, SRTablePanel join(Color_Chip_Source == NAME,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> JoinWithPanel",
 				"SelectTableColumnColorChip sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
