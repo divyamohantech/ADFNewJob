@@ -78,6 +78,9 @@
 				},
 				{
 					"name": "LeftjoinNewRecords"
+				},
+				{
+					"name": "exists1"
 				}
 			],
 			"scriptLines": [
@@ -209,7 +212,7 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> SRTableColorTool",
-				"LeftjoinNewRecords select(mapColumn(",
+				"exists1 select(mapColumn(",
 				"          COLOR_Tool_Name,",
 				"          Color_Chip_Name,",
 				"          DateTime,",
@@ -293,6 +296,9 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> LeftjoinNewRecords",
+				"LeftjoinNewRecords, SRTableColorChip exists(Color_Chip_Source == SRTableColorChip@CHIP_SOURCE,",
+				"     negate:true,",
+				"     broadcast: 'auto')~> exists1",
 				"SelectTableColumnColorChip sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
