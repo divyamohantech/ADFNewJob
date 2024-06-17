@@ -5,8 +5,6 @@
 			{
 				"name": "DF3_ColorChip",
 				"type": "ExecuteDataFlow",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Log data to Panel CSV",
