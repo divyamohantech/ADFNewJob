@@ -1,9 +1,9 @@
 {
-	"name": "pipeline_4_Dynamic",
+	"name": "pipeline_DF4_SpectralReading",
 	"properties": {
 		"activities": [
 			{
-				"name": "dataflow_dynamic_4",
+				"name": "DF4_SpectralReading",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -31,7 +31,7 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "dataflow_dynamic_4",
+						"activity": "DF4_SpectralReading",
 						"dependencyConditions": [
 							"Completed"
 						]

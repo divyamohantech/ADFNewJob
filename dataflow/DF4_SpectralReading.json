@@ -9,7 +9,7 @@
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference"
 					},
-					"name": "SRInCSV"
+					"name": "SRInCsv"
 				},
 				{
 					"dataset": {
@@ -53,7 +53,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> SRInCSV",
+				"     format: 'table') ~> SRInCsv",
 				"source(output(",
 				"          PANEL_ID as integer,",
 				"          NAME as string,",
@@ -71,7 +71,7 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> SRTablePanel",
-				"SRInCSV, SRTablePanel join(COLOR_Tool_Name == SRTablePanel@NAME,",
+				"SRInCsv, SRTablePanel join(COLOR_Tool_Name == SRTablePanel@NAME,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
