@@ -139,7 +139,7 @@
 				"typeProperties": {
 					"variableName": "Max_PanelID",
 					"value": {
-						"value": "@last(split( string(activity('DF2_Panel').output.runStatus.output.cache.value[0].Max_PanelID),':')) ",
+						"value": "@last(split( string(activity('DF2_Panel').output.runStatus.output.SKCacheMAXPANELID.value[0].Max_PanelID),':')) ",
 						"type": "Expression"
 					}
 				}
