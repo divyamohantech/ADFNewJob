@@ -189,7 +189,7 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> SRInCsvRej",
-				"SRInCsv, SRTableColorChip exists(SRINCSV@Color_Chip_Source == SRTableCOLORCHIP@CHIP_SOURCE,",
+				"SRInCsv, SRTableColorChip exists(Color_Chip_Source == CHIP_SOURCE,",
 				"     negate:true,",
 				"     broadcast: 'both')~> NotExistsRecords",
 				"NotExistsRecords select(mapColumn(",
