@@ -82,7 +82,7 @@
 					"name": "JoinWithPanel"
 				},
 				{
-					"name": "FNAggMAXCOLORTOOLID"
+					"name": "FNAggMAXCOLORCHIPID"
 				}
 			],
 			"scriptLines": [
@@ -253,7 +253,7 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> JoinWithPanel",
-				"SRTableColorChip aggregate() ~> FNAggMAXCOLORTOOLID",
+				"SRTableColorChip aggregate(MAX_COLOR_CHIP_ID = max(COLOR_CHIP_ID)) ~> FNAggMAXCOLORCHIPID",
 				"SelectTableColumnColorChip sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
