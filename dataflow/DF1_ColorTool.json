@@ -57,6 +57,9 @@
 				},
 				{
 					"name": "SelectDataColorTool"
+				},
+				{
+					"name": "aggregate1"
 				}
 			],
 			"scriptLines": [
@@ -175,6 +178,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> SelectDataColorTool",
+				"SRTableColorTool aggregate(COLOR_TOOL_ID = max(COLOR_TOOL_ID)) ~> aggregate1",
 				"SelectDataColorTool sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
