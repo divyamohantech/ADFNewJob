@@ -137,7 +137,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"variableName": "Max_PanelID",
+					"variableName": "MAX_PANEL_ID",
 					"value": {
 						"value": "@last(split( string(activity('DF2_Panel').output.runStatus.output.SKCacheMAXPANELID.value[0].Max_PanelID),':')) ",
 						"type": "Expression"
@@ -153,6 +153,9 @@
 				"type": "String"
 			},
 			"Max_PanelID": {
+				"type": "Integer"
+			},
+			"MAX_PANEL_ID": {
 				"type": "Integer"
 			}
 		},
