@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "dataflow_Test_Cache1",
+				"name": "dataflow_Test_Cache",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -13,7 +13,6 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "dataflow_Test_Cache1",
@@ -168,7 +167,7 @@
 				"type": "SetVariable",
 				"dependsOn": [
 					{
-						"activity": "dataflow_Test_Cache1",
+						"activity": "dataflow_Test_Cache",
 						"dependencyConditions": [
 							"Completed"
 						]
