@@ -146,15 +146,6 @@
 			}
 		],
 		"variables": {
-			"Max_COLOR_TOOL_ID": {
-				"type": "String"
-			},
-			"Max_PANEL_ID": {
-				"type": "String"
-			},
-			"Max_PanelID": {
-				"type": "Integer"
-			},
 			"MAX_PANEL_ID": {
 				"type": "Integer"
 			}
