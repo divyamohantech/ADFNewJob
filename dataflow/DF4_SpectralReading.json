@@ -9,7 +9,8 @@
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference"
 					},
-					"name": "SRInCsv"
+					"name": "SRInCsv",
+					"description": "Import data from SQLDynamicDS "
 				},
 				{
 					"dataset": {
