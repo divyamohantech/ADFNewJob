@@ -16,13 +16,6 @@
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference"
 					},
-					"name": "SRColorTool"
-				},
-				{
-					"dataset": {
-						"referenceName": "SQLDynamicDS",
-						"type": "DatasetReference"
-					},
 					"name": "SRInCSVtable"
 				},
 				{
@@ -30,7 +23,7 @@
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference"
 					},
-					"name": "SRColorTooltable"
+					"name": "SRTableColorTool"
 				}
 			],
 			"sinks": [
@@ -39,14 +32,14 @@
 						"referenceName": "DelimitedTextDymanicCSVFiles",
 						"type": "DatasetReference"
 					},
-					"name": "SKColorToolRejectCSV"
+					"name": "SkFileColorToolRejectCSV"
 				},
 				{
 					"dataset": {
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference"
 					},
-					"name": "SKColorTool",
+					"name": "SKTableColorTool",
 					"description": "Export data to SQLDynamicDS "
 				}
 			],
@@ -112,15 +105,6 @@
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> SRINCSV",
 				"source(output(",
-				"          COLOR_TOOL_ID as integer,",
-				"          COLOR_TOOL_NAME as string,",
-				"          COLOR_TOOL_TYPE_ID as integer",
-				"     ),",
-				"     allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> SRColorTool",
-				"source(output(",
 				"          COLOR_Tool_Name as string,",
 				"          Color_Chip_Name as string,",
 				"          DateTime as string,",
@@ -172,16 +156,16 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> SRColorTooltable",
+				"     format: 'table') ~> SRTableColorTool",
 				"NotExistsTestConditionNewRecords select(mapColumn(",
 				"          COLOR_Tool_Name",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> SelectData",
-				"SRINCSV, SRColorTool exists(SRINCSV@COLOR_Tool_Name == SRColorTool@COLOR_TOOL_NAME,",
+				"SRINCSV, SRTableColorTool exists(SRINCSV@COLOR_Tool_Name == SRTableColorTool@COLOR_TOOL_NAME,",
 				"     negate:true,",
 				"     broadcast: 'auto')~> NotExistsTestConditionNewRecords",
-				"SRInCSVtable, SRColorTooltable join(SRInCSVtable@COLOR_Tool_Name == SRColorTooltable@COLOR_TOOL_NAME,",
+				"SRInCSVtable, SRTableColorTool join(SRInCSVtable@COLOR_Tool_Name == SRTableColorTool@COLOR_TOOL_NAME,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
@@ -203,7 +187,7 @@
 				"     saveOrder: 1,",
 				"     mapColumn(",
 				"          COLOR_TOOL_NAME = COLOR_Tool_Name",
-				"     )) ~> SKColorToolRejectCSV",
+				"     )) ~> SkFileColorToolRejectCSV",
 				"SelectData sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -223,7 +207,7 @@
 				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
 				"          COLOR_TOOL_NAME = COLOR_Tool_Name",
-				"     )) ~> SKColorTool"
+				"     )) ~> SKTableColorTool"
 			]
 		}
 	}
