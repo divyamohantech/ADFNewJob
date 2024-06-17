@@ -24,7 +24,8 @@
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference"
 					},
-					"name": "SRTablePanel"
+					"name": "SRTablePanel",
+					"description": "Import data from SQLDynamicDS "
 				},
 				{
 					"dataset": {
