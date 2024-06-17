@@ -262,6 +262,16 @@
 							},
 							"SRInCSVtable": {
 								"TableName": "InCSV_NEW"
+							},
+							"SRTableColorTool": {
+								"TableName": "COLOR_TOOL"
+							},
+							"SKFileColorToolRejectCSV": {
+								"Container_Name": "Test",
+								"File_Name": "Color_Tool_Rejected.csv"
+							},
+							"SKTableColorTool": {
+								"TableName": "COLOR_TOOL"
 							}
 						}
 					},
