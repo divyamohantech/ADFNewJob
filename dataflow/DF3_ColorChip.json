@@ -43,7 +43,7 @@
 				},
 				{
 					"dataset": {
-						"referenceName": "SQLDynamicDS",
+						"referenceName": "DelimitedTextColorCache",
 						"type": "DatasetReference"
 					},
 					"name": "SKTableColorCHIPs"
@@ -57,7 +57,7 @@
 					"name": "select"
 				},
 				{
-					"name": "ExistsUniqueRecords"
+					"name": "JoinWithPanel1"
 				},
 				{
 					"name": "select2"
@@ -66,7 +66,7 @@
 					"name": "JoinColorTool"
 				},
 				{
-					"name": "JoinWithPanel"
+					"name": "SelectColumnColorChipSource"
 				}
 			],
 			"scriptLines": [
@@ -202,8 +202,8 @@
 				"     skipDuplicateMapOutputs: true) ~> select",
 				"select, SRTablePanel exists(Color_Chip_Name == NAME,",
 				"     negate:true,",
-				"     broadcast: 'right')~> ExistsUniqueRecords",
-				"ExistsUniqueRecords select(mapColumn(",
+				"     broadcast: 'right')~> JoinWithPanel1",
+				"JoinWithPanel1 select(mapColumn(",
 				"          COLOR_Tool_Name,",
 				"          Color_Chip_Name,",
 				"          DateTime,",
@@ -216,11 +216,56 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> JoinColorTool",
-				"JoinColorTool, SRTablePanel join(Color_Chip_Name == SRTablePanel@NAME,",
-				"     joinType:'inner',",
-				"     matchType:'exact',",
-				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> JoinWithPanel",
+				"JoinColorTool select(mapColumn(",
+				"          COLOR_Tool_Name,",
+				"          Color_Chip_Name,",
+				"          DateTime,",
+				"          Color_Chip_Source,",
+				"          Scheme,",
+				"          Instrument,",
+				"          Geometry,",
+				"          {400},",
+				"          {410},",
+				"          {420},",
+				"          {430},",
+				"          {440},",
+				"          {450},",
+				"          {460},",
+				"          {470},",
+				"          {480},",
+				"          {490},",
+				"          {500},",
+				"          {510},",
+				"          {520},",
+				"          {530},",
+				"          {540},",
+				"          {550},",
+				"          {560},",
+				"          {570},",
+				"          {580},",
+				"          {590},",
+				"          {600},",
+				"          {610},",
+				"          {620},",
+				"          {630},",
+				"          {640},",
+				"          {650},",
+				"          {660},",
+				"          {670},",
+				"          {680},",
+				"          {690},",
+				"          {700},",
+				"          COLOR_CHIP_ID,",
+				"          PANEL_ID,",
+				"          CHIP_SOURCE,",
+				"          IS_ACTIVE,",
+				"          LAST_UPDATED_DATE,",
+				"          COLOR_TOOL_ID,",
+				"          SOURCE_SYSTEM_NAME,",
+				"          SOURCE_SYSTEM_ID",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SelectColumnColorChipSource",
 				"select2 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -245,28 +290,15 @@
 				"     skipDuplicateMapOutputs: true,",
 				"     saveOrder: 2,",
 				"     errorHandlingOption: 'stopOnFirstError') ~> SKTableColorChip",
-				"JoinWithPanel sink(allowSchemaDrift: true,",
+				"SelectColumnColorChipSource sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
-				"          PANEL_ID as integer,",
-				"          NAME as string,",
-				"          IS_METALLIC as integer,",
-				"          CREATE_USER_ID as integer,",
-				"          CREATE_DATE as timestamp,",
-				"          NOTES as string,",
-				"          IS_PUBLIC as integer,",
-				"          ENTITY_ID as integer,",
-				"          IS_INACTIVE as integer,",
-				"          AUDIT_SEARCH_INDEX_DATE as timestamp,",
-				"          IS_FLAGGED as string",
+				"          Color_Tool_ID as string,",
+				"          Color_Tool_Name as string,",
+				"          Color_Tool_Type_ID as string",
 				"     ),",
-				"     deletable:false,",
-				"     insertable:true,",
-				"     updateable:false,",
-				"     upsertable:false,",
-				"     format: 'table',",
 				"     saveOrder: 1,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> SKTableColorCHIPs"
+				"     format: 'table') ~> SKTableColorCHIPs"
 			]
 		}
 	}
