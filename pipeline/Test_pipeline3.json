@@ -87,6 +87,12 @@
 								"schemaLinkedService": {
 									"TableName": "PANEL"
 								}
+							},
+							"SKFileRejectionCSV": {
+								"schemaLinkedService": {
+									"Container_Name": "test",
+									"File_Name": "Rejection_Panel_App.csv"
+								}
 							}
 						}
 					},
