@@ -268,7 +268,7 @@
 							},
 							"SKFileColorToolRejectCSV": {
 								"Container_Name": "Test",
-								"File_Name": "Color_Tool_Rejected.csv"
+								"File_Name": "Color_Tool_Rejectedcsv"
 							},
 							"SKTableColorTool": {
 								"TableName": "COLOR_TOOL"
