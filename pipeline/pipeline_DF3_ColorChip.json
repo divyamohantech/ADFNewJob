@@ -17,7 +17,31 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "DF3_ColorChip",
-						"type": "DataFlowReference"
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"SRInCsv": {
+								"TableName": "InCSV_NEW"
+							},
+							"SRTableColorChip": {
+								"TableName": "COLOR_CHIP"
+							},
+							"SRTablePanel": {
+								"TableName": "PANEL"
+							},
+							"SRInCsvRej": {
+								"TableName": "InCSV_NEW"
+							},
+							"SRTableColorTool": {
+								"TableName": "COLOR_TOOL"
+							},
+							"SKTableColorChip": {
+								"TableName": "COLOR_CHIP"
+							},
+							"SKFileColorCHIP": {
+								"Container_Name": "test",
+								"File_Name": "colorchipRejected.csv"
+							}
+						}
 					},
 					"compute": {
 						"coreCount": 8,
@@ -183,6 +207,11 @@
 				]
 			}
 		],
+		"variables": {
+			"MAX_PANEL_ID": {
+				"type": "Integer"
+			}
+		},
 		"annotations": []
 	}
 }
