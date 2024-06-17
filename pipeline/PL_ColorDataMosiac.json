@@ -7,7 +7,7 @@
 				"type": "ExecuteDataFlow",
 				"dependsOn": [
 					{
-						"activity": "Logged data to Panel CSV",
+						"activity": "Copy data to Panel CSV",
 						"dependencyConditions": [
 							"Completed"
 						]
@@ -57,7 +57,7 @@
 				}
 			},
 			{
-				"name": "Logged Data to ColorChip Csv",
+				"name": "Copy Data to ColorChip Csv",
 				"type": "Copy",
 				"dependsOn": [
 					{
@@ -190,7 +190,7 @@
 				"type": "ExecuteDataFlow",
 				"dependsOn": [
 					{
-						"activity": "Logged data to Color_Tool CSV",
+						"activity": "Copy data to Color_Tool CSV",
 						"dependencyConditions": [
 							"Completed"
 						]
@@ -260,17 +260,8 @@
 							"SRINCSV": {
 								"TableName": "InCSV_NEW"
 							},
-							"SRColorTool": {
-								"TableName": "COLOR_TOOL"
-							},
 							"SRInCSVtable": {
 								"TableName": "InCSV_NEW"
-							},
-							"SRColorTooltable": {
-								"TableName": "COLOR_TOOL"
-							},
-							"SKColorTool": {
-								"TableName": "COLOR_TOOL"
 							}
 						}
 					},
@@ -282,13 +273,13 @@
 				}
 			},
 			{
-				"name": "Logged data to Color_Tool CSV",
+				"name": "Copy data to Color_Tool CSV",
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "DF1_ColorTool",
+						"activity": "SET_MAX_COLOR_TOOL_ID",
 						"dependencyConditions": [
-							"Completed"
+							"Succeeded"
 						]
 					}
 				],
@@ -387,7 +378,7 @@
 				]
 			},
 			{
-				"name": "Logged data to Panel CSV",
+				"name": "Copy data to Panel CSV",
 				"type": "Copy",
 				"dependsOn": [
 					{
@@ -591,7 +582,7 @@
 				"type": "ExecuteDataFlow",
 				"dependsOn": [
 					{
-						"activity": "Logged Data to ColorChip Csv",
+						"activity": "Copy Data to ColorChip Csv",
 						"dependencyConditions": [
 							"Completed"
 						]
@@ -675,8 +666,34 @@
 					},
 					"traceLevel": "Fine"
 				}
+			},
+			{
+				"name": "SET_MAX_COLOR_TOOL_ID",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "DF1_ColorTool",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "MAX_COLOR_TOOL_ID",
+					"value": "@last(split( string(activity('dataflow_Test_Cache').output.runStatus.output.cache.value[0].\nMax_COLOR_TOOL_ID),':'))"
+				}
 			}
 		],
+		"variables": {
+			"MAX_COLOR_TOOL_ID": {
+				"type": "String"
+			}
+		},
 		"annotations": []
 	}
 }
