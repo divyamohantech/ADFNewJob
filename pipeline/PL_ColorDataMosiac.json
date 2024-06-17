@@ -420,7 +420,7 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "select * from [dbo].[PANEL] where PANEL_ID  > @{variables('')}",
+							"value": "select * from [dbo].[PANEL] where PANEL_ID  > @{variables('MAX_PANEL_ID')}",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
