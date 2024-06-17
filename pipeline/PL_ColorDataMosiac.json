@@ -704,9 +704,6 @@
 			"MAX_COLOR_TOOL_ID": {
 				"type": "Integer"
 			},
-			"newMaxId": {
-				"type": "Integer"
-			},
 			"MAX_PANEL_ID": {
 				"type": "Integer"
 			},
