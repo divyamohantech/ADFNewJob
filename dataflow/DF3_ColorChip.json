@@ -77,7 +77,7 @@
 					"name": "JoinWithColorTool"
 				},
 				{
-					"name": "exists1"
+					"name": "DontExistsNewRecords"
 				}
 			],
 			"scriptLines": [
@@ -209,7 +209,7 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> SRTableColorTool",
-				"exists1 select(mapColumn(",
+				"DontExistsNewRecords select(mapColumn(",
 				"          COLOR_Tool_Name,",
 				"          Color_Chip_Name,",
 				"          DateTime,",
@@ -290,7 +290,7 @@
 				"     broadcast: 'auto')~> JoinWithColorTool",
 				"SRInCsv, SRTableColorChip exists(Color_Chip_Source == CHIP_SOURCE,",
 				"     negate:true,",
-				"     broadcast: 'auto')~> exists1",
+				"     broadcast: 'auto')~> DontExistsNewRecords",
 				"SelectTableColumnColorChip sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
