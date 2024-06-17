@@ -77,6 +77,9 @@
 				},
 				{
 					"name": "JoinWithColorTool"
+				},
+				{
+					"name": "join1"
 				}
 			],
 			"scriptLines": [
@@ -208,7 +211,7 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> SRTableColorTool",
-				"SRInCsv, SRTableColorChip exists(SRInCsv@Color_Chip_Source == SRTableColorChip@CHIP_SOURCE,",
+				"join1, SRTableColorChip exists(SRInCsv@Color_Chip_Source == SRTableColorChip@CHIP_SOURCE,",
 				"     negate:true,",
 				"     broadcast: 'both')~> NotExistsRecords1",
 				"NotExistsRecords1 select(mapColumn(",
@@ -290,6 +293,11 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> JoinWithColorTool",
+				"SRInCsv, SRTableColorChip join(Color_Chip_Source == CHIP_SOURCE,",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1",
 				"SelectTableColumnColorChip sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
