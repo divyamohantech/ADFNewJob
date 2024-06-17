@@ -197,6 +197,7 @@
 				"          COLOR_TOOL_NAME as string,",
 				"          COLOR_TOOL_TYPE_ID as string",
 				"     ),",
+				"     partitionFileNames:['Color_Tool_Rejected.csv'],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     saveOrder: 2,",
