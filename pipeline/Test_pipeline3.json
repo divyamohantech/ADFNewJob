@@ -79,7 +79,7 @@
 							},
 							"SKFileRejectionCSV": {
 								"Container_Name": "test",
-								"File_Name": "Rejection_Panel_App"
+								"File_Name": "Rejected Panel"
 							}
 						},
 						"linkedServiceParameters": {
@@ -91,7 +91,7 @@
 							"SKFileRejectionCSV": {
 								"schemaLinkedService": {
 									"Container_Name": "test",
-									"File_Name": "Rejection_Panel_App"
+									"File_Name": "Rejected Panel"
 								}
 							}
 						}
