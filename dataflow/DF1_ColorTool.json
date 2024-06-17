@@ -23,7 +23,8 @@
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference"
 					},
-					"name": "SRTableColorTool"
+					"name": "SRTableColorTool",
+					"description": "Import data from  SQLDynamicDS"
 				}
 			],
 			"sinks": [
@@ -65,6 +66,10 @@
 				},
 				{
 					"name": "FNAggMAXCOLORTOOLID"
+				},
+				{
+					"name": "DistinctCOLORTOOLName",
+					"description": "DistinctCOLORTOOLName"
 				}
 			],
 			"scriptLines": [
@@ -177,26 +182,29 @@
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
-				"     broadcast: 'left')~> joinRejectionCondition",
+				"     broadcast: 'right')~> joinRejectionCondition",
 				"joinRejectionCondition select(mapColumn(",
-				"          COLOR_Tool_Name = SRInCSVtable@COLOR_Tool_Name",
+				"          COLOR_Tool_Name = SRTableColorTool@COLOR_TOOL_NAME",
 				"     ),",
 				"     skipDuplicateMapInputs: false,",
-				"     skipDuplicateMapOutputs: false) ~> SelectDataColorTool",
+				"     skipDuplicateMapOutputs: true) ~> SelectDataColorTool",
 				"SRTableColorTool aggregate(MAX_COLOR_TOOL_ID = max(COLOR_TOOL_ID)) ~> FNAggMAXCOLORTOOLID",
-				"SelectDataColorTool sink(allowSchemaDrift: true,",
+				"SelectDataColorTool aggregate(COLOR_Tool_Name = first(COLOR_Tool_Name)) ~> DistinctCOLORTOOLName",
+				"DistinctCOLORTOOLName sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          COLOR_TOOL_ID as string,",
 				"          COLOR_TOOL_NAME as string,",
 				"          COLOR_TOOL_TYPE_ID as string",
 				"     ),",
+				"     partitionFileNames:['Color_Tool_Rejected.csv'],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     saveOrder: 2,",
 				"     mapColumn(",
 				"          COLOR_TOOL_NAME = COLOR_Tool_Name",
-				"     )) ~> SKFileColorToolRejectCSV",
+				"     ),",
+				"     partitionBy('hash', 1)) ~> SKFileColorToolRejectCSV",
 				"SelectData sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
