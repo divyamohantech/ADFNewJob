@@ -175,7 +175,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"variableName": "Max_COLOR_TOOL_ID",
+					"variableName": "MAX_COLOR_TOOL_ID",
 					"value": {
 						"value": "@last(split( string(activity('dataflow_Test_Cache').output.runStatus.output.cache.value[0].\nMax_COLOR_TOOL_ID),':'))",
 						"type": "Expression"
@@ -185,6 +185,9 @@
 		],
 		"variables": {
 			"Max_COLOR_TOOL_ID": {
+				"type": "String"
+			},
+			"MAX_COLOR_TOOL_ID": {
 				"type": "String"
 			}
 		},
