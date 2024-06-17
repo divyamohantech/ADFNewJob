@@ -177,7 +177,7 @@
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
-				"     broadcast: 'left')~> joinRejectionCondition",
+				"     broadcast: 'right')~> joinRejectionCondition",
 				"joinRejectionCondition select(mapColumn(",
 				"          COLOR_Tool_Name = SRInCSVtable@COLOR_Tool_Name",
 				"     ),",
