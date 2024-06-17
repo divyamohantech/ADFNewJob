@@ -5,6 +5,8 @@
 			{
 				"name": "dataflow_Test_Cache",
 				"type": "ExecuteDataFlow",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -33,6 +35,8 @@
 			{
 				"name": "Set Max_ColorToolID",
 				"type": "SetVariable",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "setMaxV3",
@@ -181,7 +185,7 @@
 				"typeProperties": {
 					"variableName": "Max_COLOR_TOOL_ID",
 					"value": {
-						"value": "@last(split( string(activity('dataflow_Test_Cache').output.runStatus.output.cache.value[0].\nMax_COLOR_TOOL_ID),':'))",
+						"value": "5",
 						"type": "Expression"
 					}
 				}
