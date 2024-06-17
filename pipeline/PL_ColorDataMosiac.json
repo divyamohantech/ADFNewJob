@@ -82,7 +82,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "select * from [dbo].[COLOR_CHIP] where COLOR_CHIP_ID > 1",
+						"sqlReaderQuery": "select * from [dbo].[COLOR_CHIP] where COLOR_CHIP_ID > @{variables('MAX_COLOR_CHIP_ID')}",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -691,7 +691,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"variableName": "MAX_COLOR_TOOL_ID",
+					"variableName": "MAX_COLOR_CHIP_ID",
 					"value": {
 						"value": "@activity('DF3_ColorChip').output.runStatus.output.SKCacheMAXCOLORCHIPID.value[0].MAX_COLOR_CHIP_ID",
 						"type": "Expression"
@@ -707,6 +707,9 @@
 				"type": "Integer"
 			},
 			"MAX_PANEL_ID": {
+				"type": "Integer"
+			},
+			"MAX_COLOR_CHIP_ID": {
 				"type": "Integer"
 			}
 		},
