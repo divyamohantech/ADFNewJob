@@ -31,6 +31,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "SRInCsvRej"
+				},
+				{
+					"dataset": {
+						"referenceName": "SQLDynamicDS",
+						"type": "DatasetReference"
+					},
+					"name": "SRTableColorTool"
 				}
 			],
 			"sinks": [
@@ -189,6 +196,15 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> SRInCsvRej",
+				"source(output(",
+				"          COLOR_TOOL_ID as integer,",
+				"          COLOR_TOOL_NAME as string,",
+				"          COLOR_TOOL_TYPE_ID as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> SRTableColorTool",
 				"SRInCsv, SRTableColorChip exists(Color_Chip_Source == CHIP_SOURCE,",
 				"     negate:true,",
 				"     broadcast: 'left')~> NotExistsRecords1",
