@@ -23,7 +23,8 @@
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference"
 					},
-					"name": "SRTableColorTool"
+					"name": "SRTableColorTool",
+					"description": "Import data from  SQLDynamicDS"
 				}
 			],
 			"sinks": [
