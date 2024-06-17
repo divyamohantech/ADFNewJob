@@ -1,0 +1,40 @@
+{
+	"name": "dataflow_Test_Cache1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "SQLDynamicDS",
+						"type": "DatasetReference"
+					},
+					"name": "SourceColorTool"
+				}
+			],
+			"sinks": [
+				{
+					"name": "Cache"
+				}
+			],
+			"transformations": [],
+			"scriptLines": [
+				"source(output(",
+				"          Max_COLOR_TOOL_ID as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     query: 'Select  max(COLOR_TOOL_ID) as Max_COLOR_TOOL_ID from [dbo].[COLOR_TOOL]',",
+				"     format: 'query') ~> SourceColorTool",
+				"SourceColorTool sink(validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     store: 'cache',",
+				"     format: 'inline',",
+				"     output: true,",
+				"     saveOrder: 1) ~> Cache"
+			]
+		}
+	}
+}

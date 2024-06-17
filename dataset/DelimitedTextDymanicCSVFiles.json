@@ -1,0 +1,50 @@
+{
+	"name": "DelimitedTextDymanicCSVFiles",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorageLS",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"Container_Name": {
+				"type": "string"
+			},
+			"File_Name": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().File_Name",
+					"type": "Expression"
+				},
+				"container": {
+					"value": "@dataset().Container_Name",
+					"type": "Expression"
+				}
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "COLOR_TOOL_ID",
+				"type": "String"
+			},
+			{
+				"name": "COLOR_TOOL_NAME",
+				"type": "String"
+			},
+			{
+				"name": "COLOR_TOOL_TYPE_ID",
+				"type": "String"
+			}
+		]
+	}
+}

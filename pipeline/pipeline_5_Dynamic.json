@@ -1,0 +1,46 @@
+{
+	"name": "pipeline_5_Dynamic",
+	"properties": {
+		"activities": [
+			{
+				"name": "dataflow_dynamic_5",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF5_SpectralMeasurement",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"SRInCSV": {
+								"TableName": "InCSV_NEW"
+							},
+							"SRPanel": {
+								"TableName": "PANEL"
+							},
+							"SRSpectralReading": {
+								"TableName": "SPECTRAL_READING"
+							},
+							"SKSpectralMeasurement": {
+								"TableName": "SPECTRAL_MEASUREMENT"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			}
+		],
+		"annotations": []
+	}
+}

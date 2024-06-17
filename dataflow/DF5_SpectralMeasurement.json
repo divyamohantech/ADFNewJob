@@ -1,0 +1,162 @@
+{
+	"name": "DF5_SpectralMeasurement",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "SQLDynamicDS",
+						"type": "DatasetReference"
+					},
+					"name": "SRInCSV"
+				},
+				{
+					"dataset": {
+						"referenceName": "SQLDynamicDS",
+						"type": "DatasetReference"
+					},
+					"name": "SRTablePanel"
+				},
+				{
+					"dataset": {
+						"referenceName": "SQLDynamicDS",
+						"type": "DatasetReference"
+					},
+					"name": "SRSpectralReading"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "SQLDynamicDS",
+						"type": "DatasetReference"
+					},
+					"name": "SKSpectralMeasurement"
+				}
+			],
+			"transformations": [
+				{
+					"name": "SRInCSVjoinSRTablePanel"
+				},
+				{
+					"name": "joinWithSRSpectralReading"
+				},
+				{
+					"name": "aggregate1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          COLOR_Tool_Name as string,",
+				"          Color_Chip_Name as string,",
+				"          DateTime as string,",
+				"          Color_Chip_Source as string,",
+				"          Scheme as string,",
+				"          Instrument as string,",
+				"          Geometry as string,",
+				"          {400} as string,",
+				"          {410} as string,",
+				"          {420} as string,",
+				"          {430} as string,",
+				"          {440} as string,",
+				"          {450} as string,",
+				"          {460} as string,",
+				"          {470} as string,",
+				"          {480} as string,",
+				"          {490} as string,",
+				"          {500} as string,",
+				"          {510} as string,",
+				"          {520} as string,",
+				"          {530} as string,",
+				"          {540} as string,",
+				"          {550} as string,",
+				"          {560} as string,",
+				"          {570} as string,",
+				"          {580} as string,",
+				"          {590} as string,",
+				"          {600} as string,",
+				"          {610} as string,",
+				"          {620} as string,",
+				"          {630} as string,",
+				"          {640} as string,",
+				"          {650} as string,",
+				"          {660} as string,",
+				"          {670} as string,",
+				"          {680} as string,",
+				"          {690} as string,",
+				"          {700} as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> SRInCSV",
+				"source(output(",
+				"          PANEL_ID as integer,",
+				"          NAME as string,",
+				"          IS_METALLIC as integer,",
+				"          CREATE_USER_ID as integer,",
+				"          CREATE_DATE as timestamp,",
+				"          NOTES as string,",
+				"          IS_PUBLIC as integer,",
+				"          ENTITY_ID as integer,",
+				"          IS_INACTIVE as integer,",
+				"          AUDIT_SEARCH_INDEX_DATE as timestamp,",
+				"          IS_FLAGGED as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> SRTablePanel",
+				"source(output(",
+				"          READING_ID as integer,",
+				"          PANEL_ID as integer,",
+				"          READING_DATE as timestamp,",
+				"          MEASUREMENT_SCHEME as string,",
+				"          DEVICE_NAME as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> SRSpectralReading",
+				"SRInCSV, SRTablePanel join(COLOR_Tool_Name == NAME,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> SRInCSVjoinSRTablePanel",
+				"SRInCSVjoinSRTablePanel, SRSpectralReading join(SRTablePanel@PANEL_ID == SRSpectralReading@PANEL_ID,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> joinWithSRSpectralReading",
+				"joinWithSRSpectralReading aggregate(groupBy(READING_ID,",
+				"          Geometry,",
+				"          {400},",
+				"          SRTablePanel@PANEL_ID),",
+				"     READING_ID_1 = first(READING_ID),",
+				"          Geometry_1 = first(Geometry),",
+				"          {400_1} = first(400)) ~> aggregate1",
+				"aggregate1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          MEASUREMENT_ID as integer,",
+				"          READING_ID as integer,",
+				"          GEOMETRY as string,",
+				"          RAW_DATA as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          READING_ID,",
+				"          GEOMETRY = Geometry",
+				"     )) ~> SKSpectralMeasurement"
+			]
+		}
+	}
+}

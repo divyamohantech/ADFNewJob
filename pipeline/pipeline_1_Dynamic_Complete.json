@@ -1,0 +1,116 @@
+{
+	"name": "pipeline_1_Dynamic_Complete",
+	"properties": {
+		"activities": [
+			{
+				"name": "dataflow_dynamic_1_CompleteNew",
+				"description": "newa",
+				"type": "ExecuteDataFlow",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "dataflow_dynamic_1_Complete_v1",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"SourceIncsv": {
+								"TableName": "InCSV_NEW"
+							},
+							"SourceColorTool": {
+								"TableName": "COLOR_TOOL"
+							},
+							"SourceInCSVtable": {
+								"TableName": "InCSV_NEW"
+							},
+							"SourceColorToolTbale": {
+								"TableName": "COLOR_TOOL"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 32,
+						"computeType": "MemoryOptimized"
+					},
+					"traceLevel": "None",
+					"runConcurrently": true,
+					"cacheSinks": {
+						"firstRowOnly": true
+					}
+				}
+			},
+			{
+				"name": "dataflow_dynamic_1_Complete_v3_copy1",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "dataflow_dynamic_1_Complete_v3_copy1",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"SourceIncsv": {
+								"TableName": "InCSV_NEW"
+							},
+							"SourceInCSVtable": {
+								"TableName": "InCSV_NEW"
+							},
+							"SourceColorToolTable": {
+								"TableName": "COLOR_TOOL"
+							},
+							"SourceColorToolAfterInsert": {
+								"TableName": "COLOR_TOOL"
+							},
+							"SinkRejectedFile1": {
+								"Container_Name": "test",
+								"File_Name": "Rejection_color_tool.csv"
+							},
+							"SinkTableColorTool3": {
+								"TableName": "COLOR_TOOL"
+							},
+							"SinkApprovedFile4": {
+								"Container_Name": "test",
+								"File_Name": "Color_Tool_New.csv"
+							},
+							"SinkTableColorToolLog3": {
+								"TableName": "COLOR_TOOL"
+							},
+							"SinkTableColorToolLog4": {
+								"TableName": "COLOR_TOOL"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "None",
+					"cacheSinks": {
+						"firstRowOnly": true
+					}
+				}
+			}
+		],
+		"variables": {
+			"csv": {
+				"type": "String"
+			}
+		},
+		"annotations": []
+	}
+}

@@ -1,0 +1,86 @@
+{
+	"name": "pipeline_1_Dataflow_Cache",
+	"properties": {
+		"activities": [
+			{
+				"name": "DF1_ColorTool",
+				"description": "new",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF1_ColorTool",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"SRINCSV": {
+								"TableName": "InCSV_NEW"
+							},
+							"SRInCSVtable": {
+								"TableName": "InCSV_NEW"
+							},
+							"SRTableColorTool": {
+								"TableName": "COLOR_TOOL"
+							},
+							"SKFileColorToolRejectCSV": {
+								"Container_Name": "test",
+								"File_Name": "REJnew.CSV"
+							},
+							"SKTableColorTool": {
+								"TableName": "COLOR_TOOL"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 32,
+						"computeType": "MemoryOptimized"
+					},
+					"traceLevel": "None",
+					"cacheSinks": {
+						"firstRowOnly": true
+					}
+				}
+			},
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "DF1_ColorTool",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "newMaxId",
+					"value": {
+						"value": "@activity('DF1_ColorTool').output.runStatus.output.SKCacheMAXCOLORTOOLID.value[0].MAX_COLOR_TOOL_ID",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"variables": {
+			"csv": {
+				"type": "String"
+			},
+			"newMaxId": {
+				"type": "Integer"
+			}
+		},
+		"annotations": []
+	}
+}

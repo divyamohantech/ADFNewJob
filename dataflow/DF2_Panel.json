@@ -1,0 +1,263 @@
+{
+	"name": "DF2_Panel",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "SQLDynamicDS",
+						"type": "DatasetReference"
+					},
+					"name": "SRInCsv"
+				},
+				{
+					"dataset": {
+						"referenceName": "SQLDynamicDS",
+						"type": "DatasetReference"
+					},
+					"name": "SRTableUserProfile"
+				},
+				{
+					"dataset": {
+						"referenceName": "SQLDynamicDS",
+						"type": "DatasetReference"
+					},
+					"name": "SRTablePanel"
+				},
+				{
+					"dataset": {
+						"referenceName": "SQLDynamicDS",
+						"type": "DatasetReference"
+					},
+					"name": "SRInCsvTable"
+				}
+			],
+			"sinks": [
+				{
+					"name": "SkEntityIDValue"
+				},
+				{
+					"dataset": {
+						"referenceName": "SQLDynamicDS",
+						"type": "DatasetReference"
+					},
+					"name": "SKTablePanel"
+				},
+				{
+					"dataset": {
+						"referenceName": "DelimitedTextDymanicCSVFiles",
+						"type": "DatasetReference"
+					},
+					"name": "SKFileRejectionCSV"
+				},
+				{
+					"name": "SKCacheMAXPANELID"
+				}
+			],
+			"transformations": [
+				{
+					"name": "AddColumnsValueEntityID"
+				},
+				{
+					"name": "selectCOLORToolName"
+				},
+				{
+					"name": "derivedColumn1",
+					"description": "Creating/updating the columns 'COLOR_Tool_Name, ENTITY_ID'"
+				},
+				{
+					"name": "SRInCsvTableJoinSRTablePanel"
+				},
+				{
+					"name": "selectColumns"
+				},
+				{
+					"name": "FNAggMAXPANEL"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          COLOR_Tool_Name as string,",
+				"          Color_Chip_Name as string,",
+				"          DateTime as string,",
+				"          Color_Chip_Source as string,",
+				"          Scheme as string,",
+				"          Instrument as string,",
+				"          Geometry as string,",
+				"          {400} as string,",
+				"          {410} as string,",
+				"          {420} as string,",
+				"          {430} as string,",
+				"          {440} as string,",
+				"          {450} as string,",
+				"          {460} as string,",
+				"          {470} as string,",
+				"          {480} as string,",
+				"          {490} as string,",
+				"          {500} as string,",
+				"          {510} as string,",
+				"          {520} as string,",
+				"          {530} as string,",
+				"          {540} as string,",
+				"          {550} as string,",
+				"          {560} as string,",
+				"          {570} as string,",
+				"          {580} as string,",
+				"          {590} as string,",
+				"          {600} as string,",
+				"          {610} as string,",
+				"          {620} as string,",
+				"          {630} as string,",
+				"          {640} as string,",
+				"          {650} as string,",
+				"          {660} as string,",
+				"          {670} as string,",
+				"          {680} as string,",
+				"          {690} as string,",
+				"          {700} as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> SRInCsv",
+				"source(output(",
+				"          ENTITY_ID as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     query: 'Select ENTITY_ID as ENTITY_ID from [dbo].[USER_PROFILE] Where User_Name =\\'pfadmin\\'',",
+				"     format: 'query') ~> SRTableUserProfile",
+				"source(output(",
+				"          PANEL_ID as integer,",
+				"          NAME as string,",
+				"          IS_METALLIC as integer,",
+				"          CREATE_USER_ID as integer,",
+				"          CREATE_DATE as timestamp,",
+				"          NOTES as string,",
+				"          IS_PUBLIC as integer,",
+				"          ENTITY_ID as integer,",
+				"          IS_INACTIVE as integer,",
+				"          AUDIT_SEARCH_INDEX_DATE as timestamp,",
+				"          IS_FLAGGED as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> SRTablePanel",
+				"source(output(",
+				"          COLOR_Tool_Name as string,",
+				"          Color_Chip_Name as string,",
+				"          DateTime as string,",
+				"          Color_Chip_Source as string,",
+				"          Scheme as string,",
+				"          Instrument as string,",
+				"          Geometry as string,",
+				"          {400} as string,",
+				"          {410} as string,",
+				"          {420} as string,",
+				"          {430} as string,",
+				"          {440} as string,",
+				"          {450} as string,",
+				"          {460} as string,",
+				"          {470} as string,",
+				"          {480} as string,",
+				"          {490} as string,",
+				"          {500} as string,",
+				"          {510} as string,",
+				"          {520} as string,",
+				"          {530} as string,",
+				"          {540} as string,",
+				"          {550} as string,",
+				"          {560} as string,",
+				"          {570} as string,",
+				"          {580} as string,",
+				"          {590} as string,",
+				"          {600} as string,",
+				"          {610} as string,",
+				"          {620} as string,",
+				"          {630} as string,",
+				"          {640} as string,",
+				"          {650} as string,",
+				"          {660} as string,",
+				"          {670} as string,",
+				"          {680} as string,",
+				"          {690} as string,",
+				"          {700} as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> SRInCsvTable",
+				"SRTableUserProfile derive(ENTITY_ID = toInteger(ENTITY_ID)) ~> AddColumnsValueEntityID",
+				"SRInCsv select(mapColumn(",
+				"          COLOR_Tool_Name",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> selectCOLORToolName",
+				"selectCOLORToolName derive(ENTITY_ID = SkEntityIDValue#output()) ~> derivedColumn1",
+				"SRInCsvTable, SRTablePanel join(COLOR_Tool_Name == NAME,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> SRInCsvTableJoinSRTablePanel",
+				"SRInCsvTableJoinSRTablePanel select(mapColumn(",
+				"          NAME,",
+				"          ENTITY_ID",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> selectColumns",
+				"SRTablePanel aggregate(Max_PanelID = max(PANEL_ID)) ~> FNAggMAXPANEL",
+				"AddColumnsValueEntityID sink(validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     store: 'cache',",
+				"     format: 'inline',",
+				"     output: true,",
+				"     saveOrder: 2,",
+				"     mapColumn(",
+				"          ENTITY_ID",
+				"     )) ~> SkEntityIDValue",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          MEASUREMENT_ID as integer,",
+				"          READING_ID as integer,",
+				"          GEOMETRY as string,",
+				"          RAW_DATA as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     saveOrder: 3,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          NAME = COLOR_Tool_Name,",
+				"          ENTITY_ID = ENTITY_ID.ENTITY_ID",
+				"     )) ~> SKTablePanel",
+				"selectColumns sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          COLOR_TOOL_ID as string,",
+				"          COLOR_TOOL_NAME as string,",
+				"          COLOR_TOOL_TYPE_ID as string",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     saveOrder: 1) ~> SKFileRejectionCSV",
+				"FNAggMAXPANEL sink(validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     store: 'cache',",
+				"     format: 'inline',",
+				"     output: false,",
+				"     saveOrder: 1) ~> SKCacheMAXPANELID"
+			]
+		}
+	}
+}

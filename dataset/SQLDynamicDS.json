@@ -1,0 +1,43 @@
+{
+	"name": "SQLDynamicDS",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabaseLS",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"TableName": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "MEASUREMENT_ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "READING_ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "GEOMETRY",
+				"type": "varchar"
+			},
+			{
+				"name": "RAW_DATA",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": {
+				"value": "@dataset().TableName",
+				"type": "Expression"
+			}
+		}
+	}
+}
