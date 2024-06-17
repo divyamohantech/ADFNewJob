@@ -698,13 +698,16 @@
 				"userProperties": [],
 				"typeProperties": {
 					"variableName": "MAX_COLOR_TOOL_ID",
-					"value": "@last(split( string(activity('DF1_ColorTool').output.runStatus.output.SKCacheMAXCOLORTOOLID.value[0].\nMAX_COLOR_TOOL_ID),':'))"
+					"value": "@activity('DF1_ColorTool').output.runStatus.output.SKCacheMAXCOLORTOOLID.value[0].MAX_COLOR_TOOL_ID"
 				}
 			}
 		],
 		"variables": {
 			"MAX_COLOR_TOOL_ID": {
 				"type": "String"
+			},
+			"newMaxId": {
+				"type": "Integer"
 			}
 		},
 		"annotations": []
