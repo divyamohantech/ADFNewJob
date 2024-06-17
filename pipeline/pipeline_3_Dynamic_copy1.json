@@ -17,31 +17,7 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "DF3_ColorChip",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"SRInCsv": {
-								"TableName": "InCSV_NEW"
-							},
-							"SRTableColorChip": {
-								"TableName": "COLOR_CHIP"
-							},
-							"SRTablePanel": {
-								"TableName": "PANEL"
-							},
-							"SRInCsvRej": {
-								"TableName": "InCSV_NEW"
-							},
-							"SRTableColorTool": {
-								"TableName": "COLOR_TOOL"
-							},
-							"SKTableColorChip": {
-								"TableName": "COLOR_CHIP"
-							},
-							"SKFileColorCHIP": {
-								"Container_Name": "test",
-								"File_Name": "colorchip.csv"
-							}
-						}
+						"type": "DataFlowReference"
 					},
 					"compute": {
 						"coreCount": 8,
@@ -54,11 +30,35 @@
 				}
 			},
 			{
-				"name": "Copy Data to ColorChip Csv",
-				"type": "Copy",
+				"name": "SET_MAX_COLOR_CHIP_ID",
+				"type": "SetVariable",
 				"dependsOn": [
 					{
 						"activity": "dataflow_dynamic_3",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "MAX_COLOR_CHIP_ID",
+					"value": {
+						"value": "@activity('DF3_ColorChip').output.runStatus.output.SKCacheMAXCOLORCHIPID.value[0].MAX_COLOR_CHIP_ID",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Log data to ColorChip CSV",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "SET_MAX_COLOR_CHIP_ID",
 						"dependencyConditions": [
 							"Completed"
 						]
@@ -75,7 +75,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "select * from [dbo].[COLOR_CHIP] where COLOR_CHIP_ID > 1",
+						"sqlReaderQuery": "select * from [dbo].[COLOR_CHIP] where COLOR_CHIP_ID > @{variables('MAX_COLOR_CHIP_ID')}",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
