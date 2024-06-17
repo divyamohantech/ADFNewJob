@@ -41,7 +41,7 @@
 					"name": "SRInCSVjoinSRTablePanel"
 				},
 				{
-					"name": "aggregate1"
+					"name": "DistinctValues"
 				},
 				{
 					"name": "DontExistsNewRecords"
@@ -127,16 +127,13 @@
 				"     broadcast: 'auto')~> SRInCSVjoinSRTablePanel",
 				"SRInCSVjoinSRTablePanel aggregate(groupBy(Scheme,",
 				"          Instrument,",
-				"          DateTime),",
-				"     Scheme1 = first(Scheme),",
-				"          DateTime1 = first(DateTime),",
-				"          Instrument1 = first(Instrument),",
-				"          PANEL_ID = max(SRTablePanel@PANEL_ID)) ~> aggregate1",
+				"          DateTime,",
+				"          PANEL_ID)) ~> DistinctValues",
 				"SRInCsv, SRTableSpectralReading exists(Scheme == MEASUREMENT_SCHEME",
 				"     && Instrument == DEVICE_NAME,",
 				"     negate:true,",
 				"     broadcast: 'auto')~> DontExistsNewRecords",
-				"aggregate1 sink(allowSchemaDrift: true,",
+				"DistinctValues sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          PANEL_ID as integer,",
