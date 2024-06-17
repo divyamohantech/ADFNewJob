@@ -63,13 +63,13 @@
 				}
 			},
 			{
-				"name": "Copy Data to ColorChip Csv",
+				"name": "Log data to ColorChip CSV",
 				"type": "Copy",
 				"state": "Inactive",
 				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
-						"activity": "SET_MAX_COLOR_TOOL_ID_copy1",
+						"activity": "SET_MAX_COLOR_CHIP_ID",
 						"dependencyConditions": [
 							"Completed"
 						]
@@ -552,7 +552,7 @@
 				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
-						"activity": "Copy Data to ColorChip Csv",
+						"activity": "Log data to ColorChip CSV",
 						"dependencyConditions": [
 							"Completed"
 						]
@@ -679,7 +679,7 @@
 				}
 			},
 			{
-				"name": "SET_MAX_COLOR_TOOL_ID_copy1",
+				"name": "SET_MAX_COLOR_CHIP_ID",
 				"type": "SetVariable",
 				"dependsOn": [
 					{
