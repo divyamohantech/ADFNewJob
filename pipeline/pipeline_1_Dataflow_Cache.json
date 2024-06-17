@@ -6,8 +6,6 @@
 				"name": "dataflowV3",
 				"description": "new",
 				"type": "ExecuteDataFlow",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -19,20 +17,23 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "dataflow_dynamic_1_Complete_v3",
+						"referenceName": "DF1_ColorTool",
 						"type": "DataFlowReference",
 						"datasetParameters": {
-							"SourceIncsv": {
+							"SRINCSV": {
 								"TableName": "InCSV_NEW"
 							},
-							"SourceInCSVtable": {
+							"SRInCSVtable": {
 								"TableName": "InCSV_NEW"
 							},
-							"SinkRejectedFile1": {
-								"Container_Name": "test",
-								"File_Name": "Rejection_color_tool.csv"
+							"SRTableColorTool": {
+								"TableName": "COLOR_TOOL"
 							},
-							"SinkTableColorTool3": {
+							"SKFileColorToolRejectCSV": {
+								"Container_Name": "TEST",
+								"File_Name": "REJ.CSV"
+							},
+							"SKTableColorTool": {
 								"TableName": "COLOR_TOOL"
 							}
 						}
@@ -40,140 +41,6 @@
 					"compute": {
 						"coreCount": 32,
 						"computeType": "MemoryOptimized"
-					},
-					"traceLevel": "None",
-					"cacheSinks": {
-						"firstRowOnly": true
-					}
-				}
-			},
-			{
-				"name": "Copy data into color tool CSV",
-				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
-				"dependsOn": [
-					{
-						"activity": "dataflowV3",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "AzureSqlSource",
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
-					},
-					"sink": {
-						"type": "DelimitedTextSink",
-						"storeSettings": {
-							"type": "AzureBlobStorageWriteSettings"
-						},
-						"formatSettings": {
-							"type": "DelimitedTextWriteSettings",
-							"quoteAllText": true,
-							"fileExtension": ".txt"
-						}
-					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"mappings": [
-							{
-								"source": {
-									"name": "COLOR_TOOL_ID",
-									"type": "Int32",
-									"physicalType": "int"
-								},
-								"sink": {
-									"name": "COLOR_TOOL_ID",
-									"type": "String",
-									"physicalType": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "COLOR_TOOL_NAME",
-									"type": "String",
-									"physicalType": "varchar"
-								},
-								"sink": {
-									"name": "COLOR_TOOL_NAME",
-									"type": "String",
-									"physicalType": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "COLOR_TOOL_TYPE_ID",
-									"type": "Int32",
-									"physicalType": "int"
-								},
-								"sink": {
-									"name": "COLOR_TOOL_TYPE_ID",
-									"type": "String",
-									"physicalType": "String"
-								}
-							}
-						],
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
-				},
-				"inputs": [
-					{
-						"referenceName": "SQLDynamicDS",
-						"type": "DatasetReference",
-						"parameters": {
-							"TableName": "COLOR_TOOL"
-						}
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "DelimitedTextDymanicCSVFiles",
-						"type": "DatasetReference"
-					}
-				]
-			},
-			{
-				"name": "dataflow_Test_Cache",
-				"type": "ExecuteDataFlow",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"dataflow": {
-						"referenceName": "dataflow_Test_Cache1",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"SourceColorTool": {
-								"TableName": "COLOR_TOOL"
-							}
-						}
-					},
-					"compute": {
-						"coreCount": 8,
-						"computeType": "General"
 					},
 					"traceLevel": "None",
 					"cacheSinks": {
