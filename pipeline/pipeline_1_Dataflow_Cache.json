@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "dataflowV3",
+				"name": "DF1_ColorTool",
 				"description": "new",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
@@ -45,6 +45,30 @@
 					"traceLevel": "None",
 					"cacheSinks": {
 						"firstRowOnly": true
+					}
+				}
+			},
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "DF1_ColorTool",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "csv",
+					"value": {
+						"value": "@activity('DF1_ColorTool').output.runStatus.output.SKCacheMAXCOLORTOOLID.value[0].MAX_COLOR_TOOL_ID",
+						"type": "Expression"
 					}
 				}
 			}
