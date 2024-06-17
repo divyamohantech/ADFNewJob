@@ -9,7 +9,7 @@
 				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
-						"activity": "Copy data to Panel CSV",
+						"activity": "Log data to Panel CSV",
 						"dependencyConditions": [
 							"Completed"
 						]
@@ -179,7 +179,7 @@
 				"type": "ExecuteDataFlow",
 				"dependsOn": [
 					{
-						"activity": "Copy data to Color_Tool CSV",
+						"activity": "Log data to Color_Tool CSV",
 						"dependencyConditions": [
 							"Completed"
 						]
@@ -275,7 +275,7 @@
 				}
 			},
 			{
-				"name": "Copy data to Color_Tool CSV",
+				"name": "Log data to Color_Tool CSV",
 				"type": "Copy",
 				"dependsOn": [
 					{
@@ -383,13 +383,11 @@
 				]
 			},
 			{
-				"name": "Copy data to Panel CSV",
+				"name": "Log data to Panel CSV",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
-						"activity": "DF2_Panel",
+						"activity": "SET_MAX_PANEL_ID",
 						"dependencyConditions": [
 							"Completed"
 						]
@@ -406,6 +404,10 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
+						"sqlReaderQuery": {
+							"value": "select * from [dbo].[PANEL] where PANEL_ID  > @{variables('MAX_PANEL_ID')}",
+							"type": "Expression"
+						},
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -450,30 +452,6 @@
 							},
 							{
 								"source": {
-									"name": "IS_METALLIC",
-									"type": "Int32",
-									"physicalType": "int"
-								},
-								"sink": {
-									"name": "IS_METALLIC",
-									"type": "String",
-									"physicalType": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "CREATE_USER_ID",
-									"type": "Int32",
-									"physicalType": "int"
-								},
-								"sink": {
-									"name": "CREATE_USER_ID",
-									"type": "String",
-									"physicalType": "String"
-								}
-							},
-							{
-								"source": {
 									"name": "CREATE_DATE",
 									"type": "DateTime",
 									"physicalType": "datetime"
@@ -516,42 +494,6 @@
 								},
 								"sink": {
 									"name": "ENTITY_ID",
-									"type": "String",
-									"physicalType": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "IS_INACTIVE",
-									"type": "Int32",
-									"physicalType": "int"
-								},
-								"sink": {
-									"name": "IS_INACTIVE",
-									"type": "String",
-									"physicalType": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "AUDIT_SEARCH_INDEX_DATE",
-									"type": "DateTime",
-									"physicalType": "datetime"
-								},
-								"sink": {
-									"name": "AUDIT_SEARCH_INDEX_DATE",
-									"type": "String",
-									"physicalType": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "IS_FLAGGED",
-									"type": "String",
-									"physicalType": "varchar"
-								},
-								"sink": {
-									"name": "IS_FLAGGED",
 									"type": "String",
 									"physicalType": "String"
 								}
@@ -579,7 +521,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"Container_Name": "test",
-							"File_Name": "Panel_App.csv"
+							"File_Name": "Panel.csv"
 						}
 					}
 				]
@@ -692,6 +634,30 @@
 						"type": "Expression"
 					}
 				}
+			},
+			{
+				"name": "SET_MAX_PANEL_ID",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "DF2_Panel",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "MAX_PANEL_ID",
+					"value": {
+						"value": "@activity('DF2_Panel').output.runStatus.output.SKCacheMAXPANELID.value[0].MAX_PANEL_ID\n\n",
+						"type": "Expression"
+					}
+				}
 			}
 		],
 		"variables": {
@@ -699,6 +665,9 @@
 				"type": "Integer"
 			},
 			"newMaxId": {
+				"type": "Integer"
+			},
+			"MAX_PANEL_ID": {
 				"type": "Integer"
 			}
 		},
