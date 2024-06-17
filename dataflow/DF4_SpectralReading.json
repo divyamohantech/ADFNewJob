@@ -155,7 +155,10 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> SKTableSpectralReadingNew"
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          PANEL_ID",
+				"     )) ~> SKTableSpectralReadingNew"
 			]
 		}
 	}
