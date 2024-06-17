@@ -43,7 +43,8 @@
 					"description": "Export data to SQLDynamicDS "
 				},
 				{
-					"name": "SKCacheMAXCOLORTOOLID"
+					"name": "SKCacheMAXCOLORTOOLID",
+					"description": "Export data to cache1"
 				}
 			],
 			"transformations": [
