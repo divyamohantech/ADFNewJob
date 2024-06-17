@@ -156,13 +156,7 @@
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     saveOrder: 1,",
-				"     errorHandlingOption: 'stopOnFirstError',",
-				"     mapColumn(",
-				"          PANEL_ID,",
-				"          READING_DATE = DateTime,",
-				"          MEASUREMENT_SCHEME = Scheme1,",
-				"          DEVICE_NAME = Instrument",
-				"     )) ~> SKTableSpectralReading"
+				"     errorHandlingOption: 'stopOnFirstError') ~> SKTableSpectralReading"
 			]
 		}
 	}
