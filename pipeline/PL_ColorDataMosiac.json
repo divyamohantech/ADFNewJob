@@ -654,7 +654,7 @@
 				"typeProperties": {
 					"variableName": "MAX_PANEL_ID",
 					"value": {
-						"value": "@activity('DF2_Panel').output.runStatus.output.SKCacheMAXPANELID.value[0].MAX_PANEL_ID\n\n",
+						"value": "@activity('DF2_Panel').output.runStatus.output.SKCacheMAXPANELID.value[0].MAX_PANELID",
 						"type": "Expression"
 					}
 				}
