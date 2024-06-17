@@ -272,7 +272,10 @@
 				"     store: 'cache',",
 				"     format: 'inline',",
 				"     output: false,",
-				"     saveOrder: 1) ~> SKCacheMAXPANELID"
+				"     saveOrder: 1,",
+				"     mapColumn(",
+				"          MAX_PANELID = Max_PanelID",
+				"     )) ~> SKCacheMAXPANELID"
 			]
 		}
 	}
