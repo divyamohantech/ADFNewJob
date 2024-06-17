@@ -16,14 +16,14 @@
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference"
 					},
-					"name": "SRUserProfile"
+					"name": "SRTableUserProfile"
 				},
 				{
 					"dataset": {
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference"
 					},
-					"name": "SRPanel"
+					"name": "SRTablePanel"
 				},
 				{
 					"dataset": {
@@ -35,7 +35,7 @@
 			],
 			"sinks": [
 				{
-					"name": "SinkEntityIDValue"
+					"name": "SkEntityIDValue"
 				},
 				{
 					"dataset": {
@@ -57,14 +57,14 @@
 					"name": "AddColumnsValueEntityID"
 				},
 				{
-					"name": "select1"
+					"name": "selectCOLORToolName"
 				},
 				{
 					"name": "derivedColumn1",
 					"description": "Creating/updating the columns 'COLOR_Tool_Name, ENTITY_ID'"
 				},
 				{
-					"name": "CommanJoin"
+					"name": "SRInCsvTableJoinSRTablePanel"
 				},
 				{
 					"name": "selectColumns"
@@ -122,7 +122,7 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     query: 'Select ENTITY_ID as ENTITY_ID from [dbo].[USER_PROFILE] Where User_Name =\\'pfadmin\\'',",
-				"     format: 'query') ~> SRUserProfile",
+				"     format: 'query') ~> SRTableUserProfile",
 				"source(output(",
 				"          PANEL_ID as integer,",
 				"          NAME as string,",
@@ -139,7 +139,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> SRPanel",
+				"     format: 'table') ~> SRTablePanel",
 				"source(output(",
 				"          COLOR_Tool_Name as string,",
 				"          Color_Chip_Name as string,",
@@ -184,19 +184,19 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> SRInCsvTable",
-				"SRUserProfile derive(ENTITY_ID = toInteger(ENTITY_ID)) ~> AddColumnsValueEntityID",
+				"SRTableUserProfile derive(ENTITY_ID = toInteger(ENTITY_ID)) ~> AddColumnsValueEntityID",
 				"SRInCsv select(mapColumn(",
 				"          COLOR_Tool_Name",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select1",
-				"select1 derive(ENTITY_ID = SinkEntityIDValue#output()) ~> derivedColumn1",
-				"SRInCsvTable, SRPanel join(COLOR_Tool_Name == NAME,",
+				"     skipDuplicateMapOutputs: true) ~> selectCOLORToolName",
+				"selectCOLORToolName derive(ENTITY_ID = SkEntityIDValue#output()) ~> derivedColumn1",
+				"SRInCsvTable, SRTablePanel join(COLOR_Tool_Name == NAME,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> CommanJoin",
-				"CommanJoin select(mapColumn(",
+				"     broadcast: 'auto')~> SRInCsvTableJoinSRTablePanel",
+				"SRInCsvTableJoinSRTablePanel select(mapColumn(",
 				"          NAME,",
 				"          ENTITY_ID",
 				"     ),",
@@ -211,7 +211,7 @@
 				"     saveOrder: 2,",
 				"     mapColumn(",
 				"          ENTITY_ID",
-				"     )) ~> SinkEntityIDValue",
+				"     )) ~> SkEntityIDValue",
 				"derivedColumn1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
