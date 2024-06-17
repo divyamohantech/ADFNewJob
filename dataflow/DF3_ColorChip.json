@@ -282,6 +282,9 @@
 				"     ),",
 				"     partitionFileNames:['Rejected Color_Chip.csv'],",
 				"     saveOrder: 1,",
+				"     mapColumn(",
+				"          {} = Color_Chip_Source",
+				"     ),",
 				"     partitionBy('hash', 1),",
 				"     format: 'table') ~> SKTableColorCHIPs"
 			]
