@@ -52,7 +52,7 @@
 				},
 				{
 					"dataset": {
-						"referenceName": "DelimitedTextColorCache",
+						"referenceName": "DelimitedTextDymanicCSVFiles",
 						"type": "DatasetReference"
 					},
 					"name": "SKTableColorCHIPs"
@@ -275,15 +275,10 @@
 				"     errorHandlingOption: 'stopOnFirstError') ~> SKTableColorChip",
 				"SelectColumnColorChipSource sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     input(",
-				"          Color_Tool_ID as string,",
-				"          Color_Tool_Name as string,",
-				"          Color_Tool_Type_ID as string",
-				"     ),",
 				"     partitionFileNames:['Rejected Color_Chip.csv'],",
 				"     saveOrder: 1,",
 				"     mapColumn(",
-				"          {} = Color_Chip_Source",
+				"          CHIP_SOURCE = Color_Chip_Source",
 				"     ),",
 				"     partitionBy('hash', 1),",
 				"     format: 'table') ~> SKTableColorCHIPs"
