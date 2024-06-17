@@ -28,8 +28,27 @@
 						"referenceName": "DF3_ColorChip",
 						"type": "DataFlowReference",
 						"datasetParameters": {
-							"SRCSVIn": {
+							"SRInCsv": {
 								"TableName": "InCSV_NEW"
+							},
+							"SRTableColorChip": {
+								"TableName": "COLOR_CHIP"
+							},
+							"SRTablePanel": {
+								"TableName": "PANEL"
+							},
+							"SRInCsvRej": {
+								"TableName": "InCSV_NEW"
+							},
+							"SRTableColorTool": {
+								"TableName": "COLOR_TOOL"
+							},
+							"SKTableColorChip": {
+								"TableName": "COLOR_CHIP"
+							},
+							"SKFileColorCHIP": {
+								"Container_Name": "test",
+								"File_Name": "NewColorChip.csv"
 							}
 						}
 					},
@@ -50,7 +69,7 @@
 				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
-						"activity": "DF3_ColorChip",
+						"activity": "SET_MAX_COLOR_TOOL_ID_copy1",
 						"dependencyConditions": [
 							"Completed"
 						]
@@ -655,6 +674,30 @@
 					"variableName": "MAX_PANEL_ID",
 					"value": {
 						"value": "@activity('DF2_Panel').output.runStatus.output.SKCacheMAXPANELID.value[0].MAX_PANELID",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "SET_MAX_COLOR_TOOL_ID_copy1",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "DF3_ColorChip",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "MAX_COLOR_TOOL_ID",
+					"value": {
+						"value": "@activity('DF1_ColorTool').output.runStatus.output.SKCacheMAXCOLORTOOLID.value[0].MAX_COLOR_TOOL_ID",
 						"type": "Expression"
 					}
 				}
