@@ -9,14 +9,14 @@
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference"
 					},
-					"name": "SRINCSV"
+					"name": "SRInCsv"
 				},
 				{
 					"dataset": {
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference"
 					},
-					"name": "SRTableCOLORCHIP"
+					"name": "SRTableColorChip"
 				},
 				{
 					"dataset": {
@@ -30,7 +30,7 @@
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference"
 					},
-					"name": "SRINCSVRej"
+					"name": "SRInCsvRej"
 				}
 			],
 			"sinks": [
@@ -86,7 +86,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> SRINCSV",
+				"     format: 'table') ~> SRInCsv",
 				"source(output(",
 				"          PANEL_ID as integer,",
 				"          NAME as string,",
@@ -103,7 +103,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> SRTableCOLORCHIP",
+				"     format: 'table') ~> SRTableColorChip",
 				"source(output(",
 				"          PANEL_ID as integer,",
 				"          NAME as string,",
@@ -137,8 +137,8 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> SRINCSVRej",
-				"SRINCSV, SRTableCOLORCHIP exists(SRINCSV@Color_Chip_Source == SRTableCOLORCHIP@Chip_Source,",
+				"     format: 'table') ~> SRInCsvRej",
+				"SRInCsv, SRTableColorChip exists(SRINCSV@Color_Chip_Source == SRTableCOLORCHIP@Chip_Source,",
 				"     negate:true,",
 				"     broadcast: 'both')~> NotExistsRecords",
 				"NotExistsRecords select(mapColumn(",
@@ -160,7 +160,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select2",
-				"SRINCSVRej, SRTableCOLORCHIP join(SRCSVIn@COLOR_Tool_Name == SRTableColorTool@COLOR_TOOL_NAME,",
+				"SRInCsvRej, SRTableColorChip join(SRCSVIn@COLOR_Tool_Name == SRTableColorTool@COLOR_TOOL_NAME,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
