@@ -80,7 +80,7 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "select * from [dbo].[COLOR_TOOL] where COLOR_TOOL_ID\n= @json(variables('Max_COLOR_TOOL_ID')).value",
+							"value": "select * from [dbo].[COLOR_TOOL] where COLOR_TOOL_ID\n= @{variables('Max_COLOR_TOOL_ID')}",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
@@ -183,7 +183,10 @@
 				"userProperties": [],
 				"typeProperties": {
 					"variableName": "Max_COLOR_TOOL_ID",
-					"value": "@last(split( string(activity('dataflow_Test_Cache').output.runStatus.output.cache.value[0].\nMax_COLOR_TOOL_ID),':'))"
+					"value": {
+						"value": "@last(split( string(activity('dataflow_Test_Cache').output.runStatus.output.cache.value[0].\nMax_COLOR_TOOL_ID),':'))",
+						"type": "Expression"
+					}
 				}
 			}
 		],
