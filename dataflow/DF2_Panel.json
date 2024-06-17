@@ -42,14 +42,14 @@
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference"
 					},
-					"name": "SKPanelTable"
+					"name": "SKTablePanel"
 				},
 				{
 					"dataset": {
 						"referenceName": "DelimitedTextDymanicCSVFiles",
 						"type": "DatasetReference"
 					},
-					"name": "SKRejectionCSV"
+					"name": "SKFileRejectionCSV"
 				}
 			],
 			"transformations": [
@@ -232,7 +232,7 @@
 				"     mapColumn(",
 				"          NAME = COLOR_Tool_Name,",
 				"          ENTITY_ID = ENTITY_ID.ENTITY_ID",
-				"     )) ~> SKPanelTable",
+				"     )) ~> SKTablePanel",
 				"selectColumns sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -242,7 +242,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     saveOrder: 1) ~> SKRejectionCSV"
+				"     saveOrder: 1) ~> SKFileRejectionCSV"
 			]
 		}
 	}
