@@ -77,9 +77,6 @@
 					"name": "JoinWithColorTool"
 				},
 				{
-					"name": "LeftjoinNewRecords"
-				},
-				{
 					"name": "exists1"
 				}
 			],
@@ -291,12 +288,7 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> JoinWithColorTool",
-				"SRInCsv, SRTableColorChip join(Color_Chip_Source == CHIP_SOURCE,",
-				"     joinType:'left',",
-				"     matchType:'exact',",
-				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> LeftjoinNewRecords",
-				"LeftjoinNewRecords, SRTableColorChip exists(Color_Chip_Source == SRTableColorChip@CHIP_SOURCE,",
+				"SRInCsv, SRTableColorChip exists(Color_Chip_Source == CHIP_SOURCE,",
 				"     negate:true,",
 				"     broadcast: 'auto')~> exists1",
 				"SelectTableColumnColorChip sink(allowSchemaDrift: true,",
