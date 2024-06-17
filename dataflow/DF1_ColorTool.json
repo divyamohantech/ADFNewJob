@@ -179,7 +179,7 @@
 				"     ignoreSpaces: false,",
 				"     broadcast: 'right')~> joinRejectionCondition",
 				"joinRejectionCondition select(mapColumn(",
-				"          COLOR_Tool_Name = SRInCSVtable@COLOR_Tool_Name",
+				"          COLOR_Tool_Name = SRTableColorTool@COLOR_TOOL_NAME",
 				"     ),",
 				"     skipDuplicateMapInputs: false,",
 				"     skipDuplicateMapOutputs: false) ~> SelectDataColorTool",
