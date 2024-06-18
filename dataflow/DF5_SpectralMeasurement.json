@@ -61,6 +61,10 @@
 				},
 				{
 					"name": "SelectTableColumnMeasurement"
+				},
+				{
+					"name": "FNAggMAXReadingID",
+					"description": "Aggregating data by producing columns 'MAX_MEASUREMENT_ID'"
 				}
 			],
 			"scriptLines": [
@@ -210,6 +214,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> SelectTableColumnMeasurement",
+				"SRTableSPECTRALMEASUREMENT aggregate(MAX_MEASUREMENT_ID = iifNull(max(MEASUREMENT_ID),0)) ~> FNAggMAXReadingID",
 				"SelectTableColumnMeasurement sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
