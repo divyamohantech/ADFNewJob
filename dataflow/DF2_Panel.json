@@ -257,7 +257,7 @@
 				"     )) ~> SKTablePanel",
 				"selectColumns sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     partitionFileNames:['Rejected_Panel.csv'],",
+				"     partitionFileNames:['Panel_Rejected.csv'],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     saveOrder: 3,",

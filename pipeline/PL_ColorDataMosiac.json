@@ -541,7 +541,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"Container_Name": "test",
-							"File_Name": "Panel.csv"
+							"File_Name": "Panel_APP.csv"
 						}
 					}
 				]
@@ -549,8 +549,6 @@
 			{
 				"name": "DF4_SpectralReading",
 				"type": "ExecuteDataFlow",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Log data to ColorChip CSV",
@@ -574,6 +572,22 @@
 						"datasetParameters": {
 							"SRInCsv": {
 								"TableName": "InCSV_NEW"
+							},
+							"SRTablePanel": {
+								"TableName": "PANEL"
+							},
+							"SRTableSpectralReading": {
+								"TableName": "SPECTRAL_READING"
+							},
+							"SRInCsvRejFile": {
+								"TableName": "InCSV_NEW"
+							},
+							"SKTableSpectralReading": {
+								"TableName": "SPECTRAL_READING"
+							},
+							"SKFileReadingRejectCSV": {
+								"Container_Name": "test",
+								"File_Name": "REJECTED_SPECTRAL_READING"
 							}
 						}
 					},
@@ -590,13 +604,11 @@
 			{
 				"name": "DF5_SpectralMeasurement",
 				"type": "ExecuteDataFlow",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
-						"activity": "DF4_SpectralReading",
+						"activity": "Log data to Reading CSV",
 						"dependencyConditions": [
-							"Completed"
+							"Succeeded"
 						]
 					}
 				],
@@ -616,11 +628,24 @@
 							"SRInCSV": {
 								"TableName": "InCSV_NEW"
 							},
-							"SRSpectralReading": {
+							"SRTableSPECTRALMEASUREMENT": {
+								"TableName": "SPECTRAL_MEASUREMENT"
+							},
+							"SRTableSpectralReading": {
 								"TableName": "SPECTRAL_READING"
+							},
+							"SRInCsvRejFile": {
+								"TableName": "InCSV_NEW"
+							},
+							"SRTablePanel": {
+								"TableName": "PANEL"
 							},
 							"SKSpectralMeasurement": {
 								"TableName": "SPECTRAL_MEASUREMENT"
+							},
+							"SKFileMeasurementRejectCSV": {
+								"Container_Name": "test",
+								"File_Name": "SPECTRAL_MEASUREMENT_Rejected.csv"
 							}
 						}
 					},
@@ -628,7 +653,10 @@
 						"coreCount": 8,
 						"computeType": "General"
 					},
-					"traceLevel": "Fine"
+					"traceLevel": "None",
+					"cacheSinks": {
+						"firstRowOnly": true
+					}
 				}
 			},
 			{
@@ -702,6 +730,306 @@
 						"type": "Expression"
 					}
 				}
+			},
+			{
+				"name": "SET_MAX_READING_ID",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "DF4_SpectralReading",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "MAX_READING_ID",
+					"value": {
+						"value": "@activity('DF4_SpectralReading').output.runStatus.output.SKCacheMAXREADINGID.value[0].MAX_READING_ID",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Log data to Reading CSV",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "SET_MAX_READING_ID",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": {
+							"value": "select * from [dbo].[SPECTRAL_READING] where READING_ID > @{variables('MAX_READING_ID')}",
+							"type": "Expression"
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "READING_ID",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "READING_ID",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PANEL_ID",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "PANEL_ID",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "READING_DATE",
+									"type": "DateTime",
+									"physicalType": "datetime"
+								},
+								"sink": {
+									"name": "READING_DATE",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "MEASUREMENT_SCHEME",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "MEASUREMENT_SCHEME",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DEVICE_NAME",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "DEVICE_NAME",
+									"type": "String",
+									"physicalType": "String"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SQLDynamicDS",
+						"type": "DatasetReference",
+						"parameters": {
+							"TableName": "SPECTRAL_READING"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DelimitedTextDymanicCSVFiles",
+						"type": "DatasetReference",
+						"parameters": {
+							"Container_Name": "test",
+							"File_Name": "SPECTRAL_READING_App.csv"
+						}
+					}
+				]
+			},
+			{
+				"name": "SET_MAX_MEASUREMENT_ID",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "DF5_SpectralMeasurement",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "MAX_MEASUREMENT_ID",
+					"value": {
+						"value": "@activity('DF5_SpectralMeasurement').output.runStatus.output.SKCacheMAXMEASUREMENTID.value[0].MAX_MEASUREMENT_ID",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Log data to Measurement CSV",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "SET_MAX_MEASUREMENT_ID",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": {
+							"value": "select * from [dbo].[SPECTRAL_MEASUREMENT] where READING_ID > @{variables('MAX_MEASUREMENT_ID')}",
+							"type": "Expression"
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "MEASUREMENT_ID",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "MEASUREMENT_ID",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "READING_ID",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "READING_ID",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "GEOMETRY",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "GEOMETRY",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "RAW_DATA",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "RAW_DATA",
+									"type": "String",
+									"physicalType": "String"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SQLDynamicDS",
+						"type": "DatasetReference",
+						"parameters": {
+							"TableName": "SPECTRAL_MEASUREMENT"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DelimitedTextDymanicCSVFiles",
+						"type": "DatasetReference",
+						"parameters": {
+							"Container_Name": "test",
+							"File_Name": "SPECTRAL_MEASUREMENT_App.csv"
+						}
+					}
+				]
 			}
 		],
 		"variables": {
@@ -712,6 +1040,12 @@
 				"type": "Integer"
 			},
 			"MAX_COLOR_CHIP_ID": {
+				"type": "Integer"
+			},
+			"MAX_READING_ID": {
+				"type": "Integer"
+			},
+			"MAX_MEASUREMENT_ID": {
 				"type": "Integer"
 			}
 		},
