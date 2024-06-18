@@ -41,6 +41,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "SKTableSpectralReading"
+				},
+				{
+					"dataset": {
+						"referenceName": "DelimitedTextDymanicCSVFiles",
+						"type": "DatasetReference"
+					},
+					"name": "SKFileReadingRejectCSV"
 				}
 			],
 			"transformations": [
@@ -237,7 +244,13 @@
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     saveOrder: 1,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> SKTableSpectralReading"
+				"     errorHandlingOption: 'stopOnFirstError') ~> SKTableSpectralReading",
+				"DistinctReadingColumns sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['REJECTED_SPECTRAL_READING.csv'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> SKFileReadingRejectCSV"
 			]
 		}
 	}
