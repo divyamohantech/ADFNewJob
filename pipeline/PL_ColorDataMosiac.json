@@ -628,7 +628,7 @@
 							"SRInCSV": {
 								"TableName": "InCSV_NEW"
 							},
-							"SRSpectralReading": {
+							"SRTableSpectralReading": {
 								"TableName": "SPECTRAL_READING"
 							},
 							"SKSpectralMeasurement": {
@@ -870,6 +870,162 @@
 						}
 					}
 				]
+			},
+			{
+				"name": "SET_MAX_MEASUREMENT_ID",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "DF5_SpectralMeasurement",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "MAX_MEASUREMENT_ID",
+					"value": {
+						"value": "@activity('DF5_SpectralMeasurement').output.runStatus.output.SKCacheMAXMEASUREMENTID.value[0].MAX_MEASUREMENT_ID",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Log data to Reading CSV_copy1",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "SET_MAX_MEASUREMENT_ID",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": {
+							"value": "select * from [dbo].[SPECTRAL_READING] where READING_ID > @{variables('MAX_READING_ID')}",
+							"type": "Expression"
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "READING_ID",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "READING_ID",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PANEL_ID",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "PANEL_ID",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "READING_DATE",
+									"type": "DateTime",
+									"physicalType": "datetime"
+								},
+								"sink": {
+									"name": "READING_DATE",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "MEASUREMENT_SCHEME",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "MEASUREMENT_SCHEME",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DEVICE_NAME",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "DEVICE_NAME",
+									"type": "String",
+									"physicalType": "String"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SQLDynamicDS",
+						"type": "DatasetReference",
+						"parameters": {
+							"TableName": "SPECTRAL_READING"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DelimitedTextDymanicCSVFiles",
+						"type": "DatasetReference",
+						"parameters": {
+							"Container_Name": "test",
+							"File_Name": "SPECTRAL_READING_App.csv"
+						}
+					}
+				]
 			}
 		],
 		"variables": {
@@ -883,6 +1039,9 @@
 				"type": "Integer"
 			},
 			"MAX_READING_ID": {
+				"type": "Integer"
+			},
+			"MAX_MEASUREMENT_ID": {
 				"type": "Integer"
 			}
 		},
