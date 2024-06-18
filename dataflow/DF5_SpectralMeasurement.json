@@ -206,7 +206,7 @@
 				"DistinctValues select(mapColumn(",
 				"          RAW_DATA,",
 				"          READING_ID,",
-				"          Geometry",
+				"          GEOMETRY = Geometry",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> SelectTableColumnMeasurement",
@@ -235,7 +235,7 @@
 				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
 				"          READING_ID,",
-				"          GEOMETRY = Geometry",
+				"          GEOMETRY",
 				"     )) ~> SKSpectralMeasurement"
 			]
 		}
