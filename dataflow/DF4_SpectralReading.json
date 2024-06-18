@@ -45,6 +45,9 @@
 				},
 				{
 					"name": "DontExistsNewRecords"
+				},
+				{
+					"name": "FNAggMAXReadingID"
 				}
 			],
 			"scriptLines": [
@@ -133,6 +136,7 @@
 				"     && Instrument == DEVICE_NAME,",
 				"     negate:true,",
 				"     broadcast: 'left')~> DontExistsNewRecords",
+				"SRTableSpectralReading aggregate(MAX_READING_ID = iifNull(max(READING_ID),0)) ~> FNAggMAXReadingID",
 				"DistinctValues sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
