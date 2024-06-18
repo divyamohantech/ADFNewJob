@@ -22,9 +22,6 @@
 							"SRInCSV": {
 								"TableName": "InCSV_NEW"
 							},
-							"SRPanel": {
-								"TableName": "PANEL"
-							},
 							"SRSpectralReading": {
 								"TableName": "SPECTRAL_READING"
 							},
