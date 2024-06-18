@@ -50,6 +50,13 @@
 				},
 				{
 					"name": "SKCacheMAXMEASUREMENTID"
+				},
+				{
+					"dataset": {
+						"referenceName": "DelimitedTextDymanicCSVFiles",
+						"type": "DatasetReference"
+					},
+					"name": "SKFileMeasurementRejectCSV"
 				}
 			],
 			"transformations": [
@@ -68,6 +75,15 @@
 				{
 					"name": "FNAggMAXMEASUREMENTID",
 					"description": "Aggregating data by producing columns 'MAX_MEASUREMENT_ID'"
+				},
+				{
+					"name": "joinSMeasurement"
+				},
+				{
+					"name": "joinSReading"
+				},
+				{
+					"name": "DistinctMeasurementColumns"
 				}
 			],
 			"scriptLines": [
@@ -218,6 +234,19 @@
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> SelectTableColumnMeasurement",
 				"SRTableSPECTRALMEASUREMENT aggregate(MAX_MEASUREMENT_ID = iifNull(max(MEASUREMENT_ID),0)) ~> FNAggMAXMEASUREMENTID",
+				"SRInCsvRejFile, SRTableSPECTRALMEASUREMENT join(SRInCsvRejFile@Geometry == SRTableSPECTRALMEASUREMENT@GEOMETRY,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> joinSMeasurement",
+				"joinSMeasurement, SRTableSpectralReading join(SRTableSPECTRALMEASUREMENT@READING_ID == SRTableSpectralReading@READING_ID,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> joinSReading",
+				"joinSReading aggregate(groupBy(Color_Chip_Name,",
+				"          SRInCsvRejFile@Geometry),",
+				"     {400} = first(400)) ~> DistinctMeasurementColumns",
 				"SelectTableColumnMeasurement sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -251,7 +280,12 @@
 				"     store: 'cache',",
 				"     format: 'inline',",
 				"     output: true,",
-				"     saveOrder: 1) ~> SKCacheMAXMEASUREMENTID"
+				"     saveOrder: 1) ~> SKCacheMAXMEASUREMENTID",
+				"DistinctMeasurementColumns sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['REJECTED_SPECTRAL_MEASUREMENT.csv'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SKFileMeasurementRejectCSV"
 			]
 		}
 	}
