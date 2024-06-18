@@ -58,9 +58,6 @@
 				},
 				{
 					"name": "aggregate1"
-				},
-				{
-					"name": "DontExistsNewRecords"
 				}
 			],
 			"scriptLines": [
@@ -163,7 +160,7 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> SRTablePanel",
-				"DontExistsNewRecords, SRTableSPECTRALMEASUREMENT join(ERROR_FUNCTION('') == SRTableSPECTRALMEASUREMENT@NAME,",
+				"SRInCSV, SRTablePanel join(ERROR_FUNCTION('') == SRTablePanel@NAME,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
@@ -173,16 +170,13 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> joinWithSRSpectralReading",
-				"joinWithSRSpectralReading aggregate(groupBy(SRTableSPECTRALMEASUREMENT@READING_ID,",
+				"joinWithSRSpectralReading aggregate(groupBy(READING_ID = SRTableSPECTRALMEASUREMENT@READING_ID,",
 				"          Geometry,",
 				"          {400},",
 				"          PANEL_ID = SRTableSPECTRALMEASUREMENT@PANEL_ID),",
 				"     READING_ID_1 = first(SRTableSPECTRALMEASUREMENT@READING_ID),",
 				"          Geometry_1 = first(Geometry),",
 				"          {400_1} = first(400)) ~> aggregate1",
-				"SRInCSV, SRTableSPECTRALMEASUREMENT exists(ERROR_FUNCTION('') == ERROR_FUNCTION(''),",
-				"     negate:true,",
-				"     broadcast: 'auto')~> DontExistsNewRecords",
 				"aggregate1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
