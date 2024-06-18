@@ -212,7 +212,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> selectColumns",
-				"SRTablePanel aggregate(Max_PanelID = max(PANEL_ID)) ~> FNAggMAXPANEL",
+				"SRTablePanel aggregate(Max_PanelID = iifNull(max(PANEL_ID),0)) ~> FNAggMAXPANEL",
 				"SRInCsv, SRTablePanel exists(Color_Chip_Name == NAME,",
 				"     negate:true,",
 				"     broadcast: 'auto')~> Notexists1",
