@@ -82,7 +82,10 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "select * from [dbo].[COLOR_CHIP] where COLOR_CHIP_ID > @{variables('MAX_COLOR_CHIP_ID')}",
+						"sqlReaderQuery": {
+							"value": "select * from [dbo].[COLOR_CHIP] where COLOR_CHIP_ID > @{variables('MAX_COLOR_CHIP_ID')}",
+							"type": "Expression"
+						},
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -313,7 +316,7 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "select * from [dbo].[COLOR_TOOL] where COLOR_TOOL_ID  > @{variables('MAX_COLOR_TOOL_ID')}",
+							"value": "select * from [dbo].[COLOR_TOOL] where COLOR_TOOL_ID  > \nint(@{variables('MAX_COLOR_TOOL_ID')})",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
