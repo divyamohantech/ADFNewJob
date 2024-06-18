@@ -50,6 +50,7 @@
 			},
 			{
 				"name": "Set variable1",
+				"description": " test",
 				"type": "SetVariable",
 				"dependsOn": [
 					{
