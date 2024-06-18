@@ -74,6 +74,9 @@
 				},
 				{
 					"name": "DistinctReadingColumns"
+				},
+				{
+					"name": "SelectTableColumnReading"
 				}
 			],
 			"scriptLines": [
@@ -224,7 +227,15 @@
 				"     skipDuplicateMapOutputs: true) ~> SelectSPECTRALREADINGColumns",
 				"SelectSPECTRALREADINGColumns aggregate(MEASUREMENT_SCHEME = first(MEASUREMENT_SCHEME),",
 				"          DEVICE_NAME = first(DEVICE_NAME)) ~> DistinctReadingColumns",
-				"DistinctValues sink(allowSchemaDrift: true,",
+				"DistinctValues select(mapColumn(",
+				"          MEASUREMENT_SCHEME = Scheme,",
+				"          DEVICE_NAME = Instrument,",
+				"          PANEL_ID,",
+				"          READING_DATE",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SelectTableColumnReading",
+				"SelectTableColumnReading sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          PANEL_ID as integer,",
