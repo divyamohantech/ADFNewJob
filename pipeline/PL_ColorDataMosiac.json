@@ -572,6 +572,22 @@
 						"datasetParameters": {
 							"SRInCsv": {
 								"TableName": "InCSV_NEW"
+							},
+							"SRTablePanel": {
+								"TableName": "PANEL"
+							},
+							"SRTableSpectralReading": {
+								"TableName": "SPECTRAL_READING"
+							},
+							"SRInCsvRejFile": {
+								"TableName": "InCSV_NEW"
+							},
+							"SKTableSpectralReading": {
+								"TableName": "SPECTRAL_READING"
+							},
+							"SKFileReadingRejectCSV": {
+								"Container_Name": "test",
+								"File_Name": "REJECTED_SPECTRAL_READING"
 							}
 						}
 					},
