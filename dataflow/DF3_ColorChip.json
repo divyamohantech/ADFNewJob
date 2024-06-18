@@ -85,7 +85,8 @@
 					"name": "JoinWithPanel"
 				},
 				{
-					"name": "FNAggMAXCOLORCHIPID"
+					"name": "FNAggMAXCOLORCHIPID",
+					"description": "Aggregating data by producing columns 'MAX_COLOR_CHIP_ID' \niifNull(max(COLOR_CHIP_ID),0)"
 				}
 			],
 			"scriptLines": [
