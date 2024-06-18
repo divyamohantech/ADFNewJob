@@ -628,11 +628,24 @@
 							"SRInCSV": {
 								"TableName": "InCSV_NEW"
 							},
+							"SRTableSPECTRALMEASUREMENT": {
+								"TableName": "SPECTRAL_MEASUREMENT"
+							},
 							"SRTableSpectralReading": {
 								"TableName": "SPECTRAL_READING"
 							},
+							"SRInCsvRejFile": {
+								"TableName": "InCSV_NEW"
+							},
+							"SRTablePanel": {
+								"TableName": "PANEL"
+							},
 							"SKSpectralMeasurement": {
 								"TableName": "SPECTRAL_MEASUREMENT"
+							},
+							"SKFileMeasurementRejectCSV": {
+								"Container_Name": "test",
+								"File_Name": "SPECTRAL_MEASUREMENT_Rejected.csv"
 							}
 						}
 					},
