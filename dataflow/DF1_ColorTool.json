@@ -65,7 +65,8 @@
 					"name": "SelectDataColorTool"
 				},
 				{
-					"name": "FNAggMAXCOLORTOOLID"
+					"name": "FNAggMAXCOLORTOOLID",
+					"description": "Aggregating data by producing columns 'MAX_COLOR_TOOL_ID' "
 				},
 				{
 					"name": "DistinctCOLORTOOLName",
@@ -188,7 +189,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: false,",
 				"     skipDuplicateMapOutputs: true) ~> SelectDataColorTool",
-				"SRTableColorTool aggregate(MAX_COLOR_TOOL_ID = c) ~> FNAggMAXCOLORTOOLID",
+				"SRTableColorTool aggregate(MAX_COLOR_TOOL_ID = iifNull(max(COLOR_TOOL_ID),0)) ~> FNAggMAXCOLORTOOLID",
 				"SelectDataColorTool aggregate(COLOR_Tool_Name = first(COLOR_Tool_Name)) ~> DistinctCOLORTOOLName",
 				"DistinctCOLORTOOLName sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
