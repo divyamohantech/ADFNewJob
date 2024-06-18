@@ -23,7 +23,7 @@
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference"
 					},
-					"name": "SRSpectralReading"
+					"name": "SRTableSpectralReading"
 				},
 				{
 					"dataset": {
@@ -135,7 +135,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> SRSpectralReading",
+				"     format: 'table') ~> SRTableSpectralReading",
 				"source(output(",
 				"          COLOR_Tool_Name as string,",
 				"          Color_Chip_Name as string,",
@@ -202,7 +202,7 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> SRInCSVjoinSRTablePanel",
-				"SRInCSVjoinSRTablePanel, SRSpectralReading join(SRTablePanel@PANEL_ID == SRSpectralReading@PANEL_ID,",
+				"SRInCSVjoinSRTablePanel, SRTableSpectralReading join(SRTablePanel@PANEL_ID == SRTableSpectralReading@PANEL_ID,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
