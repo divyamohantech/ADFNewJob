@@ -256,7 +256,7 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> JoinWithPanel",
-				"SRTableColorChip aggregate(MAX_COLOR_CHIP_ID = max(COLOR_CHIP_ID)) ~> FNAggMAXCOLORCHIPID",
+				"SRTableColorChip aggregate(MAX_COLOR_CHIP_ID = iifNull(max(COLOR_CHIP_ID),0)) ~> FNAggMAXCOLORCHIPID",
 				"SelectTableColumnColorChip sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
