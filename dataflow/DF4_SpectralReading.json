@@ -48,6 +48,9 @@
 						"type": "DatasetReference"
 					},
 					"name": "SKFileReadingRejectCSV"
+				},
+				{
+					"name": "SKCacheMAXREADINGID"
 				}
 			],
 			"transformations": [
@@ -250,7 +253,14 @@
 				"     partitionFileNames:['REJECTED_SPECTRAL_READING.csv'],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     partitionBy('hash', 1)) ~> SKFileReadingRejectCSV"
+				"     partitionBy('hash', 1)) ~> SKFileReadingRejectCSV",
+				"FNAggMAXReadingID sink(validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     store: 'cache',",
+				"     format: 'inline',",
+				"     output: true,",
+				"     saveOrder: 1) ~> SKCacheMAXREADINGID"
 			]
 		}
 	}
