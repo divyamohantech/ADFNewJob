@@ -47,6 +47,9 @@
 						"type": "DatasetReference"
 					},
 					"name": "SKSpectralMeasurement"
+				},
+				{
+					"name": "SKCacheMAXMEASUREMENTID"
 				}
 			],
 			"transformations": [
@@ -63,7 +66,7 @@
 					"name": "SelectTableColumnMeasurement"
 				},
 				{
-					"name": "FNAggMAXReadingID",
+					"name": "FNAggMAXMEASUREMENTID",
 					"description": "Aggregating data by producing columns 'MAX_MEASUREMENT_ID'"
 				}
 			],
@@ -214,7 +217,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> SelectTableColumnMeasurement",
-				"SRTableSPECTRALMEASUREMENT aggregate(MAX_MEASUREMENT_ID = iifNull(max(MEASUREMENT_ID),0)) ~> FNAggMAXReadingID",
+				"SRTableSPECTRALMEASUREMENT aggregate(MAX_MEASUREMENT_ID = iifNull(max(MEASUREMENT_ID),0)) ~> FNAggMAXMEASUREMENTID",
 				"SelectTableColumnMeasurement sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -241,7 +244,14 @@
 				"     mapColumn(",
 				"          READING_ID,",
 				"          GEOMETRY",
-				"     )) ~> SKSpectralMeasurement"
+				"     )) ~> SKSpectralMeasurement",
+				"FNAggMAXMEASUREMENTID sink(validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     store: 'cache',",
+				"     format: 'inline',",
+				"     output: true,",
+				"     saveOrder: 1) ~> SKCacheMAXMEASUREMENTID"
 			]
 		}
 	}
