@@ -55,6 +55,9 @@
 				},
 				{
 					"name": "FNAggMAXReadingID"
+				},
+				{
+					"name": "join1"
 				}
 			],
 			"scriptLines": [
@@ -131,17 +134,11 @@
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> SRTableSpectralReading",
 				"source(output(",
+				"          READING_ID as integer,",
 				"          PANEL_ID as integer,",
-				"          NAME as string,",
-				"          IS_METALLIC as integer,",
-				"          CREATE_USER_ID as integer,",
-				"          CREATE_DATE as timestamp,",
-				"          NOTES as string,",
-				"          IS_PUBLIC as integer,",
-				"          ENTITY_ID as integer,",
-				"          IS_INACTIVE as integer,",
-				"          AUDIT_SEARCH_INDEX_DATE as timestamp,",
-				"          IS_FLAGGED as string",
+				"          READING_DATE as timestamp,",
+				"          MEASUREMENT_SCHEME as string,",
+				"          DEVICE_NAME as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
@@ -161,6 +158,11 @@
 				"     negate:true,",
 				"     broadcast: 'left')~> DontExistsNewRecords",
 				"SRTableSpectralReading aggregate(MAX_READING_ID = iifNull(max(READING_ID),0)) ~> FNAggMAXReadingID",
+				"SRInCsvRejFile, SRTableSpectralReading join(SRInCsvRejFile@MEASUREMENT_SCHEME == ERROR_FUNCTION(''),",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1",
 				"DistinctValues sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
