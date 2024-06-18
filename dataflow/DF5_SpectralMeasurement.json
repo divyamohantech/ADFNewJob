@@ -285,7 +285,8 @@
 				"     validateSchema: false,",
 				"     partitionFileNames:['SPECTRAL_MEASUREMENT_Rejected.csv'],",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> SKFileMeasurementRejectCSV"
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> SKFileMeasurementRejectCSV"
 			]
 		}
 	}
