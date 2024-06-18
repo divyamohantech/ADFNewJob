@@ -61,6 +61,9 @@
 				},
 				{
 					"name": "SelectSPECTRALREADINGColumns"
+				},
+				{
+					"name": "DistinctReadingColumns"
 				}
 			],
 			"scriptLines": [
@@ -209,6 +212,8 @@
 				"     ),",
 				"     skipDuplicateMapInputs: false,",
 				"     skipDuplicateMapOutputs: true) ~> SelectSPECTRALREADINGColumns",
+				"SelectSPECTRALREADINGColumns aggregate(MEASUREMENT_SCHEME = first(MEASUREMENT_SCHEME),",
+				"          DEVICE_NAME = first(DEVICE_NAME)) ~> DistinctReadingColumns",
 				"DistinctValues sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
