@@ -132,7 +132,7 @@
 				"SRInCsv, SRTableSpectralReading exists(Scheme == MEASUREMENT_SCHEME",
 				"     && Instrument == DEVICE_NAME,",
 				"     negate:true,",
-				"     broadcast: 'auto')~> DontExistsNewRecords",
+				"     broadcast: 'left')~> DontExistsNewRecords",
 				"DistinctValues sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
