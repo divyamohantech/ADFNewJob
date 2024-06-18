@@ -31,6 +31,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "SRInCsvRejFile"
+				},
+				{
+					"dataset": {
+						"referenceName": "SQLDynamicDS",
+						"type": "DatasetReference"
+					},
+					"name": "SRTablePanel"
 				}
 			],
 			"sinks": [
@@ -122,6 +129,23 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> SRInCsvRejFile",
+				"source(output(",
+				"          PANEL_ID as integer,",
+				"          NAME as string,",
+				"          IS_METALLIC as integer,",
+				"          CREATE_USER_ID as integer,",
+				"          CREATE_DATE as timestamp,",
+				"          NOTES as string,",
+				"          IS_PUBLIC as integer,",
+				"          ENTITY_ID as integer,",
+				"          IS_INACTIVE as integer,",
+				"          AUDIT_SEARCH_INDEX_DATE as timestamp,",
+				"          IS_FLAGGED as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> SRTablePanel",
 				"SRInCSV, SRTableSPECTRALMEASUREMENT join(COLOR_Tool_Name == SRTableSPECTRALMEASUREMENT@NAME,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
