@@ -592,7 +592,7 @@
 				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
-						"activity": "Log data to ColorChip CSV_copy1",
+						"activity": "Log data to Reading CSV",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -726,7 +726,7 @@
 				}
 			},
 			{
-				"name": "Log data to ColorChip CSV_copy1",
+				"name": "Log data to Reading CSV",
 				"type": "Copy",
 				"dependsOn": [
 					{
@@ -748,7 +748,7 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "select * from [dbo].[COLOR_CHIP] where COLOR_CHIP_ID > @{variables('MAX_COLOR_CHIP_ID')}",
+							"value": "select * from [dbo].[SPECTRAL_READING] where READING_ID > @{variables('MAX_READING_ID')}",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
@@ -771,12 +771,12 @@
 						"mappings": [
 							{
 								"source": {
-									"name": "COLOR_CHIP_ID",
+									"name": "READING_ID",
 									"type": "Int32",
 									"physicalType": "int"
 								},
 								"sink": {
-									"name": "COLOR_CHIP_ID",
+									"name": "READING_ID",
 									"type": "String",
 									"physicalType": "String"
 								}
@@ -795,36 +795,36 @@
 							},
 							{
 								"source": {
-									"name": "CHIP_SOURCE",
-									"type": "String",
-									"physicalType": "nvarchar"
-								},
-								"sink": {
-									"name": "CHIP_SOURCE",
-									"type": "String",
-									"physicalType": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "LAST_UPDATED_DATE",
+									"name": "READING_DATE",
 									"type": "DateTime",
 									"physicalType": "datetime"
 								},
 								"sink": {
-									"name": "LAST_UPDATED_DATE",
+									"name": "READING_DATE",
 									"type": "String",
 									"physicalType": "String"
 								}
 							},
 							{
 								"source": {
-									"name": "COLOR_TOOL_ID",
-									"type": "Int32",
-									"physicalType": "int"
+									"name": "MEASUREMENT_SCHEME",
+									"type": "String",
+									"physicalType": "varchar"
 								},
 								"sink": {
-									"name": "COLOR_TOOL_ID",
+									"name": "MEASUREMENT_SCHEME",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DEVICE_NAME",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "DEVICE_NAME",
 									"type": "String",
 									"physicalType": "String"
 								}
@@ -842,7 +842,7 @@
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference",
 						"parameters": {
-							"TableName": "COLOR_CHIP"
+							"TableName": "SPECTRAL_READING"
 						}
 					}
 				],
@@ -852,7 +852,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"Container_Name": "test",
-							"File_Name": "Color_Chip_App.csv"
+							"File_Name": "SPECTRAL_READING_App.csv"
 						}
 					}
 				]
