@@ -16,7 +16,7 @@
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference"
 					},
-					"name": "SRTablePanel"
+					"name": "SRTableSPECTRALMEASUREMENT"
 				},
 				{
 					"dataset": {
@@ -24,6 +24,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "SRSpectralReading"
+				},
+				{
+					"dataset": {
+						"referenceName": "SQLDynamicDS",
+						"type": "DatasetReference"
+					},
+					"name": "SRInCsvRejFile"
 				}
 			],
 			"sinks": [
@@ -80,7 +87,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> SRTablePanel",
+				"     format: 'table') ~> SRTableSPECTRALMEASUREMENT",
 				"source(output(",
 				"          PANEL_ID as integer,",
 				"          NAME as string,",
@@ -98,12 +105,29 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> SRSpectralReading",
-				"SRInCSV, SRTablePanel join(COLOR_Tool_Name == SRTablePanel@NAME,",
+				"source(output(",
+				"          PANEL_ID as integer,",
+				"          NAME as string,",
+				"          IS_METALLIC as integer,",
+				"          CREATE_USER_ID as integer,",
+				"          CREATE_DATE as timestamp,",
+				"          NOTES as string,",
+				"          IS_PUBLIC as integer,",
+				"          ENTITY_ID as integer,",
+				"          IS_INACTIVE as integer,",
+				"          AUDIT_SEARCH_INDEX_DATE as timestamp,",
+				"          IS_FLAGGED as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> SRInCsvRejFile",
+				"SRInCSV, SRTableSPECTRALMEASUREMENT join(COLOR_Tool_Name == SRTableSPECTRALMEASUREMENT@NAME,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> SRInCSVjoinSRTablePanel",
-				"SRInCSVjoinSRTablePanel, SRSpectralReading join(SRTablePanel@PANEL_ID == SRSpectralReading@PANEL_ID,",
+				"SRInCSVjoinSRTablePanel, SRSpectralReading join(SRTableSPECTRALMEASUREMENT@PANEL_ID == SRSpectralReading@PANEL_ID,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
@@ -111,7 +135,7 @@
 				"joinWithSRSpectralReading aggregate(groupBy(READING_ID,",
 				"          Geometry,",
 				"          {400},",
-				"          SRTablePanel@PANEL_ID),",
+				"          SRTableSPECTRALMEASUREMENT@PANEL_ID),",
 				"     READING_ID_1 = first(READING_ID),",
 				"          Geometry_1 = first(Geometry),",
 				"          {400_1} = first(400)) ~> aggregate1",
