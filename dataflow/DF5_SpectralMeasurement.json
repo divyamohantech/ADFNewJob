@@ -269,6 +269,7 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
+				"     saveOrder: 3,",
 				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
 				"          READING_ID,",
@@ -280,12 +281,13 @@
 				"     store: 'cache',",
 				"     format: 'inline',",
 				"     output: true,",
-				"     saveOrder: 1) ~> SKCacheMAXMEASUREMENTID",
+				"     saveOrder: 2) ~> SKCacheMAXMEASUREMENTID",
 				"DistinctMeasurementColumns sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     partitionFileNames:['SPECTRAL_MEASUREMENT_Rejected.csv'],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
+				"     saveOrder: 1,",
 				"     partitionBy('hash', 1)) ~> SKFileMeasurementRejectCSV"
 			]
 		}
