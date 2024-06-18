@@ -604,8 +604,6 @@
 			{
 				"name": "DF5_SpectralMeasurement",
 				"type": "ExecuteDataFlow",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Log data to Reading CSV",
