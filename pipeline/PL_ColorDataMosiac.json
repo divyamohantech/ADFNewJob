@@ -295,6 +295,7 @@
 			},
 			{
 				"name": "Log data to Color_Tool CSV",
+				"description": "test ",
 				"type": "Copy",
 				"dependsOn": [
 					{
