@@ -283,7 +283,7 @@
 				"     saveOrder: 1) ~> SKCacheMAXMEASUREMENTID",
 				"DistinctMeasurementColumns sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     partitionFileNames:['REJECTED_SPECTRAL_MEASUREMENT.csv'],",
+				"     partitionFileNames:['SPECTRAL_MEASUREMENT_Rejected.csv'],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> SKFileMeasurementRejectCSV"
 			]
