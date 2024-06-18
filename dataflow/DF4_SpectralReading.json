@@ -261,7 +261,7 @@
 				"     errorHandlingOption: 'stopOnFirstError') ~> SKTableSpectralReading",
 				"DistinctReadingColumns sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     partitionFileNames:['REJECTED_SPECTRAL_READING.csv'],",
+				"     partitionFileNames:['SPECTRAL_READING_Rejected.csv'],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     partitionBy('hash', 1)) ~> SKFileReadingRejectCSV",
