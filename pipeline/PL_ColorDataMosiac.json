@@ -896,7 +896,7 @@
 				}
 			},
 			{
-				"name": "Log data to Reading CSV_copy1",
+				"name": "Log data to Measurement CSV",
 				"type": "Copy",
 				"dependsOn": [
 					{
@@ -918,7 +918,7 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "select * from [dbo].[SPECTRAL_READING] where READING_ID > @{variables('MAX_READING_ID')}",
+							"value": "select * from [dbo].[SPECTRAL_MEASUREMENT] where READING_ID > @{variables('MAX_MEASUREMENT_ID')}",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
@@ -941,6 +941,18 @@
 						"mappings": [
 							{
 								"source": {
+									"name": "MEASUREMENT_ID",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "MEASUREMENT_ID",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
 									"name": "READING_ID",
 									"type": "Int32",
 									"physicalType": "int"
@@ -953,48 +965,24 @@
 							},
 							{
 								"source": {
-									"name": "PANEL_ID",
-									"type": "Int32",
-									"physicalType": "int"
-								},
-								"sink": {
-									"name": "PANEL_ID",
-									"type": "String",
-									"physicalType": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "READING_DATE",
-									"type": "DateTime",
-									"physicalType": "datetime"
-								},
-								"sink": {
-									"name": "READING_DATE",
-									"type": "String",
-									"physicalType": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "MEASUREMENT_SCHEME",
+									"name": "GEOMETRY",
 									"type": "String",
 									"physicalType": "varchar"
 								},
 								"sink": {
-									"name": "MEASUREMENT_SCHEME",
+									"name": "GEOMETRY",
 									"type": "String",
 									"physicalType": "String"
 								}
 							},
 							{
 								"source": {
-									"name": "DEVICE_NAME",
+									"name": "RAW_DATA",
 									"type": "String",
 									"physicalType": "varchar"
 								},
 								"sink": {
-									"name": "DEVICE_NAME",
+									"name": "RAW_DATA",
 									"type": "String",
 									"physicalType": "String"
 								}
@@ -1012,7 +1000,7 @@
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference",
 						"parameters": {
-							"TableName": "SPECTRAL_READING"
+							"TableName": "SPECTRAL_MEASUREMENT"
 						}
 					}
 				],
@@ -1022,7 +1010,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"Container_Name": "test",
-							"File_Name": "SPECTRAL_READING_App.csv"
+							"File_Name": "SPECTRAL_MEASUREMENT_App.csv"
 						}
 					}
 				]
