@@ -57,7 +57,10 @@
 					"name": "joinWithSRSpectralReading"
 				},
 				{
-					"name": "aggregate1"
+					"name": "DistinctValues"
+				},
+				{
+					"name": "SelectTableColumnMeasurement"
 				}
 			],
 			"scriptLines": [
@@ -199,8 +202,15 @@
 				"     broadcast: 'auto')~> joinWithSRSpectralReading",
 				"joinWithSRSpectralReading aggregate(groupBy(RAW_DATA = concat({400} , \",\", {410}),",
 				"          READING_ID),",
-				"     Geometry = first(Geometry)) ~> aggregate1",
-				"aggregate1 sink(allowSchemaDrift: true,",
+				"     Geometry = first(Geometry)) ~> DistinctValues",
+				"DistinctValues select(mapColumn(",
+				"          RAW_DATA,",
+				"          READING_ID,",
+				"          Geometry",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SelectTableColumnMeasurement",
+				"SelectTableColumnMeasurement sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          PANEL_ID as integer,",
