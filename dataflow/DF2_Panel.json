@@ -73,7 +73,8 @@
 					"name": "selectColumns"
 				},
 				{
-					"name": "FNAggMAXPANEL"
+					"name": "FNAggMAXPANEL",
+					"description": "Aggregating data by producing columns 'Max_PanelID'\nupdate MAX PanleId change"
 				},
 				{
 					"name": "Notexists1"
