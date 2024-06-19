@@ -201,7 +201,7 @@
 				"NotExistsTestConditionNewRecords aggregate(groupBy(COLOR_Tool_Name),",
 				"     COLOR_Tool_NameNew = first(COLOR_Tool_Name)) ~> DistinctValues",
 				"joinRejectionCondition aggregate(groupBy(SRInCSVtable@COLOR_Tool_Name),",
-				"     COLOR_Tool_Name = first(SRInCSVtable@COLOR_Tool_Name)) ~> DistinctCOLORTOOLName",
+				"     COLOR_Tool_NameNew = first(SRInCSVtable@COLOR_Tool_Name)) ~> DistinctCOLORTOOLName",
 				"new sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     partitionFileNames:['Color_Tool_Rejected.csv'],",
