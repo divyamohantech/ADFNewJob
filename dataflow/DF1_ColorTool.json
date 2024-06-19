@@ -69,11 +69,10 @@
 					"description": "Aggregating data by producing columns 'MAX_COLOR_TOOL_ID' "
 				},
 				{
-					"name": "DistinctCOLORTOOLName",
-					"description": "DistinctCOLORTOOLName"
+					"name": "DistinctValues"
 				},
 				{
-					"name": "DistinctValues"
+					"name": "DistinctCOLORTOOLName"
 				}
 			],
 			"scriptLines": [
@@ -187,16 +186,17 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'right')~> joinRejectionCondition",
-				"joinRejectionCondition select(mapColumn(",
+				"DistinctCOLORTOOLName select(mapColumn(",
 				"          COLOR_Tool_Name = SRTableColorTool@COLOR_TOOL_NAME",
 				"     ),",
 				"     skipDuplicateMapInputs: false,",
 				"     skipDuplicateMapOutputs: true) ~> SelectDataColorTool",
 				"SRTableColorTool aggregate(MAX_COLOR_TOOL_ID = iifNull(max(COLOR_TOOL_ID),0)) ~> FNAggMAXCOLORTOOLID",
-				"SelectDataColorTool aggregate(COLOR_Tool_Name = first(COLOR_Tool_Name)) ~> DistinctCOLORTOOLName",
 				"NotExistsTestConditionNewRecords aggregate(groupBy(COLOR_Tool_Name),",
 				"     COLOR_Tool_NameNew = first(COLOR_Tool_Name)) ~> DistinctValues",
-				"DistinctCOLORTOOLName sink(allowSchemaDrift: true,",
+				"joinRejectionCondition aggregate(groupBy(SRInCSVtable@COLOR_Tool_Name),",
+				"     COLOR_Tool_NameNew = first(SRInCSVtable@COLOR_Tool_Name)) ~> DistinctCOLORTOOLName",
+				"SelectDataColorTool sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     partitionFileNames:['Color_Tool_Rejected.csv'],",
 				"     skipDuplicateMapInputs: true,",
