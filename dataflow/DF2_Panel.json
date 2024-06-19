@@ -76,10 +76,10 @@
 					"name": "FNAggMAXPANEL"
 				},
 				{
-					"name": "Notexists1"
+					"name": "NotExistsTestConditionNewRecords"
 				},
 				{
-					"name": "aggregate1"
+					"name": "DistinctValues"
 				}
 			],
 			"scriptLines": [
@@ -197,7 +197,7 @@
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> SRInCsvTable",
 				"SRTableUserProfile derive(ENTITY_ID = toInteger(ENTITY_ID)) ~> AddColumnsValueEntityID",
-				"aggregate1 select(mapColumn(",
+				"DistinctValues select(mapColumn(",
 				"          Color_Chip_Name",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
@@ -218,9 +218,9 @@
 				"SRTablePanel aggregate(Max_PanelID = max(PANEL_ID)) ~> FNAggMAXPANEL",
 				"SRInCsv, SRTablePanel exists(Color_Chip_Name == NAME,",
 				"     negate:true,",
-				"     broadcast: 'auto')~> Notexists1",
-				"Notexists1 aggregate(groupBy(Color_Chip_Name),",
-				"     Color_Chip_NameNew = first(Color_Chip_Name)) ~> aggregate1",
+				"     broadcast: 'auto')~> NotExistsTestConditionNewRecords",
+				"NotExistsTestConditionNewRecords aggregate(groupBy(Color_Chip_Name),",
+				"     Color_Chip_NameNew = first(Color_Chip_Name)) ~> DistinctValues",
 				"AddColumnsValueEntityID sink(validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
