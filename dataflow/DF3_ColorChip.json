@@ -17,7 +17,7 @@
 						"type": "DatasetReference"
 					},
 					"name": "SRTableColorChip",
-					"description": "Import data from SQLDynamicDS "
+					"description": "Import data from SQLDynamicDS new "
 				},
 				{
 					"dataset": {
