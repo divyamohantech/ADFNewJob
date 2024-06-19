@@ -77,6 +77,9 @@
 				},
 				{
 					"name": "Notexists1"
+				},
+				{
+					"name": "aggregate1"
 				}
 			],
 			"scriptLines": [
@@ -194,7 +197,7 @@
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> SRInCsvTable",
 				"SRTableUserProfile derive(ENTITY_ID = toInteger(ENTITY_ID)) ~> AddColumnsValueEntityID",
-				"Notexists1 select(mapColumn(",
+				"aggregate1 select(mapColumn(",
 				"          Color_Chip_Name",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
@@ -216,6 +219,8 @@
 				"SRInCsv, SRTablePanel exists(Color_Chip_Name == NAME,",
 				"     negate:true,",
 				"     broadcast: 'auto')~> Notexists1",
+				"Notexists1 aggregate(groupBy(Color_Chip_Name),",
+				"     Color_Chip_NameNew = first(Color_Chip_Name)) ~> aggregate1",
 				"AddColumnsValueEntityID sink(validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
