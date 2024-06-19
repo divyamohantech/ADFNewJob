@@ -70,6 +70,9 @@
 				{
 					"name": "DistinctCOLORTOOLName",
 					"description": "DistinctCOLORTOOLName"
+				},
+				{
+					"name": "DistinctValues"
 				}
 			],
 			"scriptLines": [
@@ -170,8 +173,8 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> SRTableColorTool",
-				"NotExistsTestConditionNewRecords select(mapColumn(",
-				"          COLOR_Tool_Name",
+				"DistinctValues select(mapColumn(",
+				"          COLOR_Tool_Name = DistinctValues@COLOR_Tool_Name",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> SelectData",
@@ -190,6 +193,8 @@
 				"     skipDuplicateMapOutputs: true) ~> SelectDataColorTool",
 				"SRTableColorTool aggregate(MAX_COLOR_TOOL_ID = max(COLOR_TOOL_ID)) ~> FNAggMAXCOLORTOOLID",
 				"SelectDataColorTool aggregate(COLOR_Tool_Name = first(COLOR_Tool_Name)) ~> DistinctCOLORTOOLName",
+				"NotExistsTestConditionNewRecords aggregate(groupBy(COLOR_Tool_Name),",
+				"     COLOR_Tool_Name = first(COLOR_Tool_Name)) ~> DistinctValues",
 				"DistinctCOLORTOOLName sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     partitionFileNames:['Color_Tool_Rejected.csv'],",
