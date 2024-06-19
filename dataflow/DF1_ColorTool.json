@@ -187,7 +187,7 @@
 				"     ignoreSpaces: false,",
 				"     broadcast: 'right')~> joinRejectionCondition",
 				"DistinctCOLORTOOLName select(mapColumn(",
-				"          COLOR_Tool_Name = SRTableColorTool@COLOR_TOOL_NAME",
+				"          COLOR_Tool_Name",
 				"     ),",
 				"     skipDuplicateMapInputs: false,",
 				"     skipDuplicateMapOutputs: true) ~> SelectDataColorTool",
