@@ -143,7 +143,9 @@
 				"     skipDuplicateMapOutputs: true,",
 				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
-				"          {} = Color_Chip_Name",
+				"          PANEL_ID,",
+				"          Color_Chip_NameNew,",
+				"          Scheme",
 				"     )) ~> SkRejectionCSV"
 			]
 		}
