@@ -95,7 +95,8 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> join1",
-				"join1 aggregate(groupBy(NAME)) ~> DistinctValues"
+				"join1 aggregate(groupBy(NAME),",
+				"     NAMENEW = first(NAME)) ~> DistinctValues"
 			]
 		}
 	}
