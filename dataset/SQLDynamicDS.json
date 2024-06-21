@@ -12,50 +12,7 @@
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",
-		"schema": [
-			{
-				"name": "PANEL_COLOR_COORDINATE_ID",
-				"type": "int",
-				"precision": 10
-			},
-			{
-				"name": "PANEL_ID",
-				"type": "int",
-				"precision": 10
-			},
-			{
-				"name": "GEOMETRY",
-				"type": "varchar"
-			},
-			{
-				"name": "SPARKLE",
-				"type": "varchar"
-			},
-			{
-				"name": "MEASUREMENT_SCHEME",
-				"type": "varchar"
-			},
-			{
-				"name": "L",
-				"type": "varchar"
-			},
-			{
-				"name": "A",
-				"type": "varchar"
-			},
-			{
-				"name": "B",
-				"type": "varchar"
-			},
-			{
-				"name": "C",
-				"type": "varchar"
-			},
-			{
-				"name": "ILLUMINANT_OBSERVE",
-				"type": "varchar"
-			}
-		],
+		"schema": [],
 		"typeProperties": {
 			"schema": "dbo",
 			"table": {
