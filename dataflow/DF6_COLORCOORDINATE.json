@@ -26,6 +26,9 @@
 				},
 				{
 					"name": "DistinctValues"
+				},
+				{
+					"name": "select1"
 				}
 			],
 			"scriptLines": [
@@ -96,7 +99,13 @@
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> join1",
 				"join1 aggregate(groupBy(NAME),",
-				"     NAMENEW = first(NAME)) ~> DistinctValues"
+				"     NAMENEW = first(NAME)) ~> DistinctValues",
+				"DistinctValues select(mapColumn(",
+				"          NAME,",
+				"          NAMENEW",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1"
 			]
 		}
 	}
