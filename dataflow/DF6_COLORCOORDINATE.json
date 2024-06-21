@@ -112,8 +112,6 @@
 				"join1 select(mapColumn(",
 				"          COLOR_Tool_Name,",
 				"          Color_Chip_Name,",
-				"          DateTime,",
-				"          Color_Chip_Source,",
 				"          Scheme,",
 				"          Instrument,",
 				"          Geometry,",
