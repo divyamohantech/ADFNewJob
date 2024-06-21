@@ -141,7 +141,9 @@
 				"     skipDuplicateMapOutputs: true,",
 				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
-				"          GEOMETRY = Geometry",
+				"          PANEL_ID,",
+				"          GEOMETRY = Geometry,",
+				"          MEASUREMENT_SCHEME = Scheme",
 				"     )) ~> SKCOLORCOORDINATE"
 			]
 		}
