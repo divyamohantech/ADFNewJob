@@ -238,7 +238,6 @@
 				"     skipDuplicateMapOutputs: true,",
 				"     saveOrder: 3,",
 				"     mapColumn(",
-				"          NAME,",
 				"          ENTITY_ID,",
 				"          PANEL_ID",
 				"     ),",
