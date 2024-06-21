@@ -14,57 +14,45 @@
 		"type": "AzureSqlTable",
 		"schema": [
 			{
+				"name": "PANEL_COLOR_COORDINATE_ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
 				"name": "PANEL_ID",
 				"type": "int",
 				"precision": 10
 			},
 			{
-				"name": "NAME",
+				"name": "GEOMETRY",
 				"type": "varchar"
 			},
 			{
-				"name": "IS_METALLIC",
-				"type": "int",
-				"precision": 10
-			},
-			{
-				"name": "CREATE_USER_ID",
-				"type": "int",
-				"precision": 10
-			},
-			{
-				"name": "CREATE_DATE",
-				"type": "datetime",
-				"precision": 23,
-				"scale": 3
-			},
-			{
-				"name": "NOTES",
+				"name": "SPARKLE",
 				"type": "varchar"
 			},
 			{
-				"name": "IS_PUBLIC",
-				"type": "int",
-				"precision": 10
+				"name": "MEASUREMENT_SCHEME",
+				"type": "varchar"
 			},
 			{
-				"name": "ENTITY_ID",
-				"type": "int",
-				"precision": 10
+				"name": "L",
+				"type": "varchar"
 			},
 			{
-				"name": "IS_INACTIVE",
-				"type": "int",
-				"precision": 10
+				"name": "A",
+				"type": "varchar"
 			},
 			{
-				"name": "AUDIT_SEARCH_INDEX_DATE",
-				"type": "datetime",
-				"precision": 23,
-				"scale": 3
+				"name": "B",
+				"type": "varchar"
 			},
 			{
-				"name": "IS_FLAGGED",
+				"name": "C",
+				"type": "varchar"
+			},
+			{
+				"name": "ILLUMINANT_OBSERVE",
 				"type": "varchar"
 			}
 		],
