@@ -176,7 +176,7 @@
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> selectCOLORToolName",
 				"selectCOLORToolName derive(ENTITY_ID = SkEntityIDValue#output()) ~> derivedColumn1",
-				"SRInCsvTable, SRTablePanel join(Color_Chip_Name == NAME,",
+				"SRInCsvTable, SRTablePanel join(ERROR_FUNCTION('') == ERROR_FUNCTION(''),",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
