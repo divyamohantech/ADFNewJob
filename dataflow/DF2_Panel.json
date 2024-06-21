@@ -172,7 +172,7 @@
 				"SRInCsvTableJoinSRTablePanel select(mapColumn(",
 				"          NAME = Color_Chip_Name,",
 				"          ENTITY_ID,",
-				"          PANEL_ID = SRTablePanel@PANEL_ID",
+				"          PANEL_ID = {SRTablePanel@PANEL_ID}",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> selectColumns",
