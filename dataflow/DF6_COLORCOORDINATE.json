@@ -110,7 +110,6 @@
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select1",
 				"join1 select(mapColumn(",
-				"          Color_Chip_Name,",
 				"          Scheme,",
 				"          Geometry,",
 				"          PANEL_ID",
