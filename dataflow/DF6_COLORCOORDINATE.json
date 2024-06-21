@@ -19,16 +19,21 @@
 					"name": "SRPanelTable"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DelimitedTextDymanicCSVFiles",
+						"type": "DatasetReference"
+					},
+					"name": "SkRejectionCSV"
+				}
+			],
 			"transformations": [
 				{
 					"name": "join1"
 				},
 				{
 					"name": "DistinctValues"
-				},
-				{
-					"name": "select1"
 				},
 				{
 					"name": "select2"
@@ -103,12 +108,6 @@
 				"     broadcast: 'auto')~> join1",
 				"select2 aggregate(groupBy(Color_Chip_Name),",
 				"     Color_Chip_NameNew = first(Color_Chip_Name)) ~> DistinctValues",
-				"DistinctValues select(mapColumn(",
-				"          NAME = Color_Chip_Name,",
-				"          NAMENEW = Color_Chip_Name",
-				"     ),",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select1",
 				"join1 select(mapColumn(",
 				"          Scheme,",
 				"          Geometry,",
@@ -116,7 +115,15 @@
 				"          Color_Chip_Name",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select2"
+				"     skipDuplicateMapOutputs: true) ~> select2",
+				"DistinctValues sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     mapColumn(",
+				"          Color_Chip_Name,",
+				"          Color_Chip_NameNew",
+				"     )) ~> SkRejectionCSV"
 			]
 		}
 	}
