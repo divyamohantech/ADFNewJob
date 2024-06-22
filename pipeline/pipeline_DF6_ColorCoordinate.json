@@ -65,10 +65,8 @@
 				}
 			},
 			{
-				"name": "Copy data1",
-				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
+				"name": "Set variable1",
+				"type": "SetVariable",
 				"dependsOn": [
 					{
 						"activity": "Web1",
@@ -78,29 +76,24 @@
 					}
 				],
 				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
 					"secureOutput": false,
 					"secureInput": false
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"source": {
-						"type": "AzureSqlSource",
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
-					},
-					"enableStaging": false
-				},
-				"inputs": [
-					{
-						"referenceName": "SQLDynamicDS",
-						"type": "DatasetReference"
+					"variableName": "First_name",
+					"value": {
+						"value": "@activity('Web1').output.value\r\n\r\n\r\n",
+						"type": "Expression"
 					}
-				]
+				}
 			}
 		],
+		"variables": {
+			"First_name": {
+				"type": "String"
+			}
+		},
 		"annotations": []
 	}
 }
