@@ -224,48 +224,6 @@
 							]
 						},
 						{
-							"name": "DF6_COLORCOORDINATE",
-							"type": "ExecuteDataFlow",
-							"dependsOn": [],
-							"policy": {
-								"timeout": "0.12:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"dataflow": {
-									"referenceName": "DF6_COLORCOORDINATE",
-									"type": "DataFlowReference",
-									"datasetParameters": {
-										"SRInCSV": {
-											"TableName": "InCSV_NEW"
-										},
-										"SRPanelTable": {
-											"TableName": "PANEL"
-										},
-										"SKCOLORCOORDINATE": {
-											"TableName": "COLOR_COORDINATE"
-										}
-									},
-									"linkedServiceParameters": {
-										"SKCOLORCOORDINATE": {
-											"schemaLinkedService": {
-												"TableName": "COLOR_COORDINATE"
-											}
-										}
-									}
-								},
-								"compute": {
-									"coreCount": 8,
-									"computeType": "General"
-								},
-								"traceLevel": "Fine"
-							}
-						},
-						{
 							"name": "Set variable2",
 							"type": "SetVariable",
 							"dependsOn": [
@@ -292,14 +250,7 @@
 						{
 							"name": "Web1",
 							"type": "WebActivity",
-							"dependsOn": [
-								{
-									"activity": "DF6_COLORCOORDINATE",
-									"dependencyConditions": [
-										"Completed"
-									]
-								}
-							],
+							"dependsOn": [],
 							"policy": {
 								"timeout": "0.12:00:00",
 								"retry": 0,
