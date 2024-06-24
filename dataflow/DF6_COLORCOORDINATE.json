@@ -16,7 +16,8 @@
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference"
 					},
-					"name": "SRPanelTable"
+					"name": "SRPanelTable",
+					"description": "Import data from SQLDynamicDs"
 				}
 			],
 			"sinks": [
