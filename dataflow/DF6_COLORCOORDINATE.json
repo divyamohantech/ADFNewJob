@@ -22,6 +22,10 @@
 			],
 			"sinks": [
 				{
+					"dataset": {
+						"referenceName": "SQLDynamicDS",
+						"type": "DatasetReference"
+					},
 					"name": "SKCOLORCOORDINATE"
 				}
 			],
@@ -117,17 +121,15 @@
 				"     skipDuplicateMapOutputs: true) ~> select2",
 				"DistinctValues sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     store: 'cache',",
-				"     format: 'inline',",
-				"     output: false,",
 				"     saveOrder: 1,",
-				"     mapColumn(",
-				"          PANEL_ID,",
-				"          GEOMETRY = Geometry,",
-				"          MEASUREMENT_SCHEME = Scheme",
-				"     )) ~> SKCOLORCOORDINATE"
+				"     errorHandlingOption: 'stopOnFirstError') ~> SKCOLORCOORDINATE"
 			]
 		}
 	}
