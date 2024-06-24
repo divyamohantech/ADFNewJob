@@ -36,6 +36,8 @@
 						{
 							"name": "Copy data2",
 							"type": "Copy",
+							"state": "Inactive",
+							"onInactiveMarkAs": "Succeeded",
 							"dependsOn": [
 								{
 									"activity": "Set variable2",
@@ -243,6 +245,16 @@
 										},
 										"SRPanelTable": {
 											"TableName": "PANEL"
+										},
+										"SKCOLORCOORDINATE": {
+											"TableName": "COLOR_COORDINATE"
+										}
+									},
+									"linkedServiceParameters": {
+										"SKCOLORCOORDINATE": {
+											"schemaLinkedService": {
+												"TableName": "COLOR_COORDINATE"
+											}
 										}
 									}
 								},
