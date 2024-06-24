@@ -24,6 +24,9 @@
 							},
 							"SRPanelTable": {
 								"TableName": "PANEL"
+							},
+							"SKCOLORCOORDINATE": {
+								"TableName": "COLOR_COORDINATE"
 							}
 						}
 					},
@@ -40,9 +43,14 @@
 			{
 				"name": "Web1",
 				"type": "WebActivity",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "DF6_COLORCOORDINATE",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -59,8 +67,6 @@
 			{
 				"name": "Set variable1",
 				"type": "SetVariable",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Web1",
@@ -85,8 +91,6 @@
 			{
 				"name": "Copy data1",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Set variable1",
@@ -189,14 +193,9 @@
 			{
 				"name": "ForEach1",
 				"type": "ForEach",
-				"dependsOn": [
-					{
-						"activity": "DF6_COLORCOORDINATE",
-						"dependencyConditions": [
-							"Completed"
-						]
-					}
-				],
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
