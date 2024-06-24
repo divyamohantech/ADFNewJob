@@ -284,7 +284,7 @@
 							"typeProperties": {
 								"variableName": "TableData",
 								"value": {
-									"value": "@activity('Web1').output",
+									"value": "@item()",
 									"type": "Expression"
 								}
 							}
