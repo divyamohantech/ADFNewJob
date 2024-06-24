@@ -5,14 +5,7 @@
 			{
 				"name": "DF6_COLORCOORDINATE",
 				"type": "ExecuteDataFlow",
-				"dependsOn": [
-					{
-						"activity": "Copy data1",
-						"dependencyConditions": [
-							"Completed"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -31,9 +24,6 @@
 							},
 							"SRPanelTable": {
 								"TableName": "PANEL"
-							},
-							"SKCOLORCOORDINATE": {
-								"TableName": "COLOR_COORDINATE"
 							}
 						}
 					},
@@ -50,6 +40,8 @@
 			{
 				"name": "Web1",
 				"type": "WebActivity",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -67,6 +59,8 @@
 			{
 				"name": "Set variable1",
 				"type": "SetVariable",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Web1",
@@ -91,6 +85,8 @@
 			{
 				"name": "Copy data1",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Set variable1",
@@ -189,11 +185,244 @@
 						}
 					}
 				]
+			},
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "DF6_COLORCOORDINATE",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('DF6_COLORCOORDINATE').output",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Azure Function1",
+							"type": "AzureFunctionActivity",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"functionName": "AZ",
+								"method": "GET"
+							},
+							"linkedServiceName": {
+								"referenceName": "AzureFunctionLS",
+								"type": "LinkedServiceReference"
+							}
+						},
+						{
+							"name": "Copy data2",
+							"type": "Copy",
+							"dependsOn": [
+								{
+									"activity": "Azure Function1",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "AzureSqlSource",
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
+								},
+								"sink": {
+									"type": "DelimitedTextSink",
+									"storeSettings": {
+										"type": "AzureBlobStorageWriteSettings"
+									},
+									"formatSettings": {
+										"type": "DelimitedTextWriteSettings",
+										"quoteAllText": true,
+										"fileExtension": ".txt"
+									}
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"mappings": [
+										{
+											"source": {
+												"name": "PANEL_COLOR_COORDINATE_ID",
+												"type": "Int32",
+												"physicalType": "int"
+											},
+											"sink": {
+												"name": "PANEL_COLOR_COORDINATE_ID",
+												"type": "String",
+												"physicalType": "String"
+											}
+										},
+										{
+											"source": {
+												"name": "PANEL_ID",
+												"type": "Int32",
+												"physicalType": "int"
+											},
+											"sink": {
+												"name": "PANEL_ID",
+												"type": "String",
+												"physicalType": "String"
+											}
+										},
+										{
+											"source": {
+												"name": "GEOMETRY",
+												"type": "String",
+												"physicalType": "varchar"
+											},
+											"sink": {
+												"name": "GEOMETRY",
+												"type": "String",
+												"physicalType": "String"
+											}
+										},
+										{
+											"source": {
+												"name": "SPARKLE",
+												"type": "String",
+												"physicalType": "varchar"
+											},
+											"sink": {
+												"name": "SPARKLE",
+												"type": "String",
+												"physicalType": "String"
+											}
+										},
+										{
+											"source": {
+												"name": "MEASUREMENT_SCHEME",
+												"type": "String",
+												"physicalType": "varchar"
+											},
+											"sink": {
+												"name": "MEASUREMENT_SCHEME",
+												"type": "String",
+												"physicalType": "String"
+											}
+										},
+										{
+											"source": {
+												"name": "L",
+												"type": "String",
+												"physicalType": "varchar"
+											},
+											"sink": {
+												"name": "L",
+												"type": "String",
+												"physicalType": "String"
+											}
+										},
+										{
+											"source": {
+												"name": "A",
+												"type": "String",
+												"physicalType": "varchar"
+											},
+											"sink": {
+												"name": "A",
+												"type": "String",
+												"physicalType": "String"
+											}
+										},
+										{
+											"source": {
+												"name": "B",
+												"type": "String",
+												"physicalType": "varchar"
+											},
+											"sink": {
+												"name": "B",
+												"type": "String",
+												"physicalType": "String"
+											}
+										},
+										{
+											"source": {
+												"name": "C",
+												"type": "String",
+												"physicalType": "varchar"
+											},
+											"sink": {
+												"name": "C",
+												"type": "String",
+												"physicalType": "String"
+											}
+										},
+										{
+											"source": {
+												"name": "ILLUMINANT_OBSERVE",
+												"type": "String",
+												"physicalType": "varchar"
+											},
+											"sink": {
+												"name": "ILLUMINANT_OBSERVE",
+												"type": "String",
+												"physicalType": "String"
+											}
+										}
+									],
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "SQLDynamicDS",
+									"type": "DatasetReference",
+									"parameters": {
+										"TableName": "COLOR_COORDINATE"
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DelimitedTextDymanicCSVFiles",
+									"type": "DatasetReference",
+									"parameters": {
+										"Container_Name": "test",
+										"File_Name": "AZ.csv"
+									}
+								}
+							]
+						}
+					]
+				}
 			}
 		],
 		"variables": {
 			"First_name": {
 				"type": "String"
+			},
+			"TableData": {
+				"type": "Array"
 			}
 		},
 		"annotations": []
