@@ -35,7 +35,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('DF6_COLORCOORDINATE').output",
+						"value": "@variables('First_name')",
 						"type": "Expression"
 					},
 					"isSequential": true,
