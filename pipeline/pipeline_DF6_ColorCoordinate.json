@@ -61,11 +61,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"method": "GET",
-					"relativeUrl": "https://reqres.in/api/users"
-				},
-				"linkedServiceName": {
-					"referenceName": "WebLS123",
-					"type": "LinkedServiceReference"
+					"url": "https://reqres.in/api/users"
 				}
 			},
 			{
