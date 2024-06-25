@@ -34,9 +34,6 @@
 					"name": "join1"
 				},
 				{
-					"name": "DistinctValues"
-				},
-				{
 					"name": "select2"
 				}
 			],
@@ -106,20 +103,15 @@
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> join1",
-				"select2 aggregate(groupBy(Scheme,",
-				"          Geometry,",
-				"          PANEL_ID),",
-				"     Color_Chip_NameNew = first(Color_Chip_Name)) ~> DistinctValues",
+				"     broadcast: 'off')~> join1",
 				"join1 select(mapColumn(",
-				"          Scheme,",
-				"          Geometry,",
-				"          PANEL_ID,",
-				"          Color_Chip_Name",
+				"          MEASUREMENT_SCHEME = Scheme,",
+				"          GEOMETRY = Geometry,",
+				"          PANEL_ID",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select2",
-				"DistinctValues sink(allowSchemaDrift: true,",
+				"select2 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     deletable:false,",
 				"     insertable:true,",
@@ -131,10 +123,9 @@
 				"     saveOrder: 1,",
 				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
-				"          Scheme,",
-				"          Geometry,",
-				"          PANEL_ID,",
-				"          Color_Chip_NameNew",
+				"          MEASUREMENT_SCHEME,",
+				"          GEOMETRY,",
+				"          PANEL_ID",
 				"     )) ~> SKCOLORCOORDINATE"
 			]
 		}
