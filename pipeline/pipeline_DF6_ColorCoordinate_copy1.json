@@ -5,18 +5,23 @@
 			{
 				"name": "Set variable1",
 				"type": "SetVariable",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Web2",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
 				"policy": {
 					"secureOutput": false,
 					"secureInput": false
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"variableName": "First_name",
+					"variableName": "APIDATA",
 					"value": {
-						"value": "@activity('Web1').output.value\n\n",
+						"value": "@activity('Web2').output.value",
 						"type": "Expression"
 					}
 				}
@@ -24,14 +29,7 @@
 			{
 				"name": "ForEach1",
 				"type": "ForEach",
-				"dependsOn": [
-					{
-						"activity": "DF6_COLORCOORDINATE",
-						"dependencyConditions": [
-							"Completed"
-						]
-					}
-				],
+				"dependsOn": [],
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
@@ -238,6 +236,131 @@
 						"firstRowOnly": true
 					}
 				}
+			},
+			{
+				"name": "Web2",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "DF6_COLORCOORDINATE",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "GET",
+					"relativeUrl": "https://reqres.in/api/users"
+				},
+				"linkedServiceName": {
+					"referenceName": "WebLS123",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Copy data3",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Set variable1",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "RestSource",
+						"httpRequestTimeout": "00:01:40",
+						"requestInterval": "00.00:00:00.010",
+						"requestMethod": "GET",
+						"paginationRules": {
+							"supportRFC5988": "true"
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "upsert",
+						"upsertSettings": {
+							"useTempDB": true
+						},
+						"sqlWriterUseTableLock": false,
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"path": "$['data'][0]['id']"
+								},
+								"sink": {
+									"name": "L",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['data'][0]['email']"
+								},
+								"sink": {
+									"name": "A",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['data'][0]['first_name']"
+								},
+								"sink": {
+									"name": "B",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['data'][0]['last_name']"
+								},
+								"sink": {
+									"name": "C",
+									"type": "String"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "RestAPIData",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "SQLDynamicDS",
+						"type": "DatasetReference",
+						"parameters": {
+							"TableName": "COLOR_COORDINATE"
+						}
+					}
+				]
 			}
 		],
 		"variables": {
