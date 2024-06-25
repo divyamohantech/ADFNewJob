@@ -43,6 +43,8 @@
 			{
 				"name": "Web1",
 				"type": "WebActivity",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "DF6_COLORCOORDINATE",
@@ -61,12 +63,18 @@
 				"userProperties": [],
 				"typeProperties": {
 					"method": "GET",
-					"url": "https://reqres.in/api/users"
+					"relativeUrl": "https://reqres.in/api/users"
+				},
+				"linkedServiceName": {
+					"referenceName": "WebLS123",
+					"type": "LinkedServiceReference"
 				}
 			},
 			{
 				"name": "Set variable1",
 				"type": "SetVariable",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Web1",
@@ -123,10 +131,7 @@
 						"upsertSettings": {
 							"useTempDB": true,
 							"keys": [
-								"ID",
-								"email",
-								"first_name",
-								"last_name"
+								"ID"
 							]
 						},
 						"sqlWriterUseTableLock": false,
@@ -141,8 +146,8 @@
 									"path": "$['data'][0]['id']"
 								},
 								"sink": {
-									"name": "ID",
-									"type": "Int32"
+									"name": "L",
+									"type": "String"
 								}
 							},
 							{
@@ -150,7 +155,7 @@
 									"path": "$['data'][0]['email']"
 								},
 								"sink": {
-									"name": "email",
+									"name": "A",
 									"type": "String"
 								}
 							},
@@ -159,7 +164,7 @@
 									"path": "$['data'][0]['first_name']"
 								},
 								"sink": {
-									"name": "first_name",
+									"name": "B",
 									"type": "String"
 								}
 							},
@@ -168,16 +173,7 @@
 									"path": "$['data'][0]['last_name']"
 								},
 								"sink": {
-									"name": "last_name",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"path": "$['data'][0]['avatar']"
-								},
-								"sink": {
-									"name": "avatar",
+									"name": "C",
 									"type": "String"
 								}
 							}
