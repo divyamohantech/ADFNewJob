@@ -119,8 +119,12 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
-						"writeBehavior": "insert",
-						"sqlWriterUseTableLock": false
+						"writeBehavior": "upsert",
+						"upsertSettings": {
+							"useTempDB": true
+						},
+						"sqlWriterUseTableLock": false,
+						"disableMetricsCollection": false
 					},
 					"enableStaging": false,
 					"translator": {
@@ -185,7 +189,7 @@
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference",
 						"parameters": {
-							"TableName": "API_Response"
+							"TableName": "COLOR_COORDINATE"
 						}
 					}
 				]
@@ -422,6 +426,9 @@
 			},
 			"TableData": {
 				"type": "Array"
+			},
+			"APIDATA": {
+				"type": "String"
 			}
 		},
 		"annotations": []
