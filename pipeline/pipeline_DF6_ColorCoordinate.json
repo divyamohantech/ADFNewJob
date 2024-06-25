@@ -81,7 +81,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"variableName": "First_name",
+					"variableName": "APIDATA",
 					"value": {
 						"value": "@activity('Web1').output.value\n\n",
 						"type": "Expression"
