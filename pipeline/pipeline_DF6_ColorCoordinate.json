@@ -107,8 +107,8 @@
 									"path": "$['data'][0]['id']"
 								},
 								"sink": {
-									"name": "L",
-									"type": "String"
+									"name": "ID",
+									"type": "Int32"
 								}
 							},
 							{
@@ -116,7 +116,7 @@
 									"path": "$['data'][0]['email']"
 								},
 								"sink": {
-									"name": "A",
+									"name": "email",
 									"type": "String"
 								}
 							},
@@ -125,7 +125,7 @@
 									"path": "$['data'][0]['first_name']"
 								},
 								"sink": {
-									"name": "B",
+									"name": "first_name",
 									"type": "String"
 								}
 							},
@@ -134,7 +134,16 @@
 									"path": "$['data'][0]['last_name']"
 								},
 								"sink": {
-									"name": "C",
+									"name": "last_name",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['data'][0]['avatar']"
+								},
+								"sink": {
+									"name": "avatar",
 									"type": "String"
 								}
 							}
