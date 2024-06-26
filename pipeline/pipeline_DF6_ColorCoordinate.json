@@ -43,14 +43,7 @@
 			{
 				"name": "Web1",
 				"type": "WebActivity",
-				"dependsOn": [
-					{
-						"activity": "DF6_COLORCOORDINATE",
-						"dependencyConditions": [
-							"Completed"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -169,45 +162,30 @@
 			{
 				"name": "ForEach1",
 				"type": "ForEach",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "DF6_COLORCOORDINATE",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
 						"value": "@activity('DF6_COLORCOORDINATE').output",
 						"type": "Expression"
 					},
+					"isSequential": true,
 					"activities": [
-						{
-							"name": "Azure Function1",
-							"type": "AzureFunctionActivity",
-							"dependsOn": [],
-							"policy": {
-								"timeout": "0.12:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"functionName": "AZ",
-								"method": "GET"
-							},
-							"linkedServiceName": {
-								"referenceName": "AzureFunctionLS",
-								"type": "LinkedServiceReference"
-							}
-						},
 						{
 							"name": "Copy data2",
 							"type": "Copy",
 							"dependsOn": [
 								{
-									"activity": "Azure Function1",
+									"activity": "Web2",
 									"dependencyConditions": [
-										"Succeeded"
+										"Completed"
 									]
 								}
 							],
@@ -221,20 +199,18 @@
 							"userProperties": [],
 							"typeProperties": {
 								"source": {
-									"type": "AzureSqlSource",
-									"queryTimeout": "02:00:00",
-									"partitionOption": "None"
+									"type": "RestSource",
+									"httpRequestTimeout": "00:01:40",
+									"requestInterval": "00.00:00:00.010",
+									"requestMethod": "GET",
+									"paginationRules": {
+										"supportRFC5988": "true"
+									}
 								},
 								"sink": {
-									"type": "DelimitedTextSink",
-									"storeSettings": {
-										"type": "AzureBlobStorageWriteSettings"
-									},
-									"formatSettings": {
-										"type": "DelimitedTextWriteSettings",
-										"quoteAllText": true,
-										"fileExtension": ".txt"
-									}
+									"type": "AzureSqlSink",
+									"writeBehavior": "insert",
+									"sqlWriterUseTableLock": false
 								},
 								"enableStaging": false,
 								"translator": {
@@ -242,151 +218,88 @@
 									"mappings": [
 										{
 											"source": {
-												"name": "PANEL_COLOR_COORDINATE_ID",
-												"type": "Int32",
-												"physicalType": "int"
+												"path": "$['data'][0]['id']"
 											},
 											"sink": {
-												"name": "PANEL_COLOR_COORDINATE_ID",
-												"type": "String",
-												"physicalType": "String"
+												"name": "ID",
+												"type": "Int32"
 											}
 										},
 										{
 											"source": {
-												"name": "PANEL_ID",
-												"type": "Int32",
-												"physicalType": "int"
+												"path": "$['data'][0]['email']"
 											},
 											"sink": {
-												"name": "PANEL_ID",
-												"type": "String",
-												"physicalType": "String"
+												"name": "email",
+												"type": "String"
 											}
 										},
 										{
 											"source": {
-												"name": "GEOMETRY",
-												"type": "String",
-												"physicalType": "varchar"
+												"path": "$['data'][0]['first_name']"
 											},
 											"sink": {
-												"name": "GEOMETRY",
-												"type": "String",
-												"physicalType": "String"
+												"name": "first_name",
+												"type": "String"
 											}
 										},
 										{
 											"source": {
-												"name": "SPARKLE",
-												"type": "String",
-												"physicalType": "varchar"
+												"path": "$['data'][0]['last_name']"
 											},
 											"sink": {
-												"name": "SPARKLE",
-												"type": "String",
-												"physicalType": "String"
+												"name": "last_name",
+												"type": "String"
 											}
 										},
 										{
 											"source": {
-												"name": "MEASUREMENT_SCHEME",
-												"type": "String",
-												"physicalType": "varchar"
+												"path": "$['data'][0]['avatar']"
 											},
 											"sink": {
-												"name": "MEASUREMENT_SCHEME",
-												"type": "String",
-												"physicalType": "String"
-											}
-										},
-										{
-											"source": {
-												"name": "L",
-												"type": "String",
-												"physicalType": "varchar"
-											},
-											"sink": {
-												"name": "L",
-												"type": "String",
-												"physicalType": "String"
-											}
-										},
-										{
-											"source": {
-												"name": "A",
-												"type": "String",
-												"physicalType": "varchar"
-											},
-											"sink": {
-												"name": "A",
-												"type": "String",
-												"physicalType": "String"
-											}
-										},
-										{
-											"source": {
-												"name": "B",
-												"type": "String",
-												"physicalType": "varchar"
-											},
-											"sink": {
-												"name": "B",
-												"type": "String",
-												"physicalType": "String"
-											}
-										},
-										{
-											"source": {
-												"name": "C",
-												"type": "String",
-												"physicalType": "varchar"
-											},
-											"sink": {
-												"name": "C",
-												"type": "String",
-												"physicalType": "String"
-											}
-										},
-										{
-											"source": {
-												"name": "ILLUMINANT_OBSERVE",
-												"type": "String",
-												"physicalType": "varchar"
-											},
-											"sink": {
-												"name": "ILLUMINANT_OBSERVE",
-												"type": "String",
-												"physicalType": "String"
+												"name": "avatar",
+												"type": "String"
 											}
 										}
-									],
-									"typeConversion": true,
-									"typeConversionSettings": {
-										"allowDataTruncation": true,
-										"treatBooleanAsNumber": false
-									}
+									]
 								}
 							},
 							"inputs": [
 								{
-									"referenceName": "SQLDynamicDS",
-									"type": "DatasetReference",
-									"parameters": {
-										"TableName": "COLOR_COORDINATE"
-									}
+									"referenceName": "RestAPIData",
+									"type": "DatasetReference"
 								}
 							],
 							"outputs": [
 								{
-									"referenceName": "DelimitedTextDymanicCSVFiles",
+									"referenceName": "SQLDynamicDS",
 									"type": "DatasetReference",
 									"parameters": {
-										"Container_Name": "test",
-										"File_Name": "AZ.csv"
+										"TableName": "API_Response"
 									}
 								}
 							]
+						},
+						{
+							"name": "Web2",
+							"type": "WebActivity",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"method": "GET",
+								"relativeUrl": "https://reqres.in/api/users"
+							},
+							"linkedServiceName": {
+								"referenceName": "WebLS123",
+								"type": "LinkedServiceReference"
+							}
 						}
 					]
 				}
