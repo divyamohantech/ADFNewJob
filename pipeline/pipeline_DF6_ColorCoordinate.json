@@ -316,6 +316,10 @@
 				],
 				"userProperties": [],
 				"typeProperties": {
+					"expression": {
+						"value": "@activity('DF6_COLORCOORDINATE').output.runStatus",
+						"type": "Expression"
+					},
 					"activities": [
 						{
 							"name": "Web3",
