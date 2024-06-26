@@ -95,12 +95,8 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
-						"writeBehavior": "upsert",
-						"upsertSettings": {
-							"useTempDB": true
-						},
-						"sqlWriterUseTableLock": false,
-						"disableMetricsCollection": false
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
 					},
 					"enableStaging": false,
 					"translator": {
@@ -156,7 +152,7 @@
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference",
 						"parameters": {
-							"TableName": "COLOR_COORDINATE"
+							"TableName": "API_Response"
 						}
 					}
 				]
