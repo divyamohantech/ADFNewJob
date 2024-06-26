@@ -386,37 +386,46 @@
 									"mappings": [
 										{
 											"source": {
-												"path": "$['data'][0]['id']"
+												"path": "['id']"
 											},
 											"sink": {
-												"name": "L",
+												"name": "ID",
+												"type": "Int32"
+											}
+										},
+										{
+											"source": {
+												"path": "['email']"
+											},
+											"sink": {
+												"name": "email",
 												"type": "String"
 											}
 										},
 										{
 											"source": {
-												"path": "$['data'][0]['email']"
+												"path": "['first_name']"
 											},
 											"sink": {
-												"name": "A",
+												"name": "first_name",
 												"type": "String"
 											}
 										},
 										{
 											"source": {
-												"path": "$['data'][0]['first_name']"
+												"path": "['last_name']"
 											},
 											"sink": {
-												"name": "B",
+												"name": "last_name",
 												"type": "String"
 											}
 										},
 										{
 											"source": {
-												"path": "$['data'][0]['last_name']"
+												"path": "['avatar']"
 											},
 											"sink": {
-												"name": "C",
+												"name": "avatar",
 												"type": "String"
 											}
 										}
@@ -435,7 +444,7 @@
 									"referenceName": "SQLDynamicDS",
 									"type": "DatasetReference",
 									"parameters": {
-										"TableName": "COLOR_COORDINATE"
+										"TableName": "API_Response"
 									}
 								}
 							]
