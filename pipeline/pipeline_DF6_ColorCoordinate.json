@@ -412,7 +412,8 @@
 												"type": "String"
 											}
 										}
-									]
+									],
+									"collectionReference": "$['data']"
 								}
 							},
 							"inputs": [
