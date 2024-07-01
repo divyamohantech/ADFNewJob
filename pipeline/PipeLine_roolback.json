@@ -54,8 +54,8 @@
 									"path": "$['data'][0]['id']"
 								},
 								"sink": {
-									"name": "ID",
-									"type": "Int32"
+									"name": "L",
+									"type": "String"
 								}
 							},
 							{
@@ -63,7 +63,7 @@
 									"path": "$['data'][0]['email']"
 								},
 								"sink": {
-									"name": "email",
+									"name": "A",
 									"type": "String"
 								}
 							},
@@ -72,7 +72,7 @@
 									"path": "$['data'][0]['first_name']"
 								},
 								"sink": {
-									"name": "first_name",
+									"name": "B",
 									"type": "String"
 								}
 							},
@@ -81,16 +81,7 @@
 									"path": "$['data'][0]['last_name']"
 								},
 								"sink": {
-									"name": "last_name",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"path": "$['data'][0]['avatar']"
-								},
-								"sink": {
-									"name": "avatar",
+									"name": "C",
 									"type": "String"
 								}
 							}
@@ -108,7 +99,7 @@
 						"referenceName": "SQLDynamicDS",
 						"type": "DatasetReference",
 						"parameters": {
-							"TableName": "API_Response"
+							"TableName": "COLOR_COORDINATE"
 						}
 					}
 				]
