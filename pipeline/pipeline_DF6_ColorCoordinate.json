@@ -177,7 +177,13 @@
 							},
 							"userProperties": [],
 							"typeProperties": {
-								"method": "GET",
+								"method": "POST",
+								"datasets": [
+									{
+										"referenceName": "RestAPIData",
+										"type": "DatasetReference"
+									}
+								],
 								"relativeUrl": "https://reqres.in/api/users"
 							},
 							"linkedServiceName": {
