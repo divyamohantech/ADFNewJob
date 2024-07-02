@@ -186,14 +186,7 @@
 			{
 				"name": "Until1",
 				"type": "Until",
-				"dependsOn": [
-					{
-						"activity": "SET_MAX_COLOR_COORDINATE_ID",
-						"dependencyConditions": [
-							"Completed"
-						]
-					}
-				],
+				"dependsOn": [],
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
@@ -347,6 +340,41 @@
 					"value": {
 						"value": "@activity('DF6_COLORCOORDINATE').output.runStatus.output.SKCacheMAXCOLORCORDINATEID.value[0].Max_PANEL_COLOR_COORDINATE_ID\n\n",
 						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "GetNewColorCorData",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "SET_MAX_COLOR_COORDINATE_ID",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "SELECT * FROM  COLOR_COORDINATE CC \nwhere PANEL_COLOR_COORDINATE_ID >",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "SQLDynamicDS",
+						"type": "DatasetReference",
+						"parameters": {
+							"TableName": "COLOR_COORDINATE"
+						}
 					}
 				}
 			}
