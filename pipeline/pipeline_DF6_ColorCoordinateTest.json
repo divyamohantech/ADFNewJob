@@ -43,12 +43,6 @@
 							"typeProperties": {
 								"source": {
 									"type": "RestSource",
-									"additionalColumns": [
-										{
-											"name": "PANEL_ID",
-											"value": "$$COLUMN:@activity('LookUpPanel').output.value[0].PANEL_ID"
-										}
-									],
 									"httpRequestTimeout": "00:01:40",
 									"requestInterval": "00.00:00:00.010",
 									"requestMethod": "POST",
