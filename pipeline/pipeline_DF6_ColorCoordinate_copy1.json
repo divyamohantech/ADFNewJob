@@ -372,6 +372,12 @@
 			},
 			"APIDATA": {
 				"type": "String"
+			},
+			"MAX_COLOR_TOOL_ID": {
+				"type": "Integer"
+			},
+			"SET_MAX_COLOR_COORDINATE_ID": {
+				"type": "Integer"
 			}
 		},
 		"annotations": []
