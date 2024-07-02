@@ -222,6 +222,9 @@
 							"SRPanelTable": {
 								"TableName": "PANEL"
 							},
+							"SKCOLORCOORTable": {
+								"TableName": "COLOR_COORDINATE"
+							},
 							"SKCOLORCOORDINATE": {
 								"TableName": "COLOR_COORDINATE"
 							}
