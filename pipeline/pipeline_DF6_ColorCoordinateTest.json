@@ -131,7 +131,23 @@
 								"secureOutput": false,
 								"secureInput": false
 							},
-							"userProperties": []
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "AzureSqlSource",
+									"sqlReaderQuery": "SELECT PANEL_ID FROM PANEL Where Name = '@{item().Color_Chip_Name}'",
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
+								},
+								"dataset": {
+									"referenceName": "SQLDynamicDS",
+									"type": "DatasetReference",
+									"parameters": {
+										"TableName": "PANEL"
+									}
+								},
+								"firstRowOnly": false
+							}
 						}
 					]
 				}
