@@ -468,7 +468,7 @@
 				"typeProperties": {
 					"variableName": "SET_MAX_COLOR_COORDINATE_ID",
 					"value": {
-						"value": "@activity('DF6_COLORCOORDINATE').output.runStatus.output.SKCacheMAXCOLORTOOLID.value[0].SET_MAX_COLOR_COORDINATE_ID\n\n",
+						"value": "@activity('DF6_COLORCOORDINATE').output.runStatus.output.SKCacheMAXCOLORCORDINATEID.value[0].Max_PANEL_COLOR_COORDINATE_ID\n\n",
 						"type": "Expression"
 					}
 				}
