@@ -3,51 +3,10 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "DF6_COLORCOORDINATE",
-				"type": "ExecuteDataFlow",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"dataflow": {
-						"referenceName": "DF6_COLORCOORDINATE",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"SRInCSV": {
-								"TableName": "InCSV_NEW"
-							},
-							"SRPanelTable": {
-								"TableName": "PANEL"
-							},
-							"SKCOLORCOORTable": {
-								"TableName": "COLOR_COORDINATE"
-							},
-							"SKCOLORCOORDINATE": {
-								"TableName": "COLOR_COORDINATE"
-							}
-						}
-					},
-					"compute": {
-						"coreCount": 8,
-						"computeType": "General"
-					},
-					"traceLevel": "None",
-					"cacheSinks": {
-						"firstRowOnly": true
-					}
-				}
-			},
-			{
 				"name": "ForEach1",
 				"type": "ForEach",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"userProperties": [],
 				"typeProperties": {
@@ -150,72 +109,6 @@
 							]
 						}
 					]
-				}
-			},
-			{
-				"name": "SET_MAX_COLOR_COORDINATE_ID",
-				"type": "SetVariable",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
-				"dependsOn": [
-					{
-						"activity": "DF6_COLORCOORDINATE",
-						"dependencyConditions": [
-							"Completed"
-						]
-					}
-				],
-				"policy": {
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"variableName": "SET_MAX_COLOR_COORDINATE_ID",
-					"value": {
-						"value": "@activity('DF6_COLORCOORDINATE').output.runStatus.output.SKCacheMAXCOLORCORDINATEID.value[0].Max_PANEL_COLOR_COORDINATE_ID\n\n",
-						"type": "Expression"
-					}
-				}
-			},
-			{
-				"name": "GetNewColorCorData",
-				"type": "Lookup",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
-				"dependsOn": [
-					{
-						"activity": "SET_MAX_COLOR_COORDINATE_ID",
-						"dependencyConditions": [
-							"Completed"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "AzureSqlSource",
-						"sqlReaderQuery": {
-							"value": "SELECT * FROM  COLOR_COORDINATE CC \nwhere PANEL_COLOR_COORDINATE_ID > @{variables('Max_PANEL_COLOR_COORDINATE_ID')}",
-							"type": "Expression"
-						},
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
-					},
-					"dataset": {
-						"referenceName": "SQLDynamicDS",
-						"type": "DatasetReference",
-						"parameters": {
-							"TableName": "COLOR_COORDINATE"
-						}
-					}
 				}
 			},
 			{
@@ -326,12 +219,6 @@
 					],
 					"scriptBlockExecutionTimeout": "02:00:00"
 				}
-			},
-			{
-				"name": "Filter1",
-				"type": "Filter",
-				"dependsOn": [],
-				"userProperties": []
 			}
 		],
 		"variables": {
