@@ -365,7 +365,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "SELECT * FROM  COLOR_COORDINATE CC \nwhere PANEL_COLOR_COORDINATE_ID >",
+						"sqlReaderQuery": "SELECT * FROM  COLOR_COORDINATE CC \nwhere PANEL_COLOR_COORDINATE_ID > @{variables('Max_PANEL_COLOR_COORDINATE_ID')}",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
