@@ -18,6 +18,13 @@
 					},
 					"name": "SRPanelTable",
 					"description": "Import data from SQLDynamicDs"
+				},
+				{
+					"dataset": {
+						"referenceName": "SQLDynamicDS",
+						"type": "DatasetReference"
+					},
+					"name": "SKCOLORCOORTable"
 				}
 			],
 			"sinks": [
@@ -27,6 +34,9 @@
 						"type": "DatasetReference"
 					},
 					"name": "SKCOLORCOORDINATE"
+				},
+				{
+					"name": "SKCacheMAXCOLORCORDINATEID"
 				}
 			],
 			"transformations": [
@@ -35,6 +45,9 @@
 				},
 				{
 					"name": "select2"
+				},
+				{
+					"name": "FNAggMAXPANELCOLORCOORDINATEID"
 				}
 			],
 			"scriptLines": [
@@ -99,6 +112,22 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> SRPanelTable",
+				"source(output(",
+				"          PANEL_COLOR_COORDINATE_ID as integer,",
+				"          PANEL_ID as integer,",
+				"          GEOMETRY as string,",
+				"          SPARKLE as string,",
+				"          MEASUREMENT_SCHEME as string,",
+				"          L as string,",
+				"          A as string,",
+				"          B as string,",
+				"          C as string,",
+				"          ILLUMINANT_OBSERVE as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> SKCOLORCOORTable",
 				"SRInCSV, SRPanelTable join(Color_Chip_Name == NAME,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
@@ -111,6 +140,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select2",
+				"SKCOLORCOORTable aggregate(Max_PANEL_COLOR_COORDINATE_ID = iifNull(max(PANEL_COLOR_COORDINATE_ID),0)) ~> FNAggMAXPANELCOLORCOORDINATEID",
 				"select2 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     deletable:false,",
@@ -120,13 +150,20 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     saveOrder: 1,",
+				"     saveOrder: 2,",
 				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
 				"          MEASUREMENT_SCHEME,",
 				"          GEOMETRY,",
 				"          PANEL_ID",
-				"     )) ~> SKCOLORCOORDINATE"
+				"     )) ~> SKCOLORCOORDINATE",
+				"FNAggMAXPANELCOLORCOORDINATEID sink(validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     store: 'cache',",
+				"     format: 'inline',",
+				"     output: true,",
+				"     saveOrder: 1) ~> SKCacheMAXCOLORCORDINATEID"
 			]
 		}
 	}
