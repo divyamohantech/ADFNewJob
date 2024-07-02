@@ -45,7 +45,8 @@
 									"type": "RestSource",
 									"additionalColumns": [
 										{
-											"value": "$$COLUMN:"
+											"name": "PANEL_ID",
+											"value": "$$COLUMN:@activity('LookUpPanel').output.value[0].PANEL_ID"
 										}
 									],
 									"httpRequestTimeout": "00:01:40",
