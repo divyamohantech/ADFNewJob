@@ -197,7 +197,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@bool(activity('DF6_COLORCOORDINATE').output.runStatus)",
+						"value": "@activity('Web3').output",
 						"type": "Expression"
 					},
 					"activities": [
