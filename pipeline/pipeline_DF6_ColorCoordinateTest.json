@@ -206,7 +206,7 @@
 							"TableName": "InCSV_NEW"
 						}
 					},
-					"firstRowOnly": false
+					"firstRowOnly": true
 				}
 			}
 		],
