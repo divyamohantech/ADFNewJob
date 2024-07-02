@@ -24,7 +24,14 @@
 						{
 							"name": "Copy data2",
 							"type": "Copy",
-							"dependsOn": [],
+							"dependsOn": [
+								{
+									"activity": "Lookup2",
+									"dependencyConditions": [
+										"Completed"
+									]
+								}
+							],
 							"policy": {
 								"timeout": "0.12:00:00",
 								"retry": 0,
@@ -114,8 +121,8 @@
 							]
 						},
 						{
-							"name": "Script1",
-							"type": "Script",
+							"name": "Lookup2",
+							"type": "Lookup",
 							"dependsOn": [],
 							"policy": {
 								"timeout": "0.12:00:00",
@@ -124,11 +131,7 @@
 								"secureOutput": false,
 								"secureInput": false
 							},
-							"userProperties": [],
-							"typeProperties": {
-								"scripts": [],
-								"scriptBlockExecutionTimeout": "02:00:00"
-							}
+							"userProperties": []
 						}
 					]
 				}
