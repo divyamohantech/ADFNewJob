@@ -47,7 +47,7 @@
 					"name": "select2"
 				},
 				{
-					"name": "FNAggMAXPANELCOLORCOORDINATEID"
+					"name": "FNAggMAXCOLORCOORDINATEID"
 				}
 			],
 			"scriptLines": [
@@ -140,7 +140,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select2",
-				"SKCOLORCOORTable aggregate(Max_PANEL_COLOR_COORDINATE_ID = iifNull(max(PANEL_COLOR_COORDINATE_ID),0)) ~> FNAggMAXPANELCOLORCOORDINATEID",
+				"SKCOLORCOORTable aggregate(Max_PANEL_COLOR_COORDINATE_ID = iifNull(max(PANEL_COLOR_COORDINATE_ID),0)) ~> FNAggMAXCOLORCOORDINATEID",
 				"select2 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     deletable:false,",
@@ -157,7 +157,7 @@
 				"          GEOMETRY,",
 				"          PANEL_ID",
 				"     )) ~> SKCOLORCOORDINATE",
-				"FNAggMAXPANELCOLORCOORDINATEID sink(validateSchema: false,",
+				"FNAggMAXCOLORCOORDINATEID sink(validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     store: 'cache',",
