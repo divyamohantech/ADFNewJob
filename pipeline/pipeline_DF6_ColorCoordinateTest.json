@@ -227,7 +227,7 @@
 				"type": "Integer"
 			},
 			"LOOKUP_PANELID": {
-				"type": "String"
+				"type": "Integer"
 			}
 		},
 		"annotations": []
