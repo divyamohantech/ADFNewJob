@@ -65,14 +65,7 @@
 						{
 							"name": "Copy data2",
 							"type": "Copy",
-							"dependsOn": [
-								{
-									"activity": "Web2",
-									"dependencyConditions": [
-										"Completed"
-									]
-								}
-							],
+							"dependsOn": [],
 							"policy": {
 								"timeout": "0.12:00:00",
 								"retry": 0,
@@ -86,10 +79,8 @@
 									"type": "RestSource",
 									"httpRequestTimeout": "00:01:40",
 									"requestInterval": "00.00:00:00.010",
-									"requestMethod": "GET",
-									"paginationRules": {
-										"supportRFC5988": "true"
-									}
+									"requestMethod": "POST",
+									"requestBody": "{\n    \"name\": \"morpheus1\",\n    \"job\": \"leader1\"\n}"
 								},
 								"sink": {
 									"type": "AzureSqlSink",
@@ -163,33 +154,6 @@
 									}
 								}
 							]
-						},
-						{
-							"name": "Web2",
-							"type": "WebActivity",
-							"dependsOn": [],
-							"policy": {
-								"timeout": "0.12:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"method": "POST",
-								"datasets": [
-									{
-										"referenceName": "RestAPIData",
-										"type": "DatasetReference"
-									}
-								],
-								"relativeUrl": "https://reqres.in/api/users"
-							},
-							"linkedServiceName": {
-								"referenceName": "WebLS123",
-								"type": "LinkedServiceReference"
-							}
 						}
 					]
 				}
@@ -376,7 +340,10 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "SELECT * FROM  COLOR_COORDINATE CC \nwhere PANEL_COLOR_COORDINATE_ID > @{variables('Max_PANEL_COLOR_COORDINATE_ID')}",
+						"sqlReaderQuery": {
+							"value": "SELECT * FROM  COLOR_COORDINATE CC \nwhere PANEL_COLOR_COORDINATE_ID > @{variables('Max_PANEL_COLOR_COORDINATE_ID')}",
+							"type": "Expression"
+						},
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
