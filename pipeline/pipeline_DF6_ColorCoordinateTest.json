@@ -165,23 +165,6 @@
 								"variableName": "LOOKUP_PANELID",
 								"value": "@activity('LookUpPanel').output.value[0].PANEL_ID"
 							}
-						},
-						{
-							"name": "Set variable2",
-							"type": "SetVariable",
-							"dependsOn": [
-								{
-									"activity": "LookUpPanelID",
-									"dependencyConditions": [
-										"Completed"
-									]
-								}
-							],
-							"policy": {
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": []
 						}
 					]
 				}
