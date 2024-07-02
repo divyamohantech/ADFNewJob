@@ -22,11 +22,16 @@
 					"isSequential": true,
 					"activities": [
 						{
-							"name": "Copy data2",
+							"name": "SKTableColorCor_COLORAPI",
 							"type": "Copy",
-							"state": "Inactive",
-							"onInactiveMarkAs": "Succeeded",
-							"dependsOn": [],
+							"dependsOn": [
+								{
+									"activity": "LookUpPanelID",
+									"dependencyConditions": [
+										"Completed"
+									]
+								}
+							],
 							"policy": {
 								"timeout": "0.12:00:00",
 								"retry": 0,
@@ -38,10 +43,15 @@
 							"typeProperties": {
 								"source": {
 									"type": "RestSource",
+									"additionalColumns": [
+										{
+											"value": "$$COLUMN:"
+										}
+									],
 									"httpRequestTimeout": "00:01:40",
 									"requestInterval": "00.00:00:00.010",
 									"requestMethod": "POST",
-									"requestBody": "{\n    \"name\": @{item().Color_Chip_Name}',\n    \"job\": \"leader1\"\n}"
+									"requestBody": "{\n    \"name\": @{item().Color_Chip_Name}',\n     \"job\":    @activity('LookUpPanel').output.value[0].PANEL_ID\n}"
 								},
 								"sink": {
 									"type": "AzureSqlSink",
