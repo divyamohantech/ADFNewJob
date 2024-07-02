@@ -308,7 +308,7 @@
 				"type": "Until",
 				"dependsOn": [
 					{
-						"activity": "DF6_COLORCOORDINATE",
+						"activity": "SET_MAX_COLOR_COORDINATE_ID",
 						"dependencyConditions": [
 							"Completed"
 						]
@@ -445,6 +445,30 @@
 					],
 					"timeout": "0.12:00:00"
 				}
+			},
+			{
+				"name": "SET_MAX_COLOR_COORDINATE_ID",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "DF6_COLORCOORDINATE",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "SET_MAX_COLOR_COORDINATE_ID",
+					"value": {
+						"value": "@activity('DF6_COLORCOORDINATE').output.runStatus.output.SKCacheMAXCOLORTOOLID.value[0].SET_MAX_COLOR_COORDINATE_ID\n\n",
+						"type": "Expression"
+					}
+				}
 			}
 		],
 		"variables": {
@@ -456,6 +480,12 @@
 			},
 			"APIDATA": {
 				"type": "String"
+			},
+			"MAX_COLOR_TOOL_ID": {
+				"type": "Integer"
+			},
+			"SET_MAX_COLOR_COORDINATE_ID": {
+				"type": "Integer"
 			}
 		},
 		"annotations": []
