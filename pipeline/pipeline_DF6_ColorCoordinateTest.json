@@ -24,14 +24,9 @@
 						{
 							"name": "Copy data2",
 							"type": "Copy",
-							"dependsOn": [
-								{
-									"activity": "LookUpPanel",
-									"dependencyConditions": [
-										"Completed"
-									]
-								}
-							],
+							"state": "Inactive",
+							"onInactiveMarkAs": "Succeeded",
+							"dependsOn": [],
 							"policy": {
 								"timeout": "0.12:00:00",
 								"retry": 0,
@@ -149,6 +144,44 @@
 								},
 								"firstRowOnly": false
 							}
+						},
+						{
+							"name": "LookUpPanelID",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "LookUpPanel",
+									"dependencyConditions": [
+										"Completed"
+									]
+								}
+							],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "LOOKUP_PANELID",
+								"value": "@activity('LookUpPanel').output.value[0].PANEL_ID"
+							}
+						},
+						{
+							"name": "Set variable2",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "LookUpPanelID",
+									"dependencyConditions": [
+										"Completed"
+									]
+								}
+							],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": []
 						}
 					]
 				}
@@ -244,6 +277,9 @@
 			},
 			"SET_MAX_COLOR_COORDINATE_ID": {
 				"type": "Integer"
+			},
+			"LOOKUP_PANELID": {
+				"type": "String"
 			}
 		},
 		"annotations": []
