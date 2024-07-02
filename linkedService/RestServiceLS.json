@@ -8,5 +8,6 @@
 			"enableServerCertificateValidation": true,
 			"authenticationType": "Anonymous"
 		}
-	}
+	},
+	"job": "leader1"
 }
