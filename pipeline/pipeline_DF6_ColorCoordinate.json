@@ -5,6 +5,8 @@
 			{
 				"name": "DF6_COLORCOORDINATE",
 				"type": "ExecuteDataFlow",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -48,7 +50,7 @@
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "GetNewColorCorData",
+						"activity": "SRGetNewInCSV_NEW",
 						"dependencyConditions": [
 							"Completed"
 						]
@@ -57,7 +59,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('GetNewColorCorData').output.value",
+						"value": "@activity('SRGetNewInCSV_NEW').output.value\n\n",
 						"type": "Expression"
 					},
 					"isSequential": true,
@@ -79,8 +81,7 @@
 									"type": "RestSource",
 									"httpRequestTimeout": "00:01:40",
 									"requestInterval": "00.00:00:00.010",
-									"requestMethod": "POST",
-									"requestBody": "{\n    \"name\": \"morpheus1\",\n    \"job\": \"leader1\"\n}"
+									"requestMethod": "GET"
 								},
 								"sink": {
 									"type": "AzureSqlSink",
@@ -159,144 +160,10 @@
 				}
 			},
 			{
-				"name": "Until1",
-				"type": "Until",
-				"dependsOn": [],
-				"userProperties": [],
-				"typeProperties": {
-					"expression": {
-						"value": "@activity('Web3').output",
-						"type": "Expression"
-					},
-					"activities": [
-						{
-							"name": "Web3",
-							"type": "WebActivity",
-							"dependsOn": [],
-							"policy": {
-								"timeout": "0.12:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"method": "GET",
-								"url": "https://reqres.in/api/users"
-							}
-						},
-						{
-							"name": "Copy data3",
-							"type": "Copy",
-							"dependsOn": [
-								{
-									"activity": "Web3",
-									"dependencyConditions": [
-										"Completed"
-									]
-								}
-							],
-							"policy": {
-								"timeout": "0.12:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"source": {
-									"type": "RestSource",
-									"httpRequestTimeout": "00:01:40",
-									"requestInterval": "00.00:00:00.010",
-									"requestMethod": "GET",
-									"paginationRules": {
-										"supportRFC5988": "true"
-									}
-								},
-								"sink": {
-									"type": "AzureSqlSink",
-									"writeBehavior": "insert",
-									"sqlWriterUseTableLock": false,
-									"disableMetricsCollection": false
-								},
-								"enableStaging": false,
-								"translator": {
-									"type": "TabularTranslator",
-									"mappings": [
-										{
-											"source": {
-												"path": "['id']"
-											},
-											"sink": {
-												"name": "ID",
-												"type": "Int32"
-											}
-										},
-										{
-											"source": {
-												"path": "['email']"
-											},
-											"sink": {
-												"name": "email",
-												"type": "String"
-											}
-										},
-										{
-											"source": {
-												"path": "['first_name']"
-											},
-											"sink": {
-												"name": "first_name",
-												"type": "String"
-											}
-										},
-										{
-											"source": {
-												"path": "['last_name']"
-											},
-											"sink": {
-												"name": "last_name",
-												"type": "String"
-											}
-										},
-										{
-											"source": {
-												"path": "['avatar']"
-											},
-											"sink": {
-												"name": "avatar",
-												"type": "String"
-											}
-										}
-									],
-									"collectionReference": "$['data']"
-								}
-							},
-							"inputs": [
-								{
-									"referenceName": "RestAPIData",
-									"type": "DatasetReference"
-								}
-							],
-							"outputs": [
-								{
-									"referenceName": "SQLDynamicDS",
-									"type": "DatasetReference",
-									"parameters": {
-										"TableName": "API_Response"
-									}
-								}
-							]
-						}
-					],
-					"timeout": "0.12:00:00"
-				}
-			},
-			{
 				"name": "SET_MAX_COLOR_COORDINATE_ID",
 				"type": "SetVariable",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "DF6_COLORCOORDINATE",
@@ -321,6 +188,8 @@
 			{
 				"name": "GetNewColorCorData",
 				"type": "Lookup",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "SET_MAX_COLOR_COORDINATE_ID",
@@ -352,6 +221,77 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"TableName": "COLOR_COORDINATE"
+						}
+					}
+				}
+			},
+			{
+				"name": "SRGetNewInCSV_NEW",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "Select * from [dbo].[InCSV_NEW]",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "SQLDynamicDS",
+						"type": "DatasetReference",
+						"parameters": {
+							"TableName": "InCSV_NEW"
+						}
+					}
+				}
+			},
+			{
+				"name": "Lookup1",
+				"type": "Lookup",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": []
+			},
+			{
+				"name": "SRGetNewPANEL",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "Select * from [dbo].[PANEL]",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "SQLDynamicDS",
+						"type": "DatasetReference",
+						"parameters": {
+							"TableName": "PANEL"
 						}
 					}
 				}
