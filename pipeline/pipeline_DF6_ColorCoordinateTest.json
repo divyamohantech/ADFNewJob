@@ -78,6 +78,15 @@
 												"name": "A",
 												"type": "String"
 											}
+										},
+										{
+											"source": {
+												"path": "1"
+											},
+											"sink": {
+												"name": "PANEL_ID",
+												"type": "Int32"
+											}
 										}
 									],
 									"mapComplexValuesToString": false
