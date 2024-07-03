@@ -23,7 +23,7 @@
 					"activities": [
 						{
 							"name": "SKTableColorCor_COLORAPI",
-							"description": "v1",
+							"description": "v2",
 							"type": "Copy",
 							"dependsOn": [
 								{
@@ -81,7 +81,7 @@
 										},
 										{
 											"source": {
-												"path": "0"
+												"path": "10"
 											},
 											"sink": {
 												"name": "PANEL_ID",
