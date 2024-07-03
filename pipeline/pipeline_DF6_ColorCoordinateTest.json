@@ -63,15 +63,6 @@
 									"mappings": [
 										{
 											"source": {
-												"path": "'10'"
-											},
-											"sink": {
-												"name": "PANEL_ID",
-												"type": "Int32"
-											}
-										},
-										{
-											"source": {
 												"path": "$['id']"
 											},
 											"sink": {
