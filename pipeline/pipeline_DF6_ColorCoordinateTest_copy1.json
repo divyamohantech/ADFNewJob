@@ -247,7 +247,7 @@
 							},
 							{
 								"source": {
-									"path": "$['\\'Column_1\\'']"
+									"path": "$['$[\\'id\\']']"
 								},
 								"sink": {
 									"name": "EMAIL"
