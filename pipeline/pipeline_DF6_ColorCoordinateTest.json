@@ -1,5 +1,5 @@
 {
-	"name": "pipeline_DF6_ColorCoordinateTest_copy1",
+	"name": "pipeline_DF6_ColorCoordinateTest",
 	"properties": {
 		"activities": [
 			{
@@ -62,18 +62,10 @@
 									"mappings": [
 										{
 											"source": {
-												"path": "@toInteger($['data']['id'])"
+												"path": "$['data']['id']"
 											},
 											"sink": {
 												"name": "GEOMETRY"
-											}
-										},
-										{
-											"source": {
-												"path": "@variables('LOOKUP_PANELID')"
-											},
-											"sink": {
-												"name": "PANEL_ID"
 											}
 										}
 									],
