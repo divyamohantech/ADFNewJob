@@ -63,7 +63,7 @@
 									"mappings": [
 										{
 											"source": {
-												"path": "10"
+												"path": "'10'"
 											},
 											"sink": {
 												"name": "PANEL_ID",
