@@ -67,6 +67,14 @@
 											"sink": {
 												"name": "L"
 											}
+										},
+										{
+											"source": {
+												"path": "$['@{item().Geometry}']"
+											},
+											"sink": {
+												"name": "GEOMETRY"
+											}
 										}
 									],
 									"mapComplexValuesToString": true
