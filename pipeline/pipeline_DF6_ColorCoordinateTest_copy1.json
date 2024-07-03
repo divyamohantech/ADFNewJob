@@ -62,50 +62,22 @@
 									"mappings": [
 										{
 											"source": {
-												"path": "$['data'][0]['id']"
+												"path": "$['data']['id']"
 											},
 											"sink": {
-												"name": "ID",
-												"type": "Int32"
+												"name": "PANEL_COLOR_COORDINATE_ID"
 											}
 										},
 										{
 											"source": {
-												"path": "$['data'][0]['email']"
+												"path": "@variables('LOOKUP_PANELID')"
 											},
 											"sink": {
-												"name": "email",
-												"type": "String"
-											}
-										},
-										{
-											"source": {
-												"path": "$['data'][0]['first_name']"
-											},
-											"sink": {
-												"name": "first_name",
-												"type": "String"
-											}
-										},
-										{
-											"source": {
-												"path": "$['data'][0]['last_name']"
-											},
-											"sink": {
-												"name": "last_name",
-												"type": "String"
-											}
-										},
-										{
-											"source": {
-												"path": "$['data'][0]['avatar']"
-											},
-											"sink": {
-												"name": "avatar",
-												"type": "String"
+												"name": "PANEL_ID"
 											}
 										}
-									]
+									],
+									"mapComplexValuesToString": true
 								}
 							},
 							"inputs": [
@@ -119,7 +91,7 @@
 									"referenceName": "SQLDynamicDS",
 									"type": "DatasetReference",
 									"parameters": {
-										"TableName": "API_Response"
+										"TableName": "COLOR_COORDINATE"
 									}
 								}
 							]
