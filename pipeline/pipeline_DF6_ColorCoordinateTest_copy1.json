@@ -62,7 +62,7 @@
 									"mappings": [
 										{
 											"source": {
-												"path": "$['data']['id']"
+												"path": "@toInteger($['data']['id'])"
 											},
 											"sink": {
 												"name": "PANEL_COLOR_COORDINATE_ID"
