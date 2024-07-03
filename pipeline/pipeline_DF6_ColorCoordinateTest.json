@@ -77,6 +77,15 @@
 												"name": "A",
 												"type": "String"
 											}
+										},
+										{
+											"source": {
+												"path": "@variables('LOOKUP_PANELID')"
+											},
+											"sink": {
+												"name": "PANEL_ID",
+												"type": "Int32"
+											}
 										}
 									],
 									"mapComplexValuesToString": true
