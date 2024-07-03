@@ -65,7 +65,7 @@
 												"path": "@toInteger($['data']['id'])"
 											},
 											"sink": {
-												"name": "PANEL_COLOR_COORDINATE_ID"
+												"name": "GEOMETRY"
 											}
 										},
 										{
