@@ -167,9 +167,14 @@
 						{
 							"name": "Script1",
 							"type": "Script",
-							"state": "Inactive",
-							"onInactiveMarkAs": "Succeeded",
-							"dependsOn": [],
+							"dependsOn": [
+								{
+									"activity": "AZURLColor",
+									"dependencyConditions": [
+										"Completed"
+									]
+								}
+							],
 							"policy": {
 								"timeout": "0.12:00:00",
 								"retry": 0,
@@ -192,9 +197,16 @@
 							}
 						},
 						{
-							"name": "Web1",
+							"name": "AZURLColor",
 							"type": "WebActivity",
-							"dependsOn": [],
+							"dependsOn": [
+								{
+									"activity": "LookUpPanelID",
+									"dependencyConditions": [
+										"Completed"
+									]
+								}
+							],
 							"policy": {
 								"timeout": "0.12:00:00",
 								"retry": 0,
@@ -203,6 +215,22 @@
 								"secureInput": false
 							},
 							"userProperties": [],
+							"typeProperties": {
+								"method": "POST",
+								"linkedServices": [
+									{
+										"referenceName": "RestServiceLS",
+										"type": "LinkedServiceReference"
+									}
+								],
+								"datasets": [
+									{
+										"referenceName": "RestAPIData",
+										"type": "DatasetReference"
+									}
+								],
+								"body": "variables('LOOKUP_PANELID'){\n    \"name\": @{item().Color_Chip_Name}',\n     \"job\": variables('LOOKUP_PANELID')\n}"
+							},
 							"linkedServiceName": {
 								"referenceName": "WebLS123",
 								"type": "LinkedServiceReference"
