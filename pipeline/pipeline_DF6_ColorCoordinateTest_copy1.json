@@ -238,7 +238,7 @@
 						"mappings": [
 							{
 								"source": {
-									"path": "$['data']['id']"
+									"path": "$['id']"
 								},
 								"sink": {
 									"name": "ID",
