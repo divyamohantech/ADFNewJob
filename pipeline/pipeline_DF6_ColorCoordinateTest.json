@@ -65,7 +65,7 @@
 												"path": "$['data']['id']"
 											},
 											"sink": {
-												"name": "GEOMETRY"
+												"name": "L"
 											}
 										}
 									],
