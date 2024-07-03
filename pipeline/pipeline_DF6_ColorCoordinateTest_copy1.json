@@ -1,0 +1,290 @@
+{
+	"name": "pipeline_DF6_ColorCoordinateTest_copy1",
+	"properties": {
+		"activities": [
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [
+					{
+						"activity": "SRGetNewInCSV_NEW",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('SRGetNewInCSV_NEW').output.value\n\n",
+						"type": "Expression"
+					},
+					"isSequential": true,
+					"activities": [
+						{
+							"name": "SKTableColorCor_COLORAPI",
+							"type": "Copy",
+							"dependsOn": [
+								{
+									"activity": "LookUpPanelID",
+									"dependencyConditions": [
+										"Completed"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "RestSource",
+									"httpRequestTimeout": "00:01:40",
+									"requestInterval": "00.00:00:00.010",
+									"requestMethod": "POST",
+									"requestBody": "{\n    \"name\": @{item().Color_Chip_Name}',\n     \"job\":    @activity('LookUpPanel').output.value[0].PANEL_ID\n}"
+								},
+								"sink": {
+									"type": "AzureSqlSink",
+									"writeBehavior": "insert",
+									"sqlWriterUseTableLock": false
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"mappings": [
+										{
+											"source": {
+												"path": "$['data'][0]['id']"
+											},
+											"sink": {
+												"name": "ID",
+												"type": "Int32"
+											}
+										},
+										{
+											"source": {
+												"path": "$['data'][0]['email']"
+											},
+											"sink": {
+												"name": "email",
+												"type": "String"
+											}
+										},
+										{
+											"source": {
+												"path": "$['data'][0]['first_name']"
+											},
+											"sink": {
+												"name": "first_name",
+												"type": "String"
+											}
+										},
+										{
+											"source": {
+												"path": "$['data'][0]['last_name']"
+											},
+											"sink": {
+												"name": "last_name",
+												"type": "String"
+											}
+										},
+										{
+											"source": {
+												"path": "$['data'][0]['avatar']"
+											},
+											"sink": {
+												"name": "avatar",
+												"type": "String"
+											}
+										}
+									]
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "RestAPIData",
+									"type": "DatasetReference"
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "SQLDynamicDS",
+									"type": "DatasetReference",
+									"parameters": {
+										"TableName": "API_Response"
+									}
+								}
+							]
+						},
+						{
+							"name": "LookUpPanel",
+							"type": "Lookup",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "AzureSqlSource",
+									"sqlReaderQuery": "SELECT PANEL_ID FROM PANEL Where Name = '@{item().Color_Chip_Name}'",
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
+								},
+								"dataset": {
+									"referenceName": "SQLDynamicDS",
+									"type": "DatasetReference",
+									"parameters": {
+										"TableName": "PANEL"
+									}
+								},
+								"firstRowOnly": false
+							}
+						},
+						{
+							"name": "LookUpPanelID",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "LookUpPanel",
+									"dependencyConditions": [
+										"Completed"
+									]
+								}
+							],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "LOOKUP_PANELID",
+								"value": "@activity('LookUpPanel').output.value[0].PANEL_ID"
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "SRGetNewInCSV_NEW",
+				"type": "Lookup",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "Select * from [dbo].[InCSV_NEW]",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "SQLDynamicDS",
+						"type": "DatasetReference",
+						"parameters": {
+							"TableName": "InCSV_NEW"
+						}
+					},
+					"firstRowOnly": true
+				}
+			},
+			{
+				"name": "SKTableColorCor_COLORAPI_copy1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "RestSource",
+						"httpRequestTimeout": "00:01:40",
+						"requestInterval": "00.00:00:00.010",
+						"requestMethod": "POST",
+						"requestBody": "{\n    \"name\": \n\"{item().Color_Chip_Name}\",\n\n     \"job\": \"activity('LookUpPanel').output.value[0].PANEL_ID\"\n}"
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"path": "$['data'][0]['id']"
+								},
+								"sink": {
+									"name": "ID",
+									"type": "Int32"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "RestAPIData",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "SQLDynamicDS",
+						"type": "DatasetReference",
+						"parameters": {
+							"TableName": "API_Response"
+						}
+					}
+				]
+			}
+		],
+		"variables": {
+			"First_name": {
+				"type": "String"
+			},
+			"TableData": {
+				"type": "Array"
+			},
+			"APIDATA": {
+				"type": "String"
+			},
+			"MAX_COLOR_TOOL_ID": {
+				"type": "Integer"
+			},
+			"SET_MAX_COLOR_COORDINATE_ID": {
+				"type": "Integer"
+			},
+			"LOOKUP_PANELID": {
+				"type": "Integer"
+			}
+		},
+		"annotations": []
+	}
+}
