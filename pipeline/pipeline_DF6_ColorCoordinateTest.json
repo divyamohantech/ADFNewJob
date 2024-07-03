@@ -90,14 +90,6 @@
 										},
 										{
 											"source": {
-												"path": "@{variables('LOOKUP_PANELID')}"
-											},
-											"sink": {
-												"name": "GEOMETRY"
-											}
-										},
-										{
-											"source": {
 												"path": "@activity('LookUpPanel').output.value[0].PANEL_ID"
 											},
 											"sink": {
