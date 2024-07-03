@@ -62,10 +62,20 @@
 									"mappings": [
 										{
 											"source": {
-												"path": "$['@{item().Geometry}']"
+												"path": "$['id']"
 											},
 											"sink": {
-												"name": "GEOMETRY"
+												"name": "L",
+												"type": "String"
+											}
+										},
+										{
+											"source": {
+												"path": "$['createdAt']"
+											},
+											"sink": {
+												"name": "A",
+												"type": "String"
 											}
 										}
 									],
