@@ -219,7 +219,7 @@
 		],
 		"variables": {
 			"ID": {
-				"type": "Integer"
+				"type": "String"
 			}
 		},
 		"annotations": []
