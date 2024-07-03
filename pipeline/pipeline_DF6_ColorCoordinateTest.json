@@ -81,15 +81,6 @@
 										},
 										{
 											"source": {
-												"path": "@{variables('LOOKUP_PANELID')}"
-											},
-											"sink": {
-												"name": "PANEL_ID",
-												"type": "Int32"
-											}
-										},
-										{
-											"source": {
 												"path": "@activity('LookUpPanel').output.value[0].PANEL_ID"
 											},
 											"sink": {
