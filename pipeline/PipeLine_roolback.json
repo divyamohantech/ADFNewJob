@@ -188,7 +188,8 @@
 				"typeProperties": {
 					"scripts": [
 						{
-							"type": "Query"
+							"type": "Query",
+							"text": "Insert into API_Response (ID, first_name) values (@variables('ID'),'z')"
 						}
 					],
 					"scriptBlockExecutionTimeout": "02:00:00"
