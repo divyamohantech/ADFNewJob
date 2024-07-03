@@ -169,6 +169,7 @@
 			},
 			{
 				"name": "SRGetNewInCSV_NEW",
+				"description": "v1",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
