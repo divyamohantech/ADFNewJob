@@ -244,17 +244,9 @@
 									"name": "ID",
 									"type": "Int32"
 								}
-							},
-							{
-								"source": {
-									"path": "$['$[\\'id\\']']"
-								},
-								"sink": {
-									"name": "email",
-									"type": "String"
-								}
 							}
-						]
+						],
+						"mapComplexValuesToString": false
 					}
 				},
 				"inputs": [
