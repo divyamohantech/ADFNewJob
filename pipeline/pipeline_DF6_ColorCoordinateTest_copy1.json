@@ -24,6 +24,8 @@
 						{
 							"name": "SKTableColorCor_COLORAPI",
 							"type": "Copy",
+							"state": "Inactive",
+							"onInactiveMarkAs": "Succeeded",
 							"dependsOn": [
 								{
 									"activity": "LookUpPanelID",
