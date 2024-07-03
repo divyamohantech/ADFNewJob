@@ -81,7 +81,7 @@
 										},
 										{
 											"source": {
-												"path": "@activity('LookUpPanel').output.value[0].PANEL_ID"
+												"path": "0"
 											},
 											"sink": {
 												"name": "PANEL_ID",
