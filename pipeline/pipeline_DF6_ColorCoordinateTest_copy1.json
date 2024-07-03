@@ -244,6 +244,15 @@
 									"name": "ID",
 									"type": "Int32"
 								}
+							},
+							{
+								"source": {
+									"path": "$['$[\\'id\\']']"
+								},
+								"sink": {
+									"name": "first_name",
+									"type": "String"
+								}
 							}
 						],
 						"mapComplexValuesToString": false
