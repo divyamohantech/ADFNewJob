@@ -81,7 +81,7 @@
 										},
 										{
 											"source": {
-												"path": "@activity('LookUpPanel').output.value[0].PANEL_ID"
+												"path": "@json (activity('LookUpPanel').output.value[0].PANEL_ID)"
 											},
 											"sink": {
 												"name": "SPARKLE"
