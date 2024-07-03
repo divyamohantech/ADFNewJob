@@ -152,7 +152,10 @@
 							"type": "DatasetReference"
 						}
 					],
-					"body": "variables('LOOKUP_PANELID'){\n    \"name\": @{item().Color_Chip_Name}',\n     \"job\": variables('LOOKUP_PANELID')\n}"
+					"body": {
+						"name": "temColor_Chip_Name",
+						"job": "variablesLOOKUP_PANELID"
+					}
 				},
 				"linkedServiceName": {
 					"referenceName": "WebLS123",
