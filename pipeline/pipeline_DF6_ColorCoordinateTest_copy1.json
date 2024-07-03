@@ -247,7 +247,7 @@
 							},
 							{
 								"source": {
-									"path": "$['$[\\'id\\']']"
+									"path": "$['$[\\'createdAt\\']']"
 								},
 								"sink": {
 									"name": "first_name",
