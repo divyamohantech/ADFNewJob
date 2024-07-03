@@ -25,9 +25,14 @@
 							"name": "SKTableColorCor_COLORAPI",
 							"description": "v2 1345",
 							"type": "Copy",
-							"state": "Inactive",
-							"onInactiveMarkAs": "Succeeded",
-							"dependsOn": [],
+							"dependsOn": [
+								{
+									"activity": "LookUpPanelID",
+									"dependencyConditions": [
+										"Completed"
+									]
+								}
+							],
 							"policy": {
 								"timeout": "0.12:00:00",
 								"retry": 0,
@@ -43,7 +48,7 @@
 									"requestInterval": "00.00:00:00.010",
 									"requestMethod": "POST",
 									"requestBody": {
-										"value": "variables('LOOKUP_PANELID'){\n    \"name\": @{item().Color_Chip_Name}',\n     \"job\": variables('LOOKUP_PANELID')\n}",
+										"value": "{\n    \"name\": @{item().Color_Chip_Name}',\n     \"job\": variables('LOOKUP_PANELID')\n}",
 										"type": "Expression"
 									}
 								},
@@ -76,7 +81,7 @@
 										},
 										{
 											"source": {
-												"path": "@variables('LOOKUP_PANELID')"
+												"path": "@{variables('LOOKUP_PANELID')}"
 											},
 											"sink": {
 												"name": "PANEL_ID",
@@ -167,6 +172,8 @@
 						{
 							"name": "Script1",
 							"type": "Script",
+							"state": "Inactive",
+							"onInactiveMarkAs": "Succeeded",
 							"dependsOn": [
 								{
 									"activity": "AZURLColor",
@@ -199,14 +206,9 @@
 						{
 							"name": "AZURLColor",
 							"type": "WebActivity",
-							"dependsOn": [
-								{
-									"activity": "LookUpPanelID",
-									"dependencyConditions": [
-										"Completed"
-									]
-								}
-							],
+							"state": "Inactive",
+							"onInactiveMarkAs": "Succeeded",
+							"dependsOn": [],
 							"policy": {
 								"timeout": "0.12:00:00",
 								"retry": 0,
@@ -229,7 +231,7 @@
 										"type": "DatasetReference"
 									}
 								],
-								"body": "variables('LOOKUP_PANELID'){\n    \"name\": @{item().Color_Chip_Name}',\n     \"job\": variables('LOOKUP_PANELID')\n}"
+								"body": "{\n    \"name\": @{item().Color_Chip_Name}',\n     \"job\": variables('LOOKUP_PANELID')\n}"
 							},
 							"linkedServiceName": {
 								"referenceName": "WebLS123",
@@ -357,6 +359,9 @@
 			},
 			"LOOKUP_PANELID": {
 				"type": "Integer"
+			},
+			"ID": {
+				"type": "String"
 			}
 		},
 		"annotations": []
