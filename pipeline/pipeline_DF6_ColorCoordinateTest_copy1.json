@@ -47,7 +47,7 @@
 									"requestInterval": "00.00:00:00.010",
 									"requestMethod": "POST",
 									"requestBody": {
-										"value": "{\n    \"name\": @{item().Color_Chip_Name}',\n     \"job\":    @activity('LookUpPanel').output.value[0].PANEL_ID\n}",
+										"value": "{\n    \"name\": @{item().Color_Chip_Name}',\n     \"job\": @variables('LOOKUP_PANELID')\n}",
 										"type": "Expression"
 									}
 								},
