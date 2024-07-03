@@ -213,7 +213,10 @@
 				"userProperties": [],
 				"typeProperties": {
 					"variableName": "ID",
-					"value": "$['id']"
+					"value": {
+						"value": "@activity('AZURLColor').output['id']",
+						"type": "Expression"
+					}
 				}
 			}
 		],
