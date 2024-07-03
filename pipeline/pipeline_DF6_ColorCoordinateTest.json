@@ -87,6 +87,14 @@
 												"name": "PANEL_ID",
 												"type": "Int32"
 											}
+										},
+										{
+											"source": {
+												"path": "@{variables('LOOKUP_PANELID')}"
+											},
+											"sink": {
+												"name": "GEOMETRY"
+											}
 										}
 									],
 									"mapComplexValuesToString": true
