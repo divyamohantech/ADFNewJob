@@ -213,7 +213,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"variableName": "ID",
-					"value": "$['data']['id']"
+					"value": "$['id']"
 				}
 			}
 		],
