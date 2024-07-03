@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('SRGetNewInCSV_NEW').output",
+						"value": "@activity('SRGetNewInCSV_NEW').output.value",
 						"type": "Expression"
 					},
 					"isSequential": true,
