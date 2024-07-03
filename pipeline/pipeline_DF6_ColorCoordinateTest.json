@@ -23,7 +23,7 @@
 					"activities": [
 						{
 							"name": "SKTableColorCor_COLORAPI",
-							"description": "v2",
+							"description": "v2 1",
 							"type": "Copy",
 							"dependsOn": [
 								{
@@ -63,6 +63,15 @@
 									"mappings": [
 										{
 											"source": {
+												"path": "10"
+											},
+											"sink": {
+												"name": "PANEL_ID",
+												"type": "Int32"
+											}
+										},
+										{
+											"source": {
 												"path": "$['id']"
 											},
 											"sink": {
@@ -78,18 +87,9 @@
 												"name": "A",
 												"type": "String"
 											}
-										},
-										{
-											"source": {
-												"path": "10"
-											},
-											"sink": {
-												"name": "PANEL_ID",
-												"type": "Int32"
-											}
 										}
 									],
-									"mapComplexValuesToString": true
+									"mapComplexValuesToString": false
 								}
 							},
 							"inputs": [
