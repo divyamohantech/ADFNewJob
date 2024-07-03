@@ -244,42 +244,6 @@
 									"name": "ID",
 									"type": "Int32"
 								}
-							},
-							{
-								"source": {
-									"path": "$['data'][0]['email']"
-								},
-								"sink": {
-									"name": "email",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"path": "$['data'][0]['first_name']"
-								},
-								"sink": {
-									"name": "first_name",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"path": "$['data'][0]['last_name']"
-								},
-								"sink": {
-									"name": "last_name",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"path": "$['data'][0]['avatar']"
-								},
-								"sink": {
-									"name": "avatar",
-									"type": "String"
-								}
 							}
 						]
 					}
