@@ -202,7 +202,11 @@
 								"secureOutput": false,
 								"secureInput": false
 							},
-							"userProperties": []
+							"userProperties": [],
+							"linkedServiceName": {
+								"referenceName": "WebLS123",
+								"type": "LinkedServiceReference"
+							}
 						}
 					]
 				}
