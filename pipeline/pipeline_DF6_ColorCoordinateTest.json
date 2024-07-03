@@ -23,7 +23,7 @@
 					"activities": [
 						{
 							"name": "SKTableColorCor_COLORAPI",
-							"description": "v2 1",
+							"description": "v2 13",
 							"type": "Copy",
 							"dependsOn": [
 								{
