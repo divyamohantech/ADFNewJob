@@ -83,7 +83,7 @@
 												"path": "$['id']"
 											},
 											"sink": {
-												"name": "L",
+												"name": "A",
 												"type": "String"
 											}
 										},
@@ -92,7 +92,7 @@
 												"path": "$['createdAt']"
 											},
 											"sink": {
-												"name": "A",
+												"name": "L",
 												"type": "String"
 											}
 										},
@@ -103,6 +103,24 @@
 											"sink": {
 												"name": "PANEL_ID",
 												"type": "Int32"
+											}
+										},
+										{
+											"source": {
+												"path": "$['Geometry']"
+											},
+											"sink": {
+												"name": "GEOMETRY",
+												"type": "String"
+											}
+										},
+										{
+											"source": {
+												"path": "$['Scheme']"
+											},
+											"sink": {
+												"name": "MEASUREMENT_SCHEME",
+												"type": "String"
 											}
 										}
 									],
