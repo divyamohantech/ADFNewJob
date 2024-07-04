@@ -71,11 +71,10 @@
 							},
 							{
 								"source": {
-									"path": "take($['data'][0]['first_name'],2)"
+									"path": "$['data'][0]['first_name']"
 								},
 								"sink": {
-									"name": "first_name",
-									"type": "String"
+									"name": "take($['data'][0]['first_name'],2)"
 								}
 							},
 							{
