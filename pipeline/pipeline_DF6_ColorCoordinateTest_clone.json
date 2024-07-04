@@ -95,10 +95,11 @@
 										},
 										{
 											"source": {
-												"path": "$['createdAt']"
+												"path": "$['@substring(createdAt, 0, 4)']"
 											},
 											"sink": {
-												"name": "@substring(item().L, 0, 4)"
+												"name": "L",
+												"type": "String"
 											}
 										},
 										{
