@@ -54,11 +54,11 @@
 										},
 										{
 											"name": "Geometry",
-											"value": "$$COLUMN:@item().Geometry"
+											"value": "@item().Geometry"
 										},
 										{
 											"name": "Scheme",
-											"value": "$$COLUMN:@item().Scheme"
+											"value": "@item().Scheme"
 										}
 									],
 									"httpRequestTimeout": "00:01:40",
