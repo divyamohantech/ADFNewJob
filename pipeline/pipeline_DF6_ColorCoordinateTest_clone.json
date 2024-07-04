@@ -95,7 +95,7 @@
 										},
 										{
 											"source": {
-												"path": "$['@dayOfMonth(createdAt)']"
+												"path": "$['createdAt']"
 											},
 											"sink": {
 												"name": "L",
