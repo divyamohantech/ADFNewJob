@@ -98,8 +98,7 @@
 												"path": "$['createdAt']"
 											},
 											"sink": {
-												"name": "L",
-												"type": "String"
+												"name": "@substring(item().L, 0, 4)"
 											}
 										},
 										{
