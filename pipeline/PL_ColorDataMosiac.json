@@ -1030,6 +1030,29 @@
 						}
 					}
 				]
+			},
+			{
+				"name": "pipeline_DF6_ColorCoordinateTest",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Log data to Measurement CSV",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pipeline_DF6_ColorCoordinateTest",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
 			}
 		],
 		"variables": {
