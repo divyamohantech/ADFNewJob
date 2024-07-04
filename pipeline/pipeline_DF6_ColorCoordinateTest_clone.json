@@ -5,6 +5,8 @@
 			{
 				"name": "ForEach1",
 				"type": "ForEach",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "SRGetNewInCSV_NEW",
@@ -289,6 +291,8 @@
 				"name": "SRGetNewInCSV_NEW",
 				"description": "v1",
 				"type": "Lookup",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -318,8 +322,6 @@
 			{
 				"name": "SKTableColorCor_COLORAPI_copy1",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -348,7 +350,7 @@
 						"mappings": [
 							{
 								"source": {
-									"path": "$['$[\\'id\\']']"
+									"path": "$['$[\\\\'id\\\\']']"
 								},
 								"sink": {
 									"name": "ID",
@@ -357,7 +359,7 @@
 							},
 							{
 								"source": {
-									"path": "$['$[\\'createdAt\\']']"
+									"path": "$['@substring(item().first_name, 0, 4)']"
 								},
 								"sink": {
 									"name": "first_name",
