@@ -47,7 +47,10 @@
 									"additionalColumns": [
 										{
 											"name": "PANEL_ID",
-											"value": "@{variables('LOOKUP_PANELID')}"
+											"value": {
+												"value": "@{variables('LOOKUP_PANELID')}",
+												"type": "Expression"
+											}
 										}
 									],
 									"httpRequestTimeout": "00:01:40",
@@ -83,6 +86,15 @@
 											"sink": {
 												"name": "A",
 												"type": "String"
+											}
+										},
+										{
+											"source": {
+												"path": "$['PANEL_ID']"
+											},
+											"sink": {
+												"name": "PANEL_ID",
+												"type": "Int32"
 											}
 										}
 									],
@@ -228,7 +240,10 @@
 										"type": "DatasetReference"
 									}
 								],
-								"body": "{\n    \"name\": @{item().Color_Chip_Name}',\n     \"job\": variables('LOOKUP_PANELID')\n}"
+								"body": {
+									"value": "{\n    \"name\": @{item().Color_Chip_Name}',\n     \"job\": variables('LOOKUP_PANELID')\n}",
+									"type": "Expression"
+								}
 							},
 							"linkedServiceName": {
 								"referenceName": "WebLS123",
