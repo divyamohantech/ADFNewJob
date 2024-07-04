@@ -71,7 +71,7 @@
 							},
 							{
 								"source": {
-									"path": "$['data'][0]['first_name']"
+									"path": "$['data'][0]['first_name'][:2]"
 								},
 								"sink": {
 									"name": "first_name",
