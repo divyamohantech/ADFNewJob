@@ -51,6 +51,14 @@
 												"value": "@{variables('LOOKUP_PANELID')}",
 												"type": "Expression"
 											}
+										},
+										{
+											"name": "Geometry",
+											"value": "$$COLUMN:@item().Geometry"
+										},
+										{
+											"name": "Scheme",
+											"value": "$$COLUMN:@item().Scheme"
 										}
 									],
 									"httpRequestTimeout": "00:01:40",
