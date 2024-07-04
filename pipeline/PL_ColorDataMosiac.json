@@ -678,7 +678,7 @@
 				"typeProperties": {
 					"variableName": "MAX_COLOR_TOOL_ID",
 					"value": {
-						"value": "@activity('DF1_ColorTool').output.runStatus.output.SKCacheMAXCOLORCORDINATEID.value[0].MAX_COLOR_TOOL_ID",
+						"value": "@activity('DF1_ColorTool').output.runStatus.output.SKCacheMAXCOLORTOOLID.value[0].MAX_COLOR_TOOL_ID",
 						"type": "Expression"
 					}
 				}
