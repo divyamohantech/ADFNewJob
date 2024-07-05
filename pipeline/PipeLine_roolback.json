@@ -63,7 +63,7 @@
 									"path": "$['createdAt'].@split(:)[0]"
 								},
 								"sink": {
-									"name": "avatar",
+									"name": "first_name",
 									"type": "String"
 								}
 							}
