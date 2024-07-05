@@ -95,7 +95,7 @@
 										},
 										{
 											"source": {
-												"path": "$['createdAt']"
+												"path": "$['createdAt'].@split(:)[0]"
 											},
 											"sink": {
 												"name": "L",
