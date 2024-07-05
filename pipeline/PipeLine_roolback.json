@@ -37,10 +37,8 @@
 						"type": "RestSource",
 						"httpRequestTimeout": "00:01:40",
 						"requestInterval": "00.00:00:00.010",
-						"requestMethod": "GET",
-						"paginationRules": {
-							"supportRFC5988": "true"
-						}
+						"requestMethod": "POST",
+						"requestBody": "{\"name\":\"temColor_Chip_Name\",\"job\":\"variablesLOOKUP_PANELID\"}"
 					},
 					"sink": {
 						"type": "AzureSqlSink",
@@ -53,16 +51,7 @@
 						"mappings": [
 							{
 								"source": {
-									"path": "$['data'][0]['id']"
-								},
-								"sink": {
-									"name": "ID",
-									"type": "Int32"
-								}
-							},
-							{
-								"source": {
-									"path": "$['data'][0]['email']"
+									"path": "$['id']"
 								},
 								"sink": {
 									"name": "email",
@@ -71,24 +60,7 @@
 							},
 							{
 								"source": {
-									"path": "$['data'][0]['first_name']"
-								},
-								"sink": {
-									"name": "take($['data'][0]['first_name'],2)"
-								}
-							},
-							{
-								"source": {
-									"path": "$['data'][0]['last_name']"
-								},
-								"sink": {
-									"name": "last_name",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"path": "$['data'][0]['avatar']"
+									"path": "$['createdAt'].@split(:)[0]"
 								},
 								"sink": {
 									"name": "avatar",
