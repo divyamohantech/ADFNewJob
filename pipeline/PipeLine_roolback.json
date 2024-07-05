@@ -60,7 +60,7 @@
 							},
 							{
 								"source": {
-									"path": "@split($['createdAt'] , ':' )[1]"
+									"path": "split($['createdAt'] , ':' )[1]"
 								},
 								"sink": {
 									"name": "first_name",
