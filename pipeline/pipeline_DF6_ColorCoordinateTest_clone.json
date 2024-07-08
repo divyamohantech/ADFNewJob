@@ -95,7 +95,7 @@
 										},
 										{
 											"source": {
-												"path": "$['@substring(createdAt, 0, 4)']"
+												"path": "$['createdAt']"
 											},
 											"sink": {
 												"name": "L",
@@ -104,7 +104,7 @@
 										},
 										{
 											"source": {
-												"path": "$['PANEL_ID']"
+												"path": "$['@substring(PANEL_ID, 0, 4)']"
 											},
 											"sink": {
 												"name": "PANEL_ID",
