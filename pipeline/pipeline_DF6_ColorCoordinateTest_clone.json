@@ -370,7 +370,8 @@
 									"path": "$['data'][0]['first_name']"
 								},
 								"sink": {
-									"name": "@substring($['data'][0]['first_name'], 0, 3)"
+									"name": "first_name",
+									"type": "String"
 								}
 							},
 							{
