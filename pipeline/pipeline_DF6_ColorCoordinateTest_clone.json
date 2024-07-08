@@ -104,7 +104,7 @@
 										},
 										{
 											"source": {
-												"path": "$['@substring(PANEL_ID, 0, 4)']"
+												"path": "$['PANEL_ID']"
 											},
 											"sink": {
 												"name": "PANEL_ID",
@@ -113,7 +113,7 @@
 										},
 										{
 											"source": {
-												"path": "$['Geometry']"
+												"path": "$['@substring(item().Geometry, 0, 2)']"
 											},
 											"sink": {
 												"name": "GEOMETRY",
