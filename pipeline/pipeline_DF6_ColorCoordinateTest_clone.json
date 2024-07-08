@@ -5,6 +5,8 @@
 			{
 				"name": "ForEach1",
 				"type": "ForEach",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "SRGetNewInCSV_NEW",
@@ -289,6 +291,8 @@
 				"name": "SRGetNewInCSV_NEW",
 				"description": "v1",
 				"type": "Lookup",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -318,8 +322,6 @@
 			{
 				"name": "SKTableColorCor_COLORAPI_copy1",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -334,8 +336,7 @@
 						"type": "RestSource",
 						"httpRequestTimeout": "00:01:40",
 						"requestInterval": "00.00:00:00.010",
-						"requestMethod": "POST",
-						"requestBody": "{\n    \"name\": \n\"{item().Color_Chip_Name}\",\n\n     \"job\": \"activity('LookUpPanel').output.value[0].PANEL_ID\"\n}"
+						"requestMethod": "GET"
 					},
 					"sink": {
 						"type": "AzureSqlSink",
@@ -348,7 +349,7 @@
 						"mappings": [
 							{
 								"source": {
-									"path": "$['$[\\\\'id\\\\']']"
+									"path": "$['data'][0]['id']"
 								},
 								"sink": {
 									"name": "ID",
@@ -357,10 +358,37 @@
 							},
 							{
 								"source": {
-									"path": "$['$[\\\\'first_name\\\\']']"
+									"path": "$['data'][0]['email']"
+								},
+								"sink": {
+									"name": "email",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['data'][0]['first_name']"
 								},
 								"sink": {
 									"name": "first_name",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['data'][0]['last_name']"
+								},
+								"sink": {
+									"name": "last_name",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['data'][0]['avatar']"
+								},
+								"sink": {
+									"name": "avatar",
 									"type": "String"
 								}
 							}
