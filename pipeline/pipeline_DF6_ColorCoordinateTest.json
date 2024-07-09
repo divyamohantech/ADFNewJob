@@ -55,7 +55,7 @@
 										{
 											"name": "Geometry",
 											"value": {
-												"value": "@item().Geometry",
+												"value": "2",
 												"type": "Expression"
 											}
 										},
