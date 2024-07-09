@@ -22,7 +22,7 @@
 					"isSequential": true,
 					"activities": [
 						{
-							"name": "SKTableColorCor_COLORAPi",
+							"name": "SKTableColorCor_COLORAPI",
 							"description": "v2 134567",
 							"type": "Copy",
 							"dependsOn": [
