@@ -16,6 +16,8 @@
 			{
 				"name": "Copy data1",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Wait1",
@@ -35,6 +37,11 @@
 				"typeProperties": {
 					"source": {
 						"type": "RestSource",
+						"additionalColumns": [
+							{
+								"value": "$$COLUMN:"
+							}
+						],
 						"httpRequestTimeout": "00:01:40",
 						"requestInterval": "00.00:00:00.010",
 						"requestMethod": "POST",
@@ -60,15 +67,14 @@
 							},
 							{
 								"source": {
-									"path": "[2]"
+									"path": ""
 								},
 								"sink": {
 									"name": "first_name",
 									"type": "String"
 								}
 							}
-						],
-						"mapComplexValuesToString": true
+						]
 					}
 				},
 				"inputs": [
@@ -108,8 +114,6 @@
 			{
 				"name": "AZURLColor",
 				"type": "WebActivity",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -146,8 +150,6 @@
 			{
 				"name": "Script1",
 				"type": "Script",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "RestID",
@@ -184,8 +186,6 @@
 			{
 				"name": "RestID",
 				"type": "SetVariable",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "AZURLColor",
