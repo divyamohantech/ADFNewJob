@@ -113,6 +113,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
+						"sqlReaderQuery": "SELECT PANEL_ID FROM PANEL Where Name = '@{item().Color_Chip_Name}'",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
