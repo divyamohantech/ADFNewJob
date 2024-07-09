@@ -121,7 +121,7 @@
 								"scripts": [
 									{
 										"type": "Query",
-										"text": "Insert into COLOR_COORDINATE (A,PANEL_ID,GEOMETRY,MEASUREMENT_SCHEME)  values ( @{variables('ID')} ,@{variables('LOOKUP_PANELID')} ,'@{item().Geometry}' ,'@item().Scheme')"
+										"text": "Insert into COLOR_COORDINATE (A,PANEL_ID,GEOMETRY,MEASUREMENT_SCHEME)  values ( @{variables('ID')} ,@{variables('LOOKUP_PANELID')} ,'@substring(@{item().Geometry}, 0, 2)' ,'@substring(@item().Scheme, 0, 2)')"
 									}
 								],
 								"scriptBlockExecutionTimeout": "02:00:00"
