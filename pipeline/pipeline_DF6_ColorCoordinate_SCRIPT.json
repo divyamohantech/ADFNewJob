@@ -148,7 +148,7 @@
 									}
 								],
 								"body": {
-									"value": "{\n    \"name\": @{item().Color_Chip_Name}',\n     \"job\": variables('LOOKUP_PANELID')\n}",
+									"value": "{\n    \"name\": @{item().Color_Chip_Name}',\n     \"job\": variables('LookUpPanel')\n}",
 									"type": "Expression"
 								}
 							},
