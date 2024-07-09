@@ -367,7 +367,7 @@
 							},
 							{
 								"source": {
-									"path": "@substring($['data'][0]['first_name'], 0, 3)"
+									"path": "$['data'][0]['first_name']"
 								},
 								"sink": {
 									"name": "first_name",
