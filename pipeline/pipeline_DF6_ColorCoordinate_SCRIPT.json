@@ -87,12 +87,6 @@
 							"type": "Script",
 							"dependsOn": [
 								{
-									"activity": "AZURLColor",
-									"dependencyConditions": [
-										"Completed"
-									]
-								},
-								{
 									"activity": "LookUpPanelID",
 									"dependencyConditions": [
 										"Completed"
@@ -155,6 +149,20 @@
 							"linkedServiceName": {
 								"referenceName": "WebLS123",
 								"type": "LinkedServiceReference"
+							}
+						},
+						{
+							"name": "RestID",
+							"type": "SetVariable",
+							"dependsOn": [],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "ID",
+								"value": "@activity('AZURLColor').output['id']"
 							}
 						}
 					]
