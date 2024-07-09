@@ -127,7 +127,10 @@
 								"scripts": [
 									{
 										"type": "Query",
-										"text": "Insert into COLOR_COORDINATE (A,PANEL_ID,GEOMETRY,MEASUREMENT_SCHEME)  values ( @{variables('ID')} ,@{variables('LOOKUP_PANELID')} ,'@{item().Geometry}' ,'@{item().Scheme}')"
+										"text": {
+											"value": "Insert into COLOR_COORDINATE (A,PANEL_ID,GEOMETRY,MEASUREMENT_SCHEME)  values ( @{variables('ID')} ,@{variables('LOOKUP_PANELID')} ,'@{item().Geometry}' ,'@{item().Scheme}')",
+											"type": "Expression"
+										}
 									}
 								],
 								"scriptBlockExecutionTimeout": "02:00:00"
@@ -187,7 +190,10 @@
 							"userProperties": [],
 							"typeProperties": {
 								"variableName": "ID",
-								"value": "@activity('AZURLColor').output['id']"
+								"value": {
+									"value": "@activity('AZURLColor').output['id']",
+									"type": "Expression"
+								}
 							}
 						},
 						{
@@ -205,7 +211,10 @@
 							"typeProperties": {
 								"source": {
 									"type": "AzureSqlSource",
-									"sqlReaderQuery": "SELECT Geometry FROM InCSV_NEW Where Color_Chip_Name = '@{item().Color_Chip_Name}'",
+									"sqlReaderQuery": {
+										"value": "SELECT Geometry FROM InCSV_NEW Where Color_Chip_Name = '@{item().Color_Chip_Name}'",
+										"type": "Expression"
+									},
 									"queryTimeout": "02:00:00",
 									"partitionOption": "None"
 								},
@@ -260,7 +269,10 @@
 							"userProperties": [],
 							"typeProperties": {
 								"variableName": "Scheme",
-								"value": "@activity('LookupInCSV').output.value[0].Scheme"
+								"value": {
+									"value": "@activity('LookupInCSV2').output.value[0].Scheme",
+									"type": "Expression"
+								}
 							}
 						},
 						{
@@ -278,7 +290,10 @@
 							"typeProperties": {
 								"source": {
 									"type": "AzureSqlSource",
-									"sqlReaderQuery": "SELECT Scheme FROM InCSV_NEW Where Color_Chip_Name = '@{item().Color_Chip_Name}'",
+									"sqlReaderQuery": {
+										"value": "SELECT Scheme FROM InCSV_NEW Where Color_Chip_Name = '@{item().Color_Chip_Name}'",
+										"type": "Expression"
+									},
 									"queryTimeout": "02:00:00",
 									"partitionOption": "None"
 								},
