@@ -95,7 +95,7 @@
 										},
 										{
 											"source": {
-												"path": "createdAt"
+												"path": "$['createdAt']"
 											},
 											"sink": {
 												"name": "L",
