@@ -5,8 +5,6 @@
 			{
 				"name": "ForEach1",
 				"type": "ForEach",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "SRGetNewInCSV_NEW",
@@ -87,8 +85,6 @@
 						{
 							"name": "Script1",
 							"type": "Script",
-							"state": "Inactive",
-							"onInactiveMarkAs": "Succeeded",
 							"dependsOn": [
 								{
 									"activity": "AZURLColor",
@@ -118,7 +114,8 @@
 							"typeProperties": {
 								"scripts": [
 									{
-										"type": "Query"
+										"type": "Query",
+										"text": "Insert into COLOR_COORDINATE (A,PANEL_ID,GEOMETRY,MEASUREMENT_SCHEME)  values ( @{variables('ID')} ,@{variables('LOOKUP_PANELID')} ,'@item().Geometry' ,'@item().Scheme')"
 									}
 								],
 								"scriptBlockExecutionTimeout": "02:00:00"
@@ -167,8 +164,6 @@
 				"name": "SRGetNewInCSV_NEW",
 				"description": "v1",
 				"type": "Lookup",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -198,6 +193,8 @@
 			{
 				"name": "SKTableColorCor_COLORAPI_copy1",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
