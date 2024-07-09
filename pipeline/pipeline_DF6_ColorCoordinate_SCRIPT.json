@@ -199,7 +199,7 @@
 							"typeProperties": {
 								"source": {
 									"type": "AzureSqlSource",
-									"sqlReaderQuery": "select * from [dbo].[InCSV_NEW]",
+									"sqlReaderQuery": "SELECT Geometry FROM InCSV_NEW Where Name = '@{item().Color_Chip_Name}'",
 									"queryTimeout": "02:00:00",
 									"partitionOption": "None"
 								},
