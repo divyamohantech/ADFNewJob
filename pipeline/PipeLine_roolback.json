@@ -227,7 +227,10 @@
 					},
 					"dataset": {
 						"referenceName": "SQLDynamicDS",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"TableName": "Panel"
+						}
 					}
 				}
 			}
