@@ -60,7 +60,7 @@
 							},
 							{
 								"source": {
-									"path": "['createdAt']"
+									"path": "split(['createdAt'],':')[0]"
 								},
 								"sink": {
 									"name": "first_name",
