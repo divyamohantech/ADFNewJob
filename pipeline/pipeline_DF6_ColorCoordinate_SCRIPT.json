@@ -91,6 +91,12 @@
 									"dependencyConditions": [
 										"Completed"
 									]
+								},
+								{
+									"activity": "RestID",
+									"dependencyConditions": [
+										"Completed"
+									]
 								}
 							],
 							"policy": {
@@ -154,7 +160,14 @@
 						{
 							"name": "RestID",
 							"type": "SetVariable",
-							"dependsOn": [],
+							"dependsOn": [
+								{
+									"activity": "AZURLColor",
+									"dependencyConditions": [
+										"Completed"
+									]
+								}
+							],
 							"policy": {
 								"secureOutput": false,
 								"secureInput": false
