@@ -237,14 +237,25 @@
 							}
 						},
 						{
-							"name": "Set variable1",
+							"name": "RestScheme",
 							"type": "SetVariable",
-							"dependsOn": [],
+							"dependsOn": [
+								{
+									"activity": "LookupInCSV2",
+									"dependencyConditions": [
+										"Completed"
+									]
+								}
+							],
 							"policy": {
 								"secureOutput": false,
 								"secureInput": false
 							},
-							"userProperties": []
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "Scheme",
+								"value": "@activity('LookupInCSV').output.value[0].Scheme"
+							}
 						},
 						{
 							"name": "LookupInCSV2",
@@ -426,6 +437,9 @@
 				"type": "String"
 			},
 			"Geometry": {
+				"type": "String"
+			},
+			"Scheme": {
 				"type": "String"
 			}
 		},
