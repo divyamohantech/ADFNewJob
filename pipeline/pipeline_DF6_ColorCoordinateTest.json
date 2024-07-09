@@ -113,7 +113,7 @@
 										},
 										{
 											"source": {
-												"path": "@substring(item().$['Geometry'], 0, 2)"
+												"path": "$['Geometry']"
 											},
 											"sink": {
 												"name": "GEOMETRY",
