@@ -60,13 +60,14 @@
 							},
 							{
 								"source": {
-									"path": "$['createdAt']"
+									"path": "['createdAt']"
 								},
 								"sink": {
 									"name": "first_name",
 									"type": "String"
 								}
-							}
+							},
+							null
 						],
 						"mapComplexValuesToString": true
 					}
