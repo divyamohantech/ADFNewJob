@@ -66,8 +66,7 @@
 									"name": "first_name",
 									"type": "String"
 								}
-							},
-							null
+							}
 						],
 						"mapComplexValuesToString": true
 					}
