@@ -109,6 +109,12 @@
 									"dependencyConditions": [
 										"Completed"
 									]
+								},
+								{
+									"activity": "RESTDATE",
+									"dependencyConditions": [
+										"Completed"
+									]
 								}
 							],
 							"policy": {
@@ -128,7 +134,7 @@
 									{
 										"type": "Query",
 										"text": {
-											"value": "INSERT INTO COLOR_COORDINATE (A, PANEL_ID, GEOMETRY, MEASUREMENT_SCHEME) \nVALUES (\n    @{variables('ID')}, \n    @{variables('LOOKUP_PANELID')}, \n    SUBSTRING('@{item().Geometry}', 1, 2), \n    SUBSTRING('@{item().Scheme}', 1, 2)\n)",
+											"value": "INSERT INTO COLOR_COORDINATE (A,B , PANEL_ID, GEOMETRY, MEASUREMENT_SCHEME) \nVALUES (\n    @{variables('ID')}, \n    @{variables('APIDATA')}, \n    @{variables('LOOKUP_PANELID')}, \n    SUBSTRING('@{item().Geometry}', 1, 2), \n    SUBSTRING('@{item().Scheme}', 1, 2)\n)",
 											"type": "Expression"
 										}
 									}
@@ -303,6 +309,60 @@
 									"parameters": {
 										"TableName": "InCSV_NEW"
 									}
+								}
+							}
+						},
+						{
+							"name": "WebDATE",
+							"type": "WebActivity",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"method": "POST",
+								"body": {
+									"name": "temColor_Chip_Name",
+									"job": "variablesLOOKUP_PANELID"
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "WebLS123",
+								"type": "LinkedServiceReference",
+								"parameters": {
+									"@variables('LOOKUP_PANELID')": 1,
+									"@item().Color_Chip_Name": "AA",
+									"@item().Geometry": "SS",
+									"@item().Scheme": "DD"
+								}
+							}
+						},
+						{
+							"name": "RESTDATE",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "WebDATE",
+									"dependencyConditions": [
+										"Completed"
+									]
+								}
+							],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "APIDATA",
+								"value": {
+									"value": "@activity('WebDATE').output['createdAt']\n\n",
+									"type": "Expression"
 								}
 							}
 						}
