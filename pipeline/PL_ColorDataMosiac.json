@@ -1032,7 +1032,7 @@
 				]
 			},
 			{
-				"name": "pipeline_DF6_ColorCoordinateTest",
+				"name": "pipeline_DF6_ColorCoordinate_SCRIPT",
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
@@ -1048,7 +1048,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "pipeline_DF6_ColorCoordinateTest",
+						"referenceName": "pipeline_DF6_ColorCoordinate_SCRIPT",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
