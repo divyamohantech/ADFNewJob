@@ -137,42 +137,6 @@
 							}
 						},
 						{
-							"name": "AZURLColor",
-							"type": "WebActivity",
-							"dependsOn": [],
-							"policy": {
-								"timeout": "0.12:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"method": "POST",
-								"linkedServices": [
-									{
-										"referenceName": "RestServiceLS",
-										"type": "LinkedServiceReference"
-									}
-								],
-								"datasets": [
-									{
-										"referenceName": "RestAPIData",
-										"type": "DatasetReference"
-									}
-								],
-								"body": {
-									"value": "{\"name\":\"temColor_Chip_Name\",\"job\":\"variablesLOOKUP_PANELID\"}",
-									"type": "Expression"
-								}
-							},
-							"linkedServiceName": {
-								"referenceName": "WebLS123",
-								"type": "LinkedServiceReference"
-							}
-						},
-						{
 							"name": "RestID",
 							"type": "SetVariable",
 							"dependsOn": [
@@ -362,6 +326,24 @@
 									"value": "@activity('WebDATE').output['createdAt']\n\n",
 									"type": "Expression"
 								}
+							}
+						},
+						{
+							"name": "AZURLColor",
+							"type": "WebActivity",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"method": "POST",
+								"url": "https://reqres.in/api/users",
+								"body": "{\n    \"name\": @{item().Color_Chip_Name}',\n     \"job\": variables('LOOKUP_PANELID')\n}"
 							}
 						}
 					]
