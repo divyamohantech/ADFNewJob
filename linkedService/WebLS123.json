@@ -1,6 +1,7 @@
 {
 	"name": "WebLS123",
 	"properties": {
+		"type": "WebConnection",
 		"parameters": {
 			"@variables('LOOKUP_PANELID')": {
 				"type": "int"
@@ -16,7 +17,6 @@
 			}
 		},
 		"annotations": [],
-		"type": "WebConnection",
 		"typeProperties": {
 			"url": "https://reqres.in/api/users",
 			"enableServerCertificateValidation": true,
