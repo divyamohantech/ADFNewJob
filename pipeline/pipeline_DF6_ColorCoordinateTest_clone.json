@@ -310,13 +310,13 @@
 							"userProperties": [
 								{
 									"name": "Scheme",
-									"value": "@activity('LookupInCSV2').output.firstRow[0].Scheme"
+									"value": "@activity('LookupInCSV2').output.firstRow.Scheme"
 								}
 							],
 							"typeProperties": {
 								"variableName": "Scheme",
 								"value": {
-									"value": "@activity('LookupInCSV2').output.firstRow[0].Scheme",
+									"value": "@activity('LookupInCSV2').output.firstRow.Scheme",
 									"type": "Expression"
 								}
 							}
