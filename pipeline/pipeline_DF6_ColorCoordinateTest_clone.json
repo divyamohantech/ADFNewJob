@@ -287,7 +287,7 @@
 							"typeProperties": {
 								"variableName": "Geometry",
 								"value": {
-									"value": "@activity('LookupInCSV').output.value[0].Geometry\n",
+									"value": "@activity('LookupInCSV').output.value[0].Geometry",
 									"type": "Expression"
 								}
 							}
