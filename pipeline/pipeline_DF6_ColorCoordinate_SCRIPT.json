@@ -342,8 +342,14 @@
 							"userProperties": [],
 							"typeProperties": {
 								"method": "POST",
-								"url": "https://reqres.in/api/users",
-								"body": "{\n    \"name\": @{item().Color_Chip_Name}',\n     \"job\": variables('LOOKUP_PANELID')\n}"
+								"body": {
+									"value": "{\n    \"name\": @{item().Color_Chip_Name}',\n     \"job\": variables('LOOKUP_PANELID')\n}",
+									"type": "Expression"
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "WebLS123",
+								"type": "LinkedServiceReference"
 							}
 						}
 					]
