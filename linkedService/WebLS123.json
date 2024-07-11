@@ -2,20 +2,6 @@
 	"name": "WebLS123",
 	"properties": {
 		"type": "WebConnection",
-		"parameters": {
-			"@variables('LOOKUP_PANELID')": {
-				"type": "int"
-			},
-			"@item().Color_Chip_Name": {
-				"type": "string"
-			},
-			"@item().Geometry": {
-				"type": "string"
-			},
-			"@item().Scheme": {
-				"type": "string"
-			}
-		},
 		"annotations": [],
 		"typeProperties": {
 			"url": "https://reqres.in/api/users",
