@@ -93,19 +93,19 @@
 									]
 								},
 								{
-									"activity": "RestID",
+									"activity": "LookUpID",
 									"dependencyConditions": [
 										"Completed"
 									]
 								},
 								{
-									"activity": "RestGeometry",
+									"activity": "LookUpGeometry",
 									"dependencyConditions": [
 										"Completed"
 									]
 								},
 								{
-									"activity": "RestSchema",
+									"activity": "LookUpSchema",
 									"dependencyConditions": [
 										"Completed"
 									]
@@ -235,7 +235,7 @@
 							}
 						},
 						{
-							"name": "RestID",
+							"name": "LookUpID",
 							"type": "SetVariable",
 							"dependsOn": [
 								{
@@ -264,7 +264,7 @@
 							}
 						},
 						{
-							"name": "RestGeometry",
+							"name": "LookUpGeometry",
 							"type": "SetVariable",
 							"dependsOn": [
 								{
@@ -293,7 +293,7 @@
 							}
 						},
 						{
-							"name": "RestSchema",
+							"name": "LookUpSchema",
 							"type": "SetVariable",
 							"dependsOn": [
 								{
