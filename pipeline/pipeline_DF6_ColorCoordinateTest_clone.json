@@ -127,7 +127,10 @@
 								"scripts": [
 									{
 										"type": "Query",
-										"text": "INSERT INTO COLOR_COORDINATE (A, PANEL_ID, GEOMETRY, MEASUREMENT_SCHEME) \nVALUES (\n    @{variables('ID')}, \n    @{variables('LOOKUP_PANELID')}, \n    SUBSTRING('@{item().Geometry}', 1, 2), \n    SUBSTRING('@{item().Scheme}', 1, 2)\n)"
+										"text": {
+											"value": "INSERT INTO COLOR_COORDINATE (A, PANEL_ID, GEOMETRY, MEASUREMENT_SCHEME) \nVALUES (\n    @{variables('ID')}, \n    @{variables('LOOKUP_PANELID')}, \n    SUBSTRING('@{item().Geometry}', 1, 2), \n    SUBSTRING('@{item().Scheme}', 1, 2)\n)",
+											"type": "Expression"
+										}
 									}
 								],
 								"scriptBlockExecutionTimeout": "02:00:00"
@@ -184,7 +187,10 @@
 							"typeProperties": {
 								"source": {
 									"type": "AzureSqlSource",
-									"sqlReaderQuery": "SELECT Geometry FROM InCSV_NEW Where Color_Chip_Name = '@{item().Color_Chip_Name}'",
+									"sqlReaderQuery": {
+										"value": "SELECT Geometry FROM InCSV_NEW Where Color_Chip_Name = '@{item().Color_Chip_Name}'",
+										"type": "Expression"
+									},
 									"queryTimeout": "02:00:00",
 									"partitionOption": "None"
 								},
@@ -212,7 +218,10 @@
 							"typeProperties": {
 								"source": {
 									"type": "AzureSqlSource",
-									"sqlReaderQuery": "SELECT Scheme FROM InCSV_NEW Where Color_Chip_Name = '@{item().Color_Chip_Name}'",
+									"sqlReaderQuery": {
+										"value": "SELECT Scheme FROM InCSV_NEW Where Color_Chip_Name = '@{item().Color_Chip_Name}'",
+										"type": "Expression"
+									},
 									"queryTimeout": "02:00:00",
 									"partitionOption": "None"
 								},
@@ -248,7 +257,10 @@
 							],
 							"typeProperties": {
 								"variableName": "ID",
-								"value": "@activity('LookUpPanel').output.value[0].id\n"
+								"value": {
+									"value": "@activity('AZURLColor').output.value[0].id\n",
+									"type": "Expression"
+								}
 							}
 						},
 						{
@@ -274,7 +286,10 @@
 							],
 							"typeProperties": {
 								"variableName": "Geometry",
-								"value": "@activity('LookupInCSV').output.value[0].Geometry\n"
+								"value": {
+									"value": "@activity('LookupInCSV').output.value[0].Geometry\n",
+									"type": "Expression"
+								}
 							}
 						},
 						{
@@ -300,7 +315,10 @@
 							],
 							"typeProperties": {
 								"variableName": "Scheme",
-								"value": "@activity('LookupInCSV2').output.value[0].Scheme"
+								"value": {
+									"value": "@activity('LookupInCSV2').output.value[0].Scheme",
+									"type": "Expression"
+								}
 							}
 						}
 					]
