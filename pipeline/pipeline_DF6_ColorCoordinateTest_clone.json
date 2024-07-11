@@ -252,7 +252,7 @@
 							"userProperties": [
 								{
 									"name": "ID",
-									"value": "@activity('LookUpPanel').output.value[0].id"
+									"value": "@activity('AZURLColor').output.value[0].id"
 								}
 							],
 							"typeProperties": {
