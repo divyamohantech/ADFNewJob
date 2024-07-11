@@ -470,7 +470,7 @@
 				"type": "Integer"
 			},
 			"ID": {
-				"type": "String"
+				"type": "Integer"
 			},
 			"Geometry": {
 				"type": "String"
