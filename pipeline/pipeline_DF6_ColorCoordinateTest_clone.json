@@ -87,13 +87,13 @@
 							"type": "Script",
 							"dependsOn": [
 								{
-									"activity": "AZURLColor",
+									"activity": "LookUpPanelID",
 									"dependencyConditions": [
 										"Completed"
 									]
 								},
 								{
-									"activity": "LookUpPanelID",
+									"activity": "RestID",
 									"dependencyConditions": [
 										"Completed"
 									]
@@ -154,6 +154,132 @@
 							"linkedServiceName": {
 								"referenceName": "WebLS123",
 								"type": "LinkedServiceReference"
+							}
+						},
+						{
+							"name": "LookupInCSV",
+							"type": "Lookup",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "AzureSqlSource",
+									"sqlReaderQuery": "SELECT Geometry FROM InCSV_NEW Where Color_Chip_Name = '@{item().Color_Chip_Name}'",
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
+								},
+								"dataset": {
+									"referenceName": "SQLDynamicDS",
+									"type": "DatasetReference",
+									"parameters": {
+										"TableName": "InCSV_NEW"
+									}
+								}
+							}
+						},
+						{
+							"name": "LookupInCSV2",
+							"type": "Lookup",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "AzureSqlSource",
+									"sqlReaderQuery": "SELECT Scheme FROM InCSV_NEW Where Color_Chip_Name = '@{item().Color_Chip_Name}'",
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
+								},
+								"dataset": {
+									"referenceName": "SQLDynamicDS",
+									"type": "DatasetReference"
+								}
+							}
+						},
+						{
+							"name": "RestID",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "AZURLColor",
+									"dependencyConditions": [
+										"Completed"
+									]
+								}
+							],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "ID",
+								"value": "@activity('LookUpPanel').output.value[0].id\n"
+							}
+						},
+						{
+							"name": "RestGeometry",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "LookupInCSV",
+									"dependencyConditions": [
+										"Completed"
+									]
+								}
+							],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [
+								{
+									"name": "Geometry",
+									"value": "@activity('LookupInCSV').output.value[0].Geometry"
+								}
+							],
+							"typeProperties": {
+								"variableName": "Geometry",
+								"value": "@activity('LookupInCSV').output.value[0].Geometry\n"
+							}
+						},
+						{
+							"name": "RestSchema",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "LookupInCSV2",
+									"dependencyConditions": [
+										"Completed"
+									]
+								}
+							],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [
+								{
+									"name": "Scheme",
+									"value": "@activity('LookupInCSV2').output.value[0].Scheme"
+								}
+							],
+							"typeProperties": {
+								"variableName": "Scheme",
+								"value": "@activity('LookupInCSV2').output.value[0].Scheme"
 							}
 						}
 					]
@@ -305,6 +431,12 @@
 				"type": "Integer"
 			},
 			"ID": {
+				"type": "String"
+			},
+			"Geometry": {
+				"type": "String"
+			},
+			"Scheme": {
 				"type": "String"
 			}
 		},
