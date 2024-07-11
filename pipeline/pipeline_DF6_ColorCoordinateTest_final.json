@@ -163,7 +163,7 @@
 									}
 								],
 								"body": {
-									"value": "{\"name\":\"temColor_Chip_Name\",\"job\":\"variablesLOOKUP_PANELID\"}",
+									"value": "{\n    \"name\": @{item().Color_Chip_Name}',\n     \"job\": \"testjob\"\n}",
 									"type": "Expression"
 								}
 							},
@@ -258,7 +258,7 @@
 							"typeProperties": {
 								"variableName": "ID",
 								"value": {
-									"value": "@activity('AZURLColor').output['id']\n",
+									"value": "@activity('AZURLColor').output.value[0].id\n",
 									"type": "Expression"
 								}
 							}
