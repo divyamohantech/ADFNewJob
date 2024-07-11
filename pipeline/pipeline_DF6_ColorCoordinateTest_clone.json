@@ -224,7 +224,12 @@
 								"secureOutput": false,
 								"secureInput": false
 							},
-							"userProperties": [],
+							"userProperties": [
+								{
+									"name": "ID",
+									"value": "@activity('LookUpPanel').output.value[0].id"
+								}
+							],
 							"typeProperties": {
 								"variableName": "ID",
 								"value": "@activity('LookUpPanel').output.value[0].id\n"
