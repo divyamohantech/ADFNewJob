@@ -281,13 +281,13 @@
 							"userProperties": [
 								{
 									"name": "Geometry",
-									"value": "@activity('LookupInCSV').output.value[0].Geometry"
+									"value": "@activity('LookupInCSV').output.firstRow.Geometry"
 								}
 							],
 							"typeProperties": {
 								"variableName": "Geometry",
 								"value": {
-									"value": "@activity('LookupInCSV').output.value[0].Geometry",
+									"value": "@activity('LookupInCSV').output.firstRow.Geometry",
 									"type": "Expression"
 								}
 							}
