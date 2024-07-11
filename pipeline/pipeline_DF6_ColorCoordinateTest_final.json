@@ -375,7 +375,7 @@
 				"type": "Integer"
 			},
 			"ID": {
-				"type": "Integer"
+				"type": "String"
 			},
 			"Geometry": {
 				"type": "String"
