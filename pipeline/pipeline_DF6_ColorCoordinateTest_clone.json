@@ -97,6 +97,18 @@
 									"dependencyConditions": [
 										"Completed"
 									]
+								},
+								{
+									"activity": "RestGeometry",
+									"dependencyConditions": [
+										"Completed"
+									]
+								},
+								{
+									"activity": "RestSchema",
+									"dependencyConditions": [
+										"Completed"
+									]
 								}
 							],
 							"policy": {
@@ -114,7 +126,8 @@
 							"typeProperties": {
 								"scripts": [
 									{
-										"type": "Query"
+										"type": "Query",
+										"text": "INSERT INTO COLOR_COORDINATE (A, PANEL_ID, GEOMETRY, MEASUREMENT_SCHEME) \nVALUES (\n    @{variables('ID')}, \n    @{variables('LOOKUP_PANELID')}, \n    SUBSTRING('@{item().Geometry}', 1, 2), \n    SUBSTRING('@{item().Scheme}', 1, 2)\n)"
 									}
 								],
 								"scriptBlockExecutionTimeout": "02:00:00"
