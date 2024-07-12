@@ -97,6 +97,12 @@
 									"dependencyConditions": [
 										"Completed"
 									]
+								},
+								{
+									"activity": "LookupDate",
+									"dependencyConditions": [
+										"Completed"
+									]
 								}
 							],
 							"policy": {
@@ -116,7 +122,7 @@
 									{
 										"type": "Query",
 										"text": {
-											"value": "INSERT INTO COLOR_COORDINATE (A, PANEL_ID, GEOMETRY, MEASUREMENT_SCHEME) \nVALUES (\n    @{variables('ID')}, \n    @{variables('LOOKUP_PANELID')}, \n   '@{item().Geometry}', \n    '@{item().Scheme}'\n)\n\n",
+											"value": "INSERT INTO COLOR_COORDINATE (A, B, PANEL_ID, GEOMETRY, MEASUREMENT_SCHEME) \nVALUES (\n    @{variables('ID')}, \n    @{variables('createdAt')},\n    @{variables('LOOKUP_PANELID')}, \n   '@{item().Geometry}', \n    '@{item().Scheme}'\n)\n\n",
 											"type": "Expression"
 										}
 									}
@@ -188,6 +194,35 @@
 									"type": "Expression"
 								}
 							}
+						},
+						{
+							"name": "LookupDate",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "AZURLColor",
+									"dependencyConditions": [
+										"Completed"
+									]
+								}
+							],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [
+								{
+									"name": "createdAt",
+									"value": "@activity('AZURLColor').output['createdAt']"
+								}
+							],
+							"typeProperties": {
+								"variableName": "createdAt",
+								"value": {
+									"value": "@activity('AZURLColor').output['createdAt']\n",
+									"type": "Expression"
+								}
+							}
 						}
 					]
 				}
@@ -249,6 +284,9 @@
 				"type": "String"
 			},
 			"Scheme": {
+				"type": "String"
+			},
+			"createdAt": {
 				"type": "String"
 			}
 		},
