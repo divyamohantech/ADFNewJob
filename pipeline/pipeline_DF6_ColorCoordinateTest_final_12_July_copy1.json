@@ -227,6 +227,8 @@
 						{
 							"name": "CheckDublicate",
 							"type": "Script",
+							"state": "Inactive",
+							"onInactiveMarkAs": "Succeeded",
 							"dependsOn": [],
 							"policy": {
 								"timeout": "0.12:00:00",
@@ -248,30 +250,6 @@
 									}
 								],
 								"scriptBlockExecutionTimeout": "02:00:00"
-							}
-						},
-						{
-							"name": "Check",
-							"type": "SetVariable",
-							"dependsOn": [
-								{
-									"activity": "CheckDublicate",
-									"dependencyConditions": [
-										"Completed"
-									]
-								}
-							],
-							"policy": {
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"variableName": "NunberCounts",
-								"value": {
-									"value": "@activity('CheckDublicate').output.value",
-									"type": "Expression"
-								}
 							}
 						}
 					]
