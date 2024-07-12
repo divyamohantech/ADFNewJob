@@ -70,7 +70,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"variableName": "MAX_PANEL_ID",
+					"variableName": "MAX_COLOR_CHIP_ID",
 					"value": {
 						"value": "@activity('DF3_ColorChip').output.runStatus.output.SKCacheMAXCOLORCHIPID.value[0].MAX_COLOR_CHIP_ID",
 						"type": "Expression"
@@ -212,6 +212,9 @@
 		],
 		"variables": {
 			"MAX_PANEL_ID": {
+				"type": "Integer"
+			},
+			"MAX_COLOR_CHIP_ID": {
 				"type": "Integer"
 			}
 		},
