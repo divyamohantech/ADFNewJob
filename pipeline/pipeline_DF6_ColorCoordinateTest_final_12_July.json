@@ -288,6 +288,9 @@
 			},
 			"createdAt": {
 				"type": "String"
+			},
+			"NunberCounts": {
+				"type": "Integer"
 			}
 		},
 		"annotations": []
