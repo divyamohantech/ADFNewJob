@@ -1,0 +1,12 @@
+{
+	"name": "AzureFunctionLS",
+	"properties": {
+		"annotations": [],
+		"type": "AzureFunction",
+		"typeProperties": {
+			"functionAppUrl": "https://reqres.in/api/users",
+			"authentication": "Anonymous"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/linkedservices"
+}

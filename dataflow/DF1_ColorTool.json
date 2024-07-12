@@ -69,8 +69,10 @@
 					"description": "Aggregating data by producing columns 'MAX_COLOR_TOOL_ID' "
 				},
 				{
-					"name": "DistinctCOLORTOOLName",
-					"description": "DistinctCOLORTOOLName"
+					"name": "DistinctValues"
+				},
+				{
+					"name": "DistinctCOLORTOOLName"
 				}
 			],
 			"scriptLines": [
@@ -171,7 +173,7 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> SRTableColorTool",
-				"NotExistsTestConditionNewRecords select(mapColumn(",
+				"DistinctValues select(mapColumn(",
 				"          COLOR_Tool_Name",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
@@ -184,14 +186,17 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'right')~> joinRejectionCondition",
-				"joinRejectionCondition select(mapColumn(",
-				"          COLOR_Tool_Name = SRTableColorTool@COLOR_TOOL_NAME",
+				"DistinctCOLORTOOLName select(mapColumn(",
+				"          COLOR_Tool_Name",
 				"     ),",
 				"     skipDuplicateMapInputs: false,",
 				"     skipDuplicateMapOutputs: true) ~> SelectDataColorTool",
 				"SRTableColorTool aggregate(MAX_COLOR_TOOL_ID = iifNull(max(COLOR_TOOL_ID),0)) ~> FNAggMAXCOLORTOOLID",
-				"SelectDataColorTool aggregate(COLOR_Tool_Name = first(COLOR_Tool_Name)) ~> DistinctCOLORTOOLName",
-				"DistinctCOLORTOOLName sink(allowSchemaDrift: true,",
+				"NotExistsTestConditionNewRecords aggregate(groupBy(COLOR_Tool_Name),",
+				"     COLOR_Tool_NameNew = first(COLOR_Tool_Name)) ~> DistinctValues",
+				"joinRejectionCondition aggregate(groupBy(SRInCSVtable@COLOR_Tool_Name),",
+				"     COLOR_Tool_NameNew = first(SRInCSVtable@COLOR_Tool_Name)) ~> DistinctCOLORTOOLName",
+				"SelectDataColorTool sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     partitionFileNames:['Color_Tool_Rejected.csv'],",
 				"     skipDuplicateMapInputs: true,",
@@ -203,19 +208,6 @@
 				"     partitionBy('hash', 1)) ~> SKFileColorToolRejectCSV",
 				"SelectData sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     input(",
-				"          PANEL_ID as integer,",
-				"          NAME as string,",
-				"          IS_METALLIC as integer,",
-				"          CREATE_USER_ID as integer,",
-				"          CREATE_DATE as timestamp,",
-				"          NOTES as string,",
-				"          IS_PUBLIC as integer,",
-				"          ENTITY_ID as integer,",
-				"          IS_INACTIVE as integer,",
-				"          AUDIT_SEARCH_INDEX_DATE as timestamp,",
-				"          IS_FLAGGED as string",
-				"     ),",
 				"     deletable:false,",
 				"     insertable:true,",
 				"     updateable:false,",

@@ -1,0 +1,137 @@
+{
+	"name": "PipeLine_Script",
+	"properties": {
+		"activities": [
+			{
+				"name": "AZURLColor",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "POST",
+					"linkedServices": [
+						{
+							"referenceName": "RestServiceLS",
+							"type": "LinkedServiceReference"
+						}
+					],
+					"datasets": [
+						{
+							"referenceName": "RestAPIData",
+							"type": "DatasetReference"
+						}
+					],
+					"body": {
+						"name": "temColor_Chip_Name",
+						"job": "variablesLOOKUP_PANELID"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "WebLS123",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Script1",
+				"type": "Script",
+				"dependsOn": [
+					{
+						"activity": "RestID",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabaseLS",
+					"type": "LinkedServiceReference"
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "Query",
+							"text": {
+								"value": "Insert into API_Response (ID, first_name) values ( @{variables('ID')} , 'aman')",
+								"type": "Expression"
+							}
+						}
+					],
+					"scriptBlockExecutionTimeout": "02:00:00"
+				}
+			},
+			{
+				"name": "RestID",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "AZURLColor",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "ID",
+					"value": {
+						"value": "@activity('AZURLColor').output['id']",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "LookupPanel",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "SELECT PANEL_ID FROM PANEL Where Name = '@{item().Color_Chip_Name}'",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "SQLDynamicDS",
+						"type": "DatasetReference",
+						"parameters": {
+							"TableName": "PANEL"
+						}
+					}
+				}
+			}
+		],
+		"variables": {
+			"ID": {
+				"type": "String"
+			}
+		},
+		"annotations": []
+	}
+}

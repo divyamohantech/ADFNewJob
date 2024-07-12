@@ -1,0 +1,389 @@
+{
+	"name": "pipeline_DF6_ColorCoordinateTest_final",
+	"properties": {
+		"activities": [
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "SRGetNewInCSV_NEW",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('SRGetNewInCSV_NEW').output.value",
+						"type": "Expression"
+					},
+					"isSequential": true,
+					"activities": [
+						{
+							"name": "LookUpPanel",
+							"type": "Lookup",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "AzureSqlSource",
+									"sqlReaderQuery": {
+										"value": "SELECT PANEL_ID FROM PANEL Where Name = '@{item().Color_Chip_Name}'",
+										"type": "Expression"
+									},
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
+								},
+								"dataset": {
+									"referenceName": "SQLDynamicDS",
+									"type": "DatasetReference",
+									"parameters": {
+										"TableName": "PANEL"
+									}
+								},
+								"firstRowOnly": false
+							}
+						},
+						{
+							"name": "LookUpPanelID",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "LookUpPanel",
+									"dependencyConditions": [
+										"Completed"
+									]
+								}
+							],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [
+								{
+									"name": "LOOKUP_PANELID",
+									"value": "@activity('LookUpPanel').output.value[0].PANEL_ID"
+								}
+							],
+							"typeProperties": {
+								"variableName": "LOOKUP_PANELID",
+								"value": {
+									"value": "@activity('LookUpPanel').output.value[0].PANEL_ID",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "InsertColorCoordinate",
+							"type": "Script",
+							"dependsOn": [
+								{
+									"activity": "LookUpPanelID",
+									"dependencyConditions": [
+										"Completed"
+									]
+								},
+								{
+									"activity": "LookUpID",
+									"dependencyConditions": [
+										"Completed"
+									]
+								},
+								{
+									"activity": "LookUpGeometry",
+									"dependencyConditions": [
+										"Completed"
+									]
+								},
+								{
+									"activity": "LookUpSchema",
+									"dependencyConditions": [
+										"Completed"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"linkedServiceName": {
+								"referenceName": "AzureSqlDatabaseLS",
+								"type": "LinkedServiceReference"
+							},
+							"typeProperties": {
+								"scripts": [
+									{
+										"type": "Query",
+										"text": {
+											"value": "INSERT INTO COLOR_COORDINATE (A, PANEL_ID, GEOMETRY, MEASUREMENT_SCHEME) \nVALUES (\n    @{variables('ID')}, \n    @{variables('LOOKUP_PANELID')}, \n   '@{item().Geometry}', \n    '@{item().Scheme}'\n)\n\n",
+											"type": "Expression"
+										}
+									}
+								],
+								"scriptBlockExecutionTimeout": "02:00:00"
+							}
+						},
+						{
+							"name": "AZURLColor",
+							"type": "WebActivity",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"method": "POST",
+								"linkedServices": [
+									{
+										"referenceName": "RestServiceLS",
+										"type": "LinkedServiceReference"
+									}
+								],
+								"datasets": [
+									{
+										"referenceName": "RestAPIData",
+										"type": "DatasetReference"
+									}
+								],
+								"body": {
+									"value": "{\"name\":\"temColor_Chip_Name\",\"job\":\"variablesLOOKUP_PANELID\"}",
+									"type": "Expression"
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "WebLS123",
+								"type": "LinkedServiceReference"
+							}
+						},
+						{
+							"name": "LookupInCSV",
+							"type": "Lookup",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "AzureSqlSource",
+									"sqlReaderQuery": {
+										"value": "SELECT Geometry FROM InCSV_NEW Where Color_Chip_Name = '@{item().Color_Chip_Name}'",
+										"type": "Expression"
+									},
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
+								},
+								"dataset": {
+									"referenceName": "SQLDynamicDS",
+									"type": "DatasetReference",
+									"parameters": {
+										"TableName": "InCSV_NEW"
+									}
+								}
+							}
+						},
+						{
+							"name": "LookupInCSV2",
+							"type": "Lookup",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "AzureSqlSource",
+									"sqlReaderQuery": {
+										"value": "SELECT Scheme FROM InCSV_NEW Where Color_Chip_Name = '@{item().Color_Chip_Name}'",
+										"type": "Expression"
+									},
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
+								},
+								"dataset": {
+									"referenceName": "SQLDynamicDS",
+									"type": "DatasetReference",
+									"parameters": {
+										"TableName": "InCSV_NEW"
+									}
+								}
+							}
+						},
+						{
+							"name": "LookUpID",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "AZURLColor",
+									"dependencyConditions": [
+										"Completed"
+									]
+								}
+							],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [
+								{
+									"name": "ID",
+									"value": "@activity('AZURLColor').output.value[0].id"
+								}
+							],
+							"typeProperties": {
+								"variableName": "ID",
+								"value": {
+									"value": "@activity('AZURLColor').output['id']",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "LookUpGeometry",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "LookupInCSV",
+									"dependencyConditions": [
+										"Completed"
+									]
+								}
+							],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [
+								{
+									"name": "Geometry",
+									"value": "@activity('LookupInCSV').output.firstRow.Geometry"
+								}
+							],
+							"typeProperties": {
+								"variableName": "Geometry",
+								"value": {
+									"value": "@activity('LookupInCSV').output.firstRow.Geometry",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "LookUpSchema",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "LookupInCSV2",
+									"dependencyConditions": [
+										"Completed"
+									]
+								}
+							],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [
+								{
+									"name": "Scheme",
+									"value": "@activity('LookupInCSV2').output.firstRow.Scheme"
+								}
+							],
+							"typeProperties": {
+								"variableName": "Scheme",
+								"value": {
+									"value": "@activity('LookupInCSV2').output.firstRow.Scheme",
+									"type": "Expression"
+								}
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "SRGetNewInCSV_NEW",
+				"description": "v1",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "Select * from [dbo].[InCSV_NEW]",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "SQLDynamicDS",
+						"type": "DatasetReference",
+						"parameters": {
+							"TableName": "InCSV_NEW"
+						}
+					},
+					"firstRowOnly": false
+				}
+			}
+		],
+		"variables": {
+			"First_name": {
+				"type": "String"
+			},
+			"TableData": {
+				"type": "Array"
+			},
+			"APIDATA": {
+				"type": "String"
+			},
+			"MAX_COLOR_TOOL_ID": {
+				"type": "Integer"
+			},
+			"SET_MAX_COLOR_COORDINATE_ID": {
+				"type": "Integer"
+			},
+			"LOOKUP_PANELID": {
+				"type": "Integer"
+			},
+			"ID": {
+				"type": "String"
+			},
+			"Geometry": {
+				"type": "String"
+			},
+			"Scheme": {
+				"type": "String"
+			}
+		},
+		"annotations": []
+	}
+}
