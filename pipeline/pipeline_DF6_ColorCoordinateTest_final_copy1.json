@@ -122,7 +122,7 @@
 									{
 										"type": "Query",
 										"text": {
-											"value": "INSERT INTO COLOR_COORDINATE (A, B, PANEL_ID, GEOMETRY, MEASUREMENT_SCHEME) \nVALUES (\n    @{variables('ID')}, \n    SUBSTRING('@{variables('createdAt')}', 1, 2),\n    @{variables('LOOKUP_PANELID')},     \n   '@{item().Geometry}', \n    '@{item().Scheme}'\n)\n\n",
+											"value": "INSERT INTO COLOR_COORDINATE (A, B, PANEL_ID, GEOMETRY, MEASUREMENT_SCHEME) \nVALUES (\n    @{variables('ID')}, \n    SUBSTRING('@{variables('createdAt')}', 1, 4),\n    @{variables('LOOKUP_PANELID')},     \n   '@{item().Geometry}', \n    '@{item().Scheme}'\n)\n\n",
 											"type": "Expression"
 										}
 									}
