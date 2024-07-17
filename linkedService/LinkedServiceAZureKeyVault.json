@@ -1,0 +1,10 @@
+{
+	"name": "LinkedServiceAZureKeyVault",
+	"properties": {
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://AzureTestKeyVault.vault.azure.net/"
+		}
+	}
+}
