@@ -101,6 +101,8 @@
 			{
 				"name": "LookupPanel",
 				"type": "Lookup",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -113,7 +115,10 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "SELECT PANEL_ID FROM PANEL Where Name = '@{item().Color_Chip_Name}'",
+						"sqlReaderQuery": {
+							"value": "SELECT PANEL_ID FROM PANEL Where Name = '@{item().Color_Chip_Name}'",
+							"type": "Expression"
+						},
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
