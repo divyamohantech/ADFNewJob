@@ -1,0 +1,103 @@
+{
+	"name": "PL_ColorDataMosiac_copy1",
+	"properties": {
+		"activities": [
+			{
+				"name": "CheckExistenceOfTables",
+				"type": "Script",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabaseLS",
+					"type": "LinkedServiceReference"
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "Query",
+							"text": "DECLARE @ColorToolExists BIT\nDECLARE @PanelExists BIT\nDECLARE @ColorChipExists BIT\nDECLARE @SpectralReadingExists BIT\nDECLARE @SpectralMeasurementExists BIT\nDECLARE @ColorCoordinateExists BIT\nDECLARE @UserProfileExists BIT\nDECLARE @AllTablesExist BIT\n\n-- Check if COLOR_TOOL table exists\nIF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'COLOR_TOOL' AND TABLE_SCHEMA = 'dbo')\n    SET @ColorToolExists = 1\nELSE\n    SET @ColorToolExists = 0\n\n-- Check if PANEL table exists\nIF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'PANEL' AND TABLE_SCHEMA = 'dbo')\n    SET @PanelExists = 1\nELSE\n    SET @PanelExists = 0\n\n-- Check if COLOR_CHIP table exists\nIF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'COLOR_CHIP' AND TABLE_SCHEMA = 'dbo')\n    SET @ColorChipExists = 1\nELSE\n    SET @ColorChipExists = 0\n\n-- Check if SPECTRAL_READING table exists\nIF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'SPECTRAL_READING' AND TABLE_SCHEMA = 'dbo')\n    SET @SpectralReadingExists = 1\nELSE\n    SET @SpectralReadingExists = 0\n\n-- Check if SPECTRAL_MEASUREMENT table exists\nIF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'SPECTRAL_MEASUREMENT' AND TABLE_SCHEMA = 'dbo')\n    SET @SpectralMeasurementExists = 1\nELSE\n    SET @SpectralMeasurementExists = 0\n\n-- Check if COLOR_COORDINATE table exists\nIF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'COLOR_COORDINATE' AND TABLE_SCHEMA = 'dbo')\n    SET @ColorCoordinateExists = 1\nELSE\n    SET @ColorCoordinateExists = 0\n\n-- Check if USER_PROFILE table exists\nIF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'USER_PROFILE' AND TABLE_SCHEMA = 'dbo')\n    SET @UserProfileExists = 1\nELSE\n    SET @UserProfileExists = 0\n\n-- Determine if all tables exist\nIF @ColorToolExists = 1 AND @PanelExists = 1 AND @ColorChipExists = 1 AND @SpectralReadingExists = 1 AND \n   @SpectralMeasurementExists = 1 AND @ColorCoordinateExists = 1 AND @UserProfileExists = 1\n    SET @AllTablesExist = 1\nELSE\n    SET @AllTablesExist = 0\n\n-- Return the status\nSELECT @AllTablesExist AS AllTablesExist\n"
+						}
+					],
+					"scriptBlockExecutionTimeout": "02:00:00"
+				}
+			},
+			{
+				"name": "If Condition1",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "CheckExistenceOfTables",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@equals(activity('CheckExistenceOfTables').output.firstRow.AllTablesExist, 1)\n",
+						"type": "Expression"
+					},
+					"ifFalseActivities": [
+						{
+							"name": "FailMSG",
+							"type": "Fail",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"message": "Pipline can not able to run because required tables not exist in db.",
+								"errorCode": "404"
+							}
+						}
+					],
+					"ifTrueActivities": [
+						{
+							"name": "PL_ColorDataMosiac",
+							"type": "ExecutePipeline",
+							"dependsOn": [],
+							"policy": {
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "PL_ColorDataMosiac",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true
+							}
+						}
+					]
+				}
+			}
+		],
+		"variables": {
+			"MAX_COLOR_TOOL_ID": {
+				"type": "Integer"
+			},
+			"MAX_PANEL_ID": {
+				"type": "Integer"
+			},
+			"MAX_COLOR_CHIP_ID": {
+				"type": "Integer"
+			},
+			"MAX_READING_ID": {
+				"type": "Integer"
+			},
+			"MAX_MEASUREMENT_ID": {
+				"type": "Integer"
+			},
+			"SET_MAX_COLOR_COORDINATE_ID": {
+				"type": "Integer"
+			}
+		},
+		"annotations": []
+	}
+}
