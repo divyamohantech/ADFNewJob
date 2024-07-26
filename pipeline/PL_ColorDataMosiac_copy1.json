@@ -45,18 +45,6 @@
 						"value": "@equals(activity('CheckExistenceOfTables').output.resultSets[0].rows[0].AllTablesExist, 1)\n\n",
 						"type": "Expression"
 					},
-					"ifFalseActivities": [
-						{
-							"name": "FailMSG",
-							"type": "Fail",
-							"dependsOn": [],
-							"userProperties": [],
-							"typeProperties": {
-								"message": "Pipline can not able to run because required tables not exist in db.",
-								"errorCode": "404"
-							}
-						}
-					],
 					"ifTrueActivities": [
 						{
 							"name": "PL_ColorDataMosiac",
