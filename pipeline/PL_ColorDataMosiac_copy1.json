@@ -42,7 +42,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@equals(activity('CheckExistenceOfTables').output.firstRow.AllTablesExist, 1)\n",
+						"value": "@equals(activity('CheckExistenceOfTables').output.resultSets[0].rows[0].AllTablesExist, 1)\n\n",
 						"type": "Expression"
 					},
 					"ifFalseActivities": [
